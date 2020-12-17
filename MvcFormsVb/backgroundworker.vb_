@@ -1,0 +1,284 @@
+﻿'
+' * Created by SharpDevelop.
+' * User: ssepan
+' * Date: 2/8/2015
+' * Time: 10:04 AM
+' * 
+' * To change this template use Tools | Options | Coding | Edit Standard Headers.
+' 
+
+Imports System
+
+Namespace DefaultNamespace
+	''' <summary>
+	''' Description of Class1.
+	''' </summary>
+	Public Class Class1
+		Public Sub New()
+		End Sub
+
+
+
+		'FORM
+		#Region "DoSomething in background"
+		Private Sub cmdDoSomething_Click(sender As [Object], e As EventArgs) 'Handles cmdXxx.Click
+			ViewModel.DoSomething_Click()
+		End Sub
+
+		Private Sub backgroundWorkerDoSomething_DoWork(sender As [Object], e As DoWorkEventArgs)
+			ViewModel.BackgroundWorker_DoWork(Of [Boolean])(TryCast(sender, BackgroundWorker), e, Function(worker As BackgroundWorker, ea As DoWorkEventArgs, ByRef errorMessage As [String]) 
+			Dim result As [Boolean] = Nothing
+
+			'''/ Get Tuple object passed from RunWorkerAsync() method
+			'Tuple<SomeType> /*Variable*/> arguments =
+			'    e.Argument as Tuple<SomeType> /*Variable*/>;
+
+			'run process
+			'arguments,
+			result = DoSomethingController(Of DoSomethingModel).DoSomething(DoSomethingController(Of DoSomethingModel).Model, worker, e, errorMessage)
+
+			Return result
+
+			End Function, "Unable to DoSomething.")
+		End Sub
+
+		Private Sub backgroundWorkerDoSomething_ProgressChanged(sender As [Object], e As ProgressChangedEventArgs)
+			ViewModel.BackgroundWorker_ProgressChanged("Doing Something", e.UserState, e.ProgressPercentage)
+		End Sub
+
+		Private Sub backgroundWorkerDoSomething_RunWorkerCompleted(sender As [Object], e As RunWorkerCompletedEventArgs)
+			'"DoSomething Completed.";,//recover last progress  message from UI and re-display
+			ViewModel.BackgroundWorker_RunWorkerCompleted(Me.StatusBarStatusMessage.Text, TryCast(sender, BackgroundWorker), e, Nothing, Nothing, Function() 
+			If DoSomethingController(Of DoSomethingModel).Model.LineErrors Then
+				ViewModel.ErrorMessage = DoSomethingController(Of DoSomethingModel).Model.LineErrorMessage
+				System.Console.Beep()
+			End If
+
+			'restore buttons
+			ViewModel.ButtonsEnabled(True)
+
+			End Function)
+		End Sub
+		#End Region
+
+
+		'VIEWMODEL
+		''' <summary>
+		''' 
+		''' </summary>
+		Friend Sub DoSomething_Click()
+			Try
+				StartProgressBar("Doing Something...", Nothing, _actionIconImages("logo1"), False, 0)
+
+				ButtonsEnabled(False)
+
+				'Declare Tuple object to pass multiple params to DoWork method.
+				'var arguments xxx
+				'    Tuple.Create<SomeType /*xxx*/, SomeType /*yyy*/>
+				'    (
+				'        Xxx,
+				'        Yyy
+				'    );
+
+				'set cancellation hook
+				View.cancelDelegate = View.backgroundWorkerDoSomething.CancelAsync
+
+					'arguments
+				View.backgroundWorkerDoSomething.RunWorkerAsync()
+			Catch ex As Exception
+				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+
+				'clear cancellation hook
+				View.cancelDelegate = Nothing
+
+				StopProgressBar(Nothing, ex.Message)
+			End Try
+		End Sub
+
+
+		'MODEL
+		''' <summary>
+		''' Process from UI strategy; using backgroundworker
+		''' </summary>
+		''' <param name="settings"></param>
+		''' <param name="worker"></param>
+		''' <param name="e"></param>
+		''' <param name="errorMessage"></param>
+		''' <returns></returns>
+		'Tuple<SomeType> arguments,
+		Public Shared Function ProcessFromUi(model As DoSomethingModel, worker As BackgroundWorker, e As DoWorkEventArgs, ByRef errorMessage As [String]) As [Boolean]
+			Dim returnValue As [Boolean] = Nothing
+			Dim percentComplete As Int32 = 0
+			'Int32 countComplete = 0;
+			'Int32 countTotal = 0;
+
+			Try
+				If worker.CancellationPending Then
+					e.Cancel = True
+				Else
+					If Not model.ValidToDoSomething(errorMessage) Then
+						Throw New ApplicationException(errorMessage)
+					End If
+
+					If Running Then
+						Throw New ApplicationException("Already running. Unable to start.")
+					End If
+
+					Running = True
+
+					model.LineErrors = False
+					model.LineErrorMessage = [String].Empty
+
+					'countComplete = 0;
+					'countTotal = 0;
+					percentComplete = 0
+					worker.ReportProgress(percentComplete, "processing data ...")
+
+					'countTotal = 1; //1 steps: process data
+
+					'process
+					'perform do something
+					If Not DoSomething(model, errorMessage, worker, e) Then
+						Throw New ApplicationException(errorMessage)
+
+						'don't ovwewrite last progress message
+
+						'''/report progress (1)
+						'countComplete++;
+						'percentComplete = (Int32)(((Double)countComplete / (Double)countTotal) * 100);
+						'worker.ReportProgress(percentComplete, "processing data");
+
+						'''/report progress
+						'percentComplete = 100;
+						'worker.ReportProgress(percentComplete, "data processed");
+					End If
+				End If
+
+				returnValue = True
+			Catch ex As Exception
+				errorMessage = ex.Message
+
+				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+			Finally
+				Running = False
+			End Try
+			Return returnValue
+		End Function
+		#End Region
+
+		'FORMSVIEWMODEL
+
+		''' <summary>
+		''' Handle DoWork event.
+		''' </summary>
+		''' <typeparam name="TReturn"></typeparam>
+		''' <param name="worker"></param>
+		''' <param name="e"></param>
+		''' <param name="workDelegate"></param>
+		''' <param name="resultNullDescription"></param>
+		Public Overridable Sub BackgroundWorker_DoWork(Of TReturn)(worker As BackgroundWorker, e As DoWorkEventArgs, workDelegate As DoWork_WorkDelegate(Of TReturn), Optional resultNullDescription As [String] = "No result was returned.")
+			Dim errorMessage As [String] = Nothing
+
+			Try
+				'run process
+				If workDelegate IsNot Nothing Then
+					e.Result = workDelegate(worker, e, errorMessage)
+				End If
+
+				'look for specific problem
+				If Not [String].IsNullOrEmpty(errorMessage) Then
+					Throw New Exception(errorMessage)
+				End If
+
+				'warn about unexpected result
+				If e.Result Is Nothing Then
+					Throw New Exception(resultNullDescription)
+				End If
+			Catch ex As Exception
+				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+
+				're-throw and let RunWorkerCompleted event handle and report error.
+				Throw
+			End Try
+		End Sub
+
+		''' <summary>
+		''' Handle ProgressChanged event.
+		''' </summary>
+		''' <param name="description"></param>
+		''' <param name="userState">Object, specifically a String.</param>
+		''' <param name="progressPercentage"></param>
+		Public Overridable Sub BackgroundWorker_ProgressChanged(description As [String], userState As [Object], progressPercentage As Int32)
+			Dim message As [String] = [String].Empty
+
+			Try
+				If userState IsNot Nothing Then
+					message = userState.ToString()
+				End If
+				UpdateProgressBar([String].Format("{0} ({1})...{2}%", description, message, progressPercentage.ToString()), progressPercentage)
+				System.Windows.Forms.Application.DoEvents()
+			Catch ex As Exception
+				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+			End Try
+		End Sub
+
+		''' <summary>
+		''' Handle RunWorkerCompleted event.
+		''' </summary>
+		''' <param name="description"></param>
+		''' <param name="worker"></param>
+		''' <param name="e">RunWorkerCompletedEventArgs</param>
+		''' <param name="errorDelegate">Replaces default behavior of displaying the exception message.</param>
+		''' <param name="cancelledDelegate">Replaces default behavior of displaying a cancellation message. Handles the display message only; differs from cancelDelegate, which handles view-level behavior not specific to this worker.</param>
+		''' <param name="completedDelegate">Extends default behavior of refreshing the display; execute prior to Refresh().</param>
+		Public Overridable Sub BackgroundWorker_RunWorkerCompleted(description As [String], worker As BackgroundWorker, e As RunWorkerCompletedEventArgs, Optional errorDelegate As Action(Of Exception) = Nothing, Optional cancelledDelegate As Action = Nothing, Optional completedDelegate As Action = Nothing)
+			Try
+				Dim [error] As Exception = e.[Error]
+				Dim isCancelled As [Boolean] = e.Cancelled
+				Dim result As [Object] = e.Result
+
+				' First, handle the case where an exception was thrown.
+				If [error] IsNot Nothing Then
+					If errorDelegate IsNot Nothing Then
+						errorDelegate([error])
+					Else
+						' Show the error message
+						StopProgressBar(Nothing, [error].Message)
+					End If
+				ElseIf isCancelled Then
+					If cancelledDelegate IsNot Nothing Then
+						cancelledDelegate()
+					Else
+						' Handle the case where the user cancelled the operation.
+
+							'if (View.cancelDelegate != null)
+							'{
+							'    View.cancelDelegate();
+							'}
+						StopProgressBar(Nothing, "Cancelled.")
+					End If
+				Else
+					RaiseEvent completedDelegate()
+					' Operation completed successfully, so display the result.
+
+					'backgroundworker calls New/Save without UI refresh; refresh UI explicitly here.
+					ModelController(Of TModel).Model.Refresh()
+				End If
+
+				' Do post completion operations, like enabling the controls etc.      
+				View.Activate()
+
+				' Inform the user we're done
+				StopProgressBar(description, Nothing)
+			Catch ex As Exception
+				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+
+				StopProgressBar(Nothing, [String].Format("{0}", ex.Message))
+					'''/clear cancellation hook
+					'View.cancelDelegate = null;
+			Finally
+			End Try
+		End Sub
+
+	End Class
+End Namespace

@@ -86,7 +86,7 @@
             this.buttonEditProperties});
             this.toolbar.Location = new System.Drawing.Point(0, 24);
             this.toolbar.Name = "toolbar";
-            this.toolbar.Size = new System.Drawing.Size(632, 25);
+            this.toolbar.Size = new System.Drawing.Size(624, 25);
             this.toolbar.TabIndex = 118;
             this.toolbar.Text = "toolStrip1";
             // 
@@ -153,7 +153,7 @@
             this.menuHelp});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
-            this.menu.Size = new System.Drawing.Size(632, 24);
+            this.menu.Size = new System.Drawing.Size(624, 24);
             this.menu.TabIndex = 117;
             this.menu.Text = "menuStrip1";
             // 
@@ -167,14 +167,14 @@
             this.menuFileSeparator2,
             this.menuFileExit});
             this.menuFile.Name = "menuFile";
-            this.menuFile.Size = new System.Drawing.Size(35, 20);
+            this.menuFile.Size = new System.Drawing.Size(37, 20);
             this.menuFile.Text = "&File";
             // 
             // menuFileNew
             // 
             this.menuFileNew.Image = ((System.Drawing.Image)(resources.GetObject("menuFileNew.Image")));
             this.menuFileNew.Name = "menuFileNew";
-            this.menuFileNew.Size = new System.Drawing.Size(140, 22);
+            this.menuFileNew.Size = new System.Drawing.Size(146, 22);
             this.menuFileNew.Text = "&New";
             this.menuFileNew.Click += new System.EventHandler(this.menuFileNew_Click);
             // 
@@ -183,7 +183,7 @@
             this.menuFileOpen.Image = ((System.Drawing.Image)(resources.GetObject("menuFileOpen.Image")));
             this.menuFileOpen.Name = "menuFileOpen";
             this.menuFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.menuFileOpen.Size = new System.Drawing.Size(140, 22);
+            this.menuFileOpen.Size = new System.Drawing.Size(146, 22);
             this.menuFileOpen.Text = "&Open";
             this.menuFileOpen.Click += new System.EventHandler(this.menuFileOpen_Click);
             // 
@@ -192,26 +192,26 @@
             this.menuFileSave.Image = ((System.Drawing.Image)(resources.GetObject("menuFileSave.Image")));
             this.menuFileSave.Name = "menuFileSave";
             this.menuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.menuFileSave.Size = new System.Drawing.Size(140, 22);
+            this.menuFileSave.Size = new System.Drawing.Size(146, 22);
             this.menuFileSave.Text = "&Save";
             this.menuFileSave.Click += new System.EventHandler(this.menuFileSave_Click);
             // 
             // menuFileSaveAs
             // 
             this.menuFileSaveAs.Name = "menuFileSaveAs";
-            this.menuFileSaveAs.Size = new System.Drawing.Size(140, 22);
+            this.menuFileSaveAs.Size = new System.Drawing.Size(146, 22);
             this.menuFileSaveAs.Text = "Save &As...";
             this.menuFileSaveAs.Click += new System.EventHandler(this.menuFileSaveAs_Click);
             // 
             // menuFileSeparator2
             // 
             this.menuFileSeparator2.Name = "menuFileSeparator2";
-            this.menuFileSeparator2.Size = new System.Drawing.Size(137, 6);
+            this.menuFileSeparator2.Size = new System.Drawing.Size(143, 6);
             // 
             // menuFileExit
             // 
             this.menuFileExit.Name = "menuFileExit";
-            this.menuFileExit.Size = new System.Drawing.Size(140, 22);
+            this.menuFileExit.Size = new System.Drawing.Size(146, 22);
             this.menuFileExit.Text = "E&xit";
             this.menuFileExit.Click += new System.EventHandler(this.menuFileExit_Click);
             // 
@@ -222,7 +222,7 @@
             this.menuEditSeparator0,
             this.menuEditProperties});
             this.menuEdit.Name = "menuEdit";
-            this.menuEdit.Size = new System.Drawing.Size(37, 20);
+            this.menuEdit.Size = new System.Drawing.Size(39, 20);
             this.menuEdit.Text = "&Edit";
             // 
             // menuEditCopyToClipboard
@@ -230,21 +230,21 @@
             this.menuEditCopyToClipboard.Image = ((System.Drawing.Image)(resources.GetObject("menuEditCopyToClipboard.Image")));
             this.menuEditCopyToClipboard.ImageTransparentColor = System.Drawing.Color.Black;
             this.menuEditCopyToClipboard.Name = "menuEditCopyToClipboard";
-            this.menuEditCopyToClipboard.Size = new System.Drawing.Size(160, 22);
+            this.menuEditCopyToClipboard.Size = new System.Drawing.Size(171, 22);
             this.menuEditCopyToClipboard.Text = "&Copy to Clipboard";
             this.menuEditCopyToClipboard.Click += new System.EventHandler(this.menuEditCopyToClipboard_Click);
             // 
             // menuEditSeparator0
             // 
             this.menuEditSeparator0.Name = "menuEditSeparator0";
-            this.menuEditSeparator0.Size = new System.Drawing.Size(157, 6);
+            this.menuEditSeparator0.Size = new System.Drawing.Size(168, 6);
             // 
             // menuEditProperties
             // 
             this.menuEditProperties.Image = ((System.Drawing.Image)(resources.GetObject("menuEditProperties.Image")));
             this.menuEditProperties.ImageTransparentColor = System.Drawing.Color.Black;
             this.menuEditProperties.Name = "menuEditProperties";
-            this.menuEditProperties.Size = new System.Drawing.Size(160, 22);
+            this.menuEditProperties.Size = new System.Drawing.Size(171, 22);
             this.menuEditProperties.Text = "P&roperties...";
             this.menuEditProperties.Click += new System.EventHandler(this.menuEditProperties_Click);
             // 
@@ -253,14 +253,14 @@
             this.menuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuHelpAbout});
             this.menuHelp.Name = "menuHelp";
-            this.menuHelp.Size = new System.Drawing.Size(40, 20);
+            this.menuHelp.Size = new System.Drawing.Size(44, 20);
             this.menuHelp.Text = "&Help";
             this.menuHelp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // menuHelpAbout
             // 
             this.menuHelpAbout.Name = "menuHelpAbout";
-            this.menuHelpAbout.Size = new System.Drawing.Size(171, 22);
+            this.menuHelpAbout.Size = new System.Drawing.Size(181, 22);
             this.menuHelpAbout.Text = "&About MVCForms ...";
             this.menuHelpAbout.Click += new System.EventHandler(this.menuHelpAbout_Click);
             // 
@@ -274,9 +274,9 @@
             this.StatusBarDirtyMessage,
             this.StatusBarNetworkIndicator,
             this.StatusBarCustomMessage});
-            this.statusBar.Location = new System.Drawing.Point(0, 431);
+            this.statusBar.Location = new System.Drawing.Point(0, 420);
             this.statusBar.Name = "statusBar";
-            this.statusBar.Size = new System.Drawing.Size(632, 22);
+            this.statusBar.Size = new System.Drawing.Size(624, 22);
             this.statusBar.TabIndex = 116;
             this.statusBar.Text = "statusStrip1";
             // 
@@ -343,7 +343,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(37, 57);
+            this.label1.Location = new System.Drawing.Point(31, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(31, 13);
             this.label1.TabIndex = 119;
@@ -352,7 +352,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(37, 83);
+            this.label2.Location = new System.Drawing.Point(31, 81);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(34, 13);
             this.label2.TabIndex = 120;
@@ -360,14 +360,14 @@
             // 
             // txtSomeInt
             // 
-            this.txtSomeInt.Location = new System.Drawing.Point(78, 54);
+            this.txtSomeInt.Location = new System.Drawing.Point(72, 52);
             this.txtSomeInt.Name = "txtSomeInt";
             this.txtSomeInt.Size = new System.Drawing.Size(100, 20);
             this.txtSomeInt.TabIndex = 122;
             // 
             // txtSomeString
             // 
-            this.txtSomeString.Location = new System.Drawing.Point(78, 80);
+            this.txtSomeString.Location = new System.Drawing.Point(72, 78);
             this.txtSomeString.Name = "txtSomeString";
             this.txtSomeString.Size = new System.Drawing.Size(100, 20);
             this.txtSomeString.TabIndex = 123;
@@ -376,7 +376,7 @@
             // 
             this.chkSomeBoolean.AutoSize = true;
             this.chkSomeBoolean.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkSomeBoolean.Location = new System.Drawing.Point(27, 106);
+            this.chkSomeBoolean.Location = new System.Drawing.Point(21, 104);
             this.chkSomeBoolean.Name = "chkSomeBoolean";
             this.chkSomeBoolean.Size = new System.Drawing.Size(65, 17);
             this.chkSomeBoolean.TabIndex = 124;
@@ -385,7 +385,7 @@
             // 
             // cmdRun
             // 
-            this.cmdRun.Location = new System.Drawing.Point(387, 52);
+            this.cmdRun.Location = new System.Drawing.Point(381, 50);
             this.cmdRun.Name = "cmdRun";
             this.cmdRun.Size = new System.Drawing.Size(75, 23);
             this.cmdRun.TabIndex = 125;
@@ -397,7 +397,7 @@
             // 
             this.chkSomeOtherBoolean.AutoSize = true;
             this.chkSomeOtherBoolean.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkSomeOtherBoolean.Location = new System.Drawing.Point(202, 106);
+            this.chkSomeOtherBoolean.Location = new System.Drawing.Point(196, 104);
             this.chkSomeOtherBoolean.Name = "chkSomeOtherBoolean";
             this.chkSomeOtherBoolean.Size = new System.Drawing.Size(65, 17);
             this.chkSomeOtherBoolean.TabIndex = 130;
@@ -406,14 +406,14 @@
             // 
             // txtSomeOtherString
             // 
-            this.txtSomeOtherString.Location = new System.Drawing.Point(253, 80);
+            this.txtSomeOtherString.Location = new System.Drawing.Point(247, 78);
             this.txtSomeOtherString.Name = "txtSomeOtherString";
             this.txtSomeOtherString.Size = new System.Drawing.Size(100, 20);
             this.txtSomeOtherString.TabIndex = 129;
             // 
             // txtSomeOtherInt
             // 
-            this.txtSomeOtherInt.Location = new System.Drawing.Point(253, 54);
+            this.txtSomeOtherInt.Location = new System.Drawing.Point(247, 52);
             this.txtSomeOtherInt.Name = "txtSomeOtherInt";
             this.txtSomeOtherInt.Size = new System.Drawing.Size(100, 20);
             this.txtSomeOtherInt.TabIndex = 128;
@@ -421,7 +421,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(212, 83);
+            this.label3.Location = new System.Drawing.Point(206, 81);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(34, 13);
             this.label3.TabIndex = 127;
@@ -430,7 +430,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(212, 57);
+            this.label4.Location = new System.Drawing.Point(206, 55);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(31, 13);
             this.label4.TabIndex = 126;
@@ -440,7 +440,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 453);
+            this.ClientSize = new System.Drawing.Size(624, 442);
             this.Controls.Add(this.chkSomeOtherBoolean);
             this.Controls.Add(this.txtSomeOtherString);
             this.Controls.Add(this.txtSomeOtherInt);

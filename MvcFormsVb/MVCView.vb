@@ -13,11 +13,9 @@ Imports System.Reflection
 Imports System.Text
 Imports System.Windows.Forms
 Imports Ssepan.Application
-Imports Ssepan.Application.WinForms
-Imports Ssepan.Application.WinConsole
 Imports Ssepan.Io
 Imports Ssepan.Utility
-'Imports MvcLibraryVb
+Imports MvcLibraryVb
 Imports My.Resources
 
 'Namespace MvcFormsVb
@@ -287,42 +285,12 @@ Partial Public Class MVCView
 #End Region
 
 #Region "Control Events"
-    Private Sub cmdProcessBatch_Click(sender As Object, e As EventArgs) Handles cmdProcessBatch.Click
-        Try
-            rememberedStateAdd = ViewModel.ButtonEnabled(False, permitEnabledStateAdd, cmdProcessBatch, Nothing, Nothing)
-
-            ViewModel.DoSomething()
-            'ViewModel.CustomMessage = "blah" 'done in DoSomething
-        Catch ex As Exception
-
-        Finally
-            ViewModel.ButtonEnabled(rememberedStateAdd, permitEnabledStateAdd, cmdProcessBatch, Nothing, Nothing)
-        End Try
+    Private Sub cmdRun_Click(sender As Object, e As EventArgs) Handles cmdRun.Click
+        ViewModel.DoSomething()
+        'ViewModel.CustomMessage = "blah";//done in DoSomething
 
     End Sub
 
-    'Private Sub SomeComponentsBindingSource_CurrentChanged(sender As Object, e As EventArgs) Handles SomeComponentsBindingSource.CurrentChanged
-    '    Dim bindingSource As BindingSource = Nothing
-    '    Dim current As ModelComponent = Nothing
-
-    '    Try
-    '        bindingSource = CType(sender, BindingSource)
-    '        If bindingSource.Current IsNot Nothing Then
-    '            current = CType(bindingSource.Current, ModelComponent)
-    '        End If
-    '        If current Is Nothing Then
-    '            current = New ModelComponent()
-    '        End If
-
-    '        ModelController(Of Model).Model.SelectedComponent = current
-
-    '        ModelController(Of Model).Model.Refresh()
-
-    '    Catch ex As Exception
-
-    '    End Try
-
-    'End Sub
 #End Region
 #End Region
 
@@ -331,7 +299,7 @@ Partial Public Class MVCView
     Protected Sub InitViewModel()
         Try
             'subscribe view to model notifications
-            AddHandler ModelController(Of Model).Model.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
+            AddHandler ModelController(Of MVCModel).Model.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
             ''subscribe view to settings notifications
             'SettingsController(Of Settings).DefaultHandler = AddressOf SettingsPropertyChangedEventHandlerDelegate
 
@@ -366,8 +334,6 @@ Partial Public Class MVCView
                 Throw New Exception([String].Format("Unable to load config file parameter(s)."))
             End If
 
-            LoadData()
-
             'DEBUG:filename coming in is being converted/passed as DOS 8.3 format equivalent
             'Load
             If (SettingsController(Of Settings).FilePath Is Nothing) OrElse (SettingsController(Of Settings).Filename = SettingsController(Of Settings).FILE_NEW) Then
@@ -384,7 +350,7 @@ Partial Public Class MVCView
 #End If
 
             'Display dirty state
-            ModelController(Of Model).Model.Refresh()
+            ModelController(Of MVCModel).Model.Refresh()
         Catch ex As Exception
             If ViewModel IsNot Nothing Then
                 ViewModel.ErrorMessage = ex.Message
@@ -420,16 +386,11 @@ Partial Public Class MVCView
         End If
 
         'unsubscribe from model notifications
-        RemoveHandler ModelController(Of Model).Model.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
+        RemoveHandler ModelController(Of MVCModel).Model.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
     End Sub
 
     Protected Sub _Run()
         'MessageBox.Show("running", "MVC", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-    End Sub
-
-    Private Sub LoadData()
-        ModelController(Of Model).Model.LoadData()
-        ModelController(Of Model).Model.Refresh()
     End Sub
 #End Region
 
@@ -442,10 +403,6 @@ Partial Public Class MVCView
             'Form
 
             'Controls
-            'temp
-
-            'BindField(Of Label, Model)(lblKey1, ModelController(Of Model).Model, "Key1")
-            'BindField(Of Label, Model)(lblKey2, ModelController(Of Model).Model, "Key2")
 
         Catch ex As Exception
             Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
@@ -458,10 +415,13 @@ Partial Public Class MVCView
     ''' </summary>
     Private Sub BindModelUi()
         Try
-            SomeComponentsBindingSource.DataSource = ModelController(Of Model).Model.SomeComponents
-            'BindField(Of TextBox, ModelComponent)(txtSomeInt, ModelController(Of Model).Model.SelectedComponent, "SomeOtherInt")
-            'BindField(Of TextBox, ModelComponent)(txtSomeString, ModelController(Of Model).Model.SelectedComponent, "SomeOtherString")
-            'BindField(Of CheckBox, ModelComponent)(chkSomeBoolean, ModelController(Of Model).Model.SelectedComponent, "SomeOtherBoolean", "Checked")
+            BindField(Of TextBox, MVCModel)(txtSomeInt, ModelController(Of MVCModel).Model, "SomeInt")
+            BindField(Of TextBox, MVCModel)(txtSomeString, ModelController(Of MVCModel).Model, "SomeString")
+            BindField(Of CheckBox, MVCModel)(chkSomeBoolean, ModelController(Of MVCModel).Model, "SomeBoolean", "Checked")
+
+            BindField(Of TextBox, MVCModel)(txtSomeOtherInt, ModelController(Of MVCModel).Model, "SomeComponent.SomeOtherInt")
+            BindField(Of TextBox, MVCModel)(txtSomeOtherString, ModelController(Of MVCModel).Model, "SomeComponent.SomeOtherString")
+            BindField(Of CheckBox, MVCModel)(chkSomeOtherBoolean, ModelController(Of MVCModel).Model, "SomeComponent.SomeOtherBoolean", "Checked")
         Catch ex As Exception
             Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
             Throw
@@ -593,8 +553,8 @@ Partial Public Class MVCView
 #End If
             End If
 
-            'ModelController(Of Model).Model.Key1 = ConfigurationManager.AppSettings("Key1").ToString()
-            'ModelController(Of Model).Model.Key2 = ConfigurationManager.AppSettings("Key2").ToString()
+            'ModelController(Of MVCModel).Model.Key1 = ConfigurationManager.AppSettings("Key1").ToString()
+            'ModelController(Of MVCModel).Model.Key2 = ConfigurationManager.AppSettings("Key2").ToString()
 
             returnValue = True
         Catch ex As Exception

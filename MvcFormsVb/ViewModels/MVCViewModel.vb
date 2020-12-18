@@ -10,16 +10,15 @@ Imports System.Text
 Imports System.Windows.Forms
 Imports Ssepan.Utility
 Imports Ssepan.Application
-Imports Ssepan.Application.WinForms
 Imports Ssepan.Io
-'Imports MvcLibraryVb
+Imports MvcLibraryVb
 
 'Namespace MvcFormsVb
 ''' <summary>
 ''' Note: this class can subclass the base without type parameters.
 ''' </summary>
 Public Class MVCViewModel
-    Inherits FormsViewModel(Of Bitmap, Settings, Model, MVCView)
+    Inherits FormsViewModel(Of Bitmap, Settings, MVCModel, MVCView)
 #Region "Declarations"
 
 #Region "Commands"
@@ -84,24 +83,30 @@ Public Class MVCViewModel
 
         Try
             '_actionIconImages["Xxx"],
-            'StartProgressBar("Processing...", Nothing, Nothing, True, 33)
+            StartProgressBar("Doing something...", Nothing, Nothing, True, 33)
 
-            StatusMessage = String.Format("Remark: '{0}' Count: '{1}'", ModelController(Of Model).Model.Remark, ModelController(Of Model).Model.SomeComponents.Count.ToString())
+            ModelController(Of MVCModel).Model.SomeBoolean = Not ModelController(Of MVCModel).Model.SomeBoolean
+            ModelController(Of MVCModel).Model.SomeInt += 1
+            ModelController(Of MVCModel).Model.SomeString = DateTime.Now.ToString()
 
-            Dim batch As Batch = New Batch(Nothing)
-            batch.ShowDialog(View)
+            ModelController(Of MVCModel).Model.SomeComponent.SomeOtherBoolean = Not ModelController(Of MVCModel).Model.SomeComponent.SomeOtherBoolean
+            ModelController(Of MVCModel).Model.SomeComponent.SomeOtherInt += 1
+            ModelController(Of MVCModel).Model.SomeComponent.SomeOtherString = DateTime.Now.ToString()
 
-            StatusMessage = String.Format("Remark: '{0}' Count: '{1}'", ModelController(Of Model).Model.Remark, ModelController(Of Model).Model.SomeComponents.Count.ToString())
+            'SettingsController(Of MVCSettings).Settings.SomeBoolean = true
+            'SettingsController(Of MVCSettings).Settings.SomeInt += 1
+            'SettingsController(Of MVCSettings).Settings.SomeString = "test"
 
-            'UpdateStatusBarMessages(Nothing, Nothing, DateTime.Now.ToLongTimeString())
+            UpdateStatusBarMessages(Nothing, Nothing, DateTime.Now.ToLongTimeString())
         Catch ex As Exception
             Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
 
-            'StopProgressBar(Nothing, [String].Format("{0}", ex.Message))
+            StopProgressBar(Nothing, [String].Format("{0}", ex.Message))
         Finally
-            'StopProgressBar("Did something.")
+            StopProgressBar("Did something.")
         End Try
     End Sub
+
     ' ''' <summary>
     ' ''' model specific, not generic
     ' ''' </summary>

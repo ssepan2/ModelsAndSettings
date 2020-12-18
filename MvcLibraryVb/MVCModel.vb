@@ -26,7 +26,6 @@ Namespace MvcLibraryVb
                 SettingsController(Of MVCSettings).[New]()
             End If
             Debug.Assert(SettingsController(Of MVCSettings).Settings IsNot Nothing, "SettingsController<MVCSettings>.Settings != null")
-            SomeComponents = New BindingList(Of MVCSettingsComponent)()
         End Sub
 
         Public Sub New(someInt__1 As Int32, someBoolean__2 As [Boolean], someString__3 As [String])
@@ -76,50 +75,29 @@ Namespace MvcLibraryVb
 #End Region
 
 #Region "Properties"
+        Private Property _Args As String()
+        Public Property Args As String()
 
-        Private _Key1 As String
-        Public Property Key1 As String
             Get
-                Return _Key1
+                Return _Args
             End Get
-            Set(ByVal value As String)
-                _Key1 = value
-                OnPropertyChanged("Key1")
+            Set(value As String())
+
+                _Args = value
+                OnPropertyChanged("Args")
             End Set
         End Property
 
-        Private _Key2 As String
-        Public Property Key2 As String
+        'TODO:update to match mode in CS project
+        'TODO:update to use SettingsController<MVCSettings>.Settings properties for storage like CS project
+        Public Property SomeComponent As MVCSettingsComponent
             Get
-                Return _Key2
-            End Get
-            Set(ByVal value As String)
-                _Key2 = value
-                OnPropertyChanged("Key2")
-            End Set
-        End Property
-
-        Private _SomeComponents As BindingList(Of MVCSettingsComponent)
-        Public Property SomeComponents As BindingList(Of MVCSettingsComponent)
-            Get
-                Return _SomeComponents
-            End Get
-            Set(ByVal value As BindingList(Of MVCSettingsComponent))
-                _SomeComponents = value
-                OnPropertyChanged("SomeComponents")
-            End Set
-        End Property
-
-
-        Private Property _SelectedComponent As MVCSettingsComponent
-        Public Property SelectedComponent As MVCSettingsComponent
-            Get
-                Return _SelectedComponent
+                Return SettingsController(Of MVCSettings).Settings.SomeComponent
             End Get
             Set(value As MVCSettingsComponent)
-                _SelectedComponent = value
+                SettingsController(Of MVCSettings).Settings.SomeComponent = value
                 'for completeness; will rely on internal notifications
-                OnPropertyChanged("SelectedComponent")
+                OnPropertyChanged("SomeComponent")
             End Set
         End Property
 
@@ -155,78 +133,6 @@ Namespace MvcLibraryVb
 #End Region
 
 #Region "Methods"
-        ''' <summary>
-        ''' add or update
-        ''' </summary>
-        Public Sub DoSomething()
-            'Dim result As MVCSettingsComponent
-            Try
-                With ModelController(Of MVCModel).Model
-                    .SomeComponents.Add _
-                    (
-                        New MVCSettingsComponent _
-                        (
-                        )
-                    )
-
-                    .Refresh()
-
-                End With
-
-            Catch ex As Exception
-                Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
-            End Try
-        End Sub
-        ''' <summary>
-        ''' remove if present
-        ''' </summary>
-        Public Sub DoSomethingElse()
-            Dim result As MVCSettingsComponent
-            Try
-                With ModelController(Of MVCModel).Model
-                    result = .SomeComponents.SingleOrDefault(Function(i As MVCSettingsComponent) i.SomeOtherInt = .SelectedComponent.SomeOtherInt)
-                    If result IsNot Nothing Then
-                        'remove
-                        .SomeComponents.Remove(result)
-                    Else
-                        'do nothing
-                    End If
-
-                    .Refresh()
-
-                End With
-            Catch ex As Exception
-                Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
-            End Try
-        End Sub
-        ''' <summary>
-        ''' model specific, not generic
-        ''' </summary>
-        Public Sub DoSomethingOnce()
-            Try
-                With ModelController(Of MVCModel).Model
-                    .SelectedComponent.SomeOtherBoolean = Not .SelectedComponent.SomeOtherBoolean
-                    .SelectedComponent.SomeOtherInt += 1
-                    .SelectedComponent.SomeOtherString = DateTime.Now.ToString()
-                    .SomeComponents.Add _
-                    (
-                        New MVCSettingsComponent _
-                        (
-                            .SelectedComponent.SomeOtherInt,
-                            .SelectedComponent.SomeOtherBoolean,
-                            .SelectedComponent.SomeOtherString
-                        )
-                    )
-
-                    .Key2 = "value2" + DateTime.Now.ToString()
-
-                    .Refresh()
-
-                End With
-            Catch ex As Exception
-                Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
-            End Try
-        End Sub
 #End Region
     End Class
 End Namespace

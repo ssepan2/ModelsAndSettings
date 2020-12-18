@@ -10,8 +10,6 @@ Imports System.Text
 Imports System.Windows.Forms
 Imports Ssepan.Utility
 Imports Ssepan.Application
-Imports Ssepan.Application.WinConsole
-Imports Ssepan.Application.WinForms
 Imports Ssepan.Io
 Imports MvcLibraryVb
 
@@ -72,9 +70,9 @@ Namespace MvcConsoleVb
                 ModelController(Of MVCModel).Model.SomeInt += 1
                 ModelController(Of MVCModel).Model.SomeString = DateTime.Now.ToString()
 
-                ModelController(Of MVCModel).Model.SelectedComponent.SomeOtherBoolean = Not ModelController(Of MVCModel).Model.SelectedComponent.SomeOtherBoolean
-                ModelController(Of MVCModel).Model.SelectedComponent.SomeOtherInt += 1
-                ModelController(Of MVCModel).Model.SelectedComponent.SomeOtherString = DateTime.Now.ToString()
+                ModelController(Of MVCModel).Model.SomeComponent.SomeOtherBoolean = Not ModelController(Of MVCModel).Model.SomeComponent.SomeOtherBoolean
+                ModelController(Of MVCModel).Model.SomeComponent.SomeOtherInt += 1
+                ModelController(Of MVCModel).Model.SomeComponent.SomeOtherString = DateTime.Now.ToString()
 
                 'SettingsController<MVCSettings>.Settings.SomeBoolean = true;
                 'SettingsController<MVCSettings>.Settings.SomeInt += 1;

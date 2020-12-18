@@ -111,8 +111,8 @@ NotInheritable Class Program
         '    SettingsController(Of Settings).[New]()
         'End If
         'Model properties rely on Settings, so don't call Refresh before this is run.
-        If ModelController(Of Model).Model Is Nothing Then
-            ModelController(Of Model).[New]()
+        If ModelController(Of MVCModel).Model Is Nothing Then
+            ModelController(Of MVCModel).[New]()
         End If
     End Sub
 #End Region

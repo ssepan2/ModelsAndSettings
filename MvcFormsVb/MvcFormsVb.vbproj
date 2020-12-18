@@ -75,14 +75,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Batch.Designer.vb">
-      <DependentUpon>Batch.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Batch.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Model.vb" />
-    <Compile Include="ModelComponent.vb" />
     <Compile Include="MVCView.Designer.vb">
       <DependentUpon>MVCView.vb</DependentUpon>
     </Compile>
@@ -107,11 +99,7 @@
     </Compile>
     <Compile Include="Program.vb" />
     <Compile Include="Settings.vb" />
-    <Compile Include="ViewModels\BatchViewModel.vb" />
     <Compile Include="ViewModels\MVCViewModel.vb" />
-    <EmbeddedResource Include="Batch.resx">
-      <DependentUpon>Batch.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MVCView.resx">
       <DependentUpon>MVCView.vb</DependentUpon>
     </EmbeddedResource>

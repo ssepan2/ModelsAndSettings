@@ -553,9 +553,6 @@ Partial Public Class MVCView
 #End If
             End If
 
-            'ModelController(Of MVCModel).Model.Key1 = ConfigurationManager.AppSettings("Key1").ToString()
-            'ModelController(Of MVCModel).Model.Key2 = ConfigurationManager.AppSettings("Key2").ToString()
-
             returnValue = True
         Catch ex As Exception
             'throw;

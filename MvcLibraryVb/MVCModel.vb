@@ -41,7 +41,7 @@ Namespace MvcLibraryVb
         ''' <summary>
         ''' Compare property values of two specified Model objects.
         ''' </summary>
-        ''' <param name="anotherSettings"></param>
+        ''' <param name="other"></param>
         ''' <returns></returns>
         Public Overrides Function Equals(other As IModel) As [Boolean]
             Dim returnValue As [Boolean] = Nothing
@@ -88,8 +88,6 @@ Namespace MvcLibraryVb
             End Set
         End Property
 
-        'TODO:update to match mode in CS project
-        'TODO:update to use SettingsController<MVCSettings>.Settings properties for storage like CS project
         Public Property SomeComponent As MVCSettingsComponent
             Get
                 Return SettingsController(Of MVCSettings).Settings.SomeComponent

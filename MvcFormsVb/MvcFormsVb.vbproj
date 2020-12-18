@@ -6,13 +6,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8F2AD434-25E2-4D83-BED0-6A561FA8728C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Sub Main</StartupObject>
+    <StartupObject>Program</StartupObject>
     <RootNamespace>
     </RootNamespace>
     <AssemblyName>MvcFormsVb</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsFormsWithCustomSubMain</MyType>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -24,6 +24,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>MvcFormsVb.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,6 +35,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>MvcFormsVb.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -91,6 +93,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -148,9 +151,13 @@
       <Project>{9EFE2EC6-F48E-4E4E-927F-068B54210E09}</Project>
       <Name>Ssepan.Io</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Ssepan.Utility\Ssepan.Utility.csproj">
-      <Project>{9C11D8DD-E335-4FE3-AAE6-5C3B17732890}</Project>
+    <ProjectReference Include="..\..\Ssepan.Utility\Ssepan.Utility\Ssepan.Utility.csproj">
+      <Project>{4d407426-e4d4-46af-8a5e-bb9422e7b44b}</Project>
       <Name>Ssepan.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MvcLibraryVb\MvcLibraryVb.vbproj">
+      <Project>{39f41cb4-845c-485f-add7-064822a14403}</Project>
+      <Name>MvcLibraryVb</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

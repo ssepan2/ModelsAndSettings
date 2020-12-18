@@ -10,8 +10,6 @@ using System.Text;
 using System.Windows.Forms;
 using Ssepan.Utility;
 using Ssepan.Application;
-using Ssepan.Application.WinConsole;
-using Ssepan.Application.WinForms;
 using Ssepan.Io;
 using MVCLibrary;
 

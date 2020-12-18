@@ -5,8 +5,6 @@ using System.Reflection;
 using System.Windows.Forms;
 using MVCLibrary;
 using Ssepan.Application;
-using Ssepan.Application.WinConsole;
-using Ssepan.Application.Patterns;
 using Ssepan.Utility;
 
 namespace MVCForms
@@ -100,13 +98,10 @@ namespace MVCForms
                 DoSwitches(args);
 
                 InitModelAndSettings();
-                ModelController<MVCModel>.Model.Args = args;
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                //Application.Run(new MVCView(/*args*/));
-                SingleInstanceController<MVCView> controller = new SingleInstanceController<MVCView>();
-                controller.Run(args); //Note: Rather than passing args to the form, they are set in the model above.--SJS
+                Application.Run(new MVCView(/*args*/));
 
                 //return success code
                 returnValue = 0;

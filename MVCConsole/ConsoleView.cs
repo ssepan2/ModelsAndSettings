@@ -12,7 +12,6 @@ using System.Text;
 //using System.Threading.Tasks;
 using System.Windows.Forms;
 using Ssepan.Application;
-using Ssepan.Application.WinConsole;
 using Ssepan.Io;
 using Ssepan.Utility;
 using MVCLibrary;

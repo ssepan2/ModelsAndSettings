@@ -93,8 +93,8 @@ Namespace MvcLibraryVb
         ''' </summary>
         ''' <param name="other"></param>
         ''' <returns></returns>
-        'ISettings
         Public Overrides Function Equals(other As ISettingsComponent) As [Boolean]
+            'ISettings
             Dim returnValue As [Boolean] = Nothing
             Dim otherSettings As MVCSettings = Nothing
 
@@ -216,8 +216,8 @@ Namespace MvcLibraryVb
         ''' </summary>
         ''' <param name="destination"></param>
         ''' <param name="sync"></param>
-        'ISettings
         Public Overrides Sub CopyTo(destination As ISettingsComponent, sync As [Boolean])
+            'ISettings
             Dim destinationSettings As MVCSettings = Nothing
 
             Try
@@ -265,7 +265,6 @@ Namespace MvcLibraryVb
         ''' Update child components (used as properties) to use the passed handler.
         ''' Note: for every child component, copy to child and then let child copy to its children
         ''' </summary>
-        ''' <param name="defaultHandler"></param>
         Public Overrides Sub UpdateHandlers()
             'copy handlers from this object to child conponent
             ObjectHelper.CopyEvents(Of SettingsBase, SettingsComponentBase)(Me, Me.SomeComponent, "PropertyChanged")

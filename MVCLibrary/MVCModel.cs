@@ -30,8 +30,9 @@ namespace MVCLibrary
                 SettingsController<MVCSettings>.New();
             }
             Debug.Assert(SettingsController<MVCSettings>.Settings != null, "SettingsController<MVCSettings>.Settings != null");
+            //TODO:SomeComponents = new BindingList<MVCSettingsComponent>();
         }
-        
+
         public MVCModel
         (
             Int32 someInt,

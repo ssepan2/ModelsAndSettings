@@ -10,7 +10,6 @@ using System.Text;
 using System.Windows.Forms;
 using MVCLibrary;
 using Ssepan.Application;
-using Ssepan.Application.WinConsole;
 using Ssepan.Utility;
     
 namespace MVCConsole

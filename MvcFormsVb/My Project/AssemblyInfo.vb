@@ -1,7 +1,7 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-Imports Ssepan.Application.WinForms
+Imports Ssepan.Application
 
 ' General Information about an assembly is controlled through the following 
 ' set of attributes. Change these attribute values to modify the information
@@ -32,7 +32,7 @@ Imports Ssepan.Application.WinForms
 '
 ' You can specify all the values or you can default the Build and Revision Numbers 
 ' by using the '*' as shown below:
-<Assembly: AssemblyVersion("0.2.*")>
+<Assembly: AssemblyVersion("0.3")>
 
 
 #Region " Helper class to get information for the About form. "

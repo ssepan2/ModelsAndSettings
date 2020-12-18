@@ -18,7 +18,9 @@ Enhancements:
 ~Added 'SettingsPropertyChangedEventHandlerDelegate' to new static property 'DefaultHandler' in SettingsController. 
 ~Modified OnPropertyChanged in SettingsBase to fire OnChanged for 'Dirty' when property name is not 'Dirty'.
 ~Fixed bug in GetPathForSave in Ssepan.Io where SaveAs did not display dialog for '(new)'.
-~Modified Settings in Ssepan.Application to implement part of it interfaces as a new interface ISettingsComponent, and implemented an example as a property SomeComponent which copies the PropertyChanged handlers from settings and implements its own Equals, Dirty, CopyTo, Sync, etc, so Settings does not need to know the details.
+~Modified Settings in Ssepan.Application to implement part of its interfaces as a new interface ISettingsComponent, and implemented an example as a property SomeComponent which copies the PropertyChanged handlers from settings and implements its own Equals, Dirty, CopyTo, Sync, etc, so Settings does not need to know the details.
+~Updated to Framework 4.8
+~Updated Ssepan.* to 2.7
 
 0.1: (RELEASED)
 ~Refactored to use new MVVM / MVC hybrid.

@@ -10,7 +10,6 @@ Imports System.Text
 Imports System.Windows.Forms
 Imports MvcLibraryVb
 Imports Ssepan.Application
-Imports Ssepan.Application.WinConsole
 Imports Ssepan.Utility
 
 Namespace MvcConsoleVb

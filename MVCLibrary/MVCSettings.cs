@@ -333,7 +333,6 @@ namespace MVCLibrary
         /// Update child components (used as properties) to use the passed handler.
         /// Note: for every child component, copy to child and then let child copy to its children
         /// </summary>
-        /// <param name="defaultHandler"></param>
         public override void UpdateHandlers() 
         {
             //copy handlers from this object to child conponent

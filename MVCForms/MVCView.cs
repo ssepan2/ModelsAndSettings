@@ -120,7 +120,8 @@ namespace MVCForms
                 else if (e.PropertyName == "StatusMessage")
                 {
                     //replace default action by setting control property
-                    StatusBarStatusMessage.Text = ViewModel.StatusMessage;
+                    //skip status message updates after Viewmodel is null
+                    StatusBarStatusMessage.Text = (ViewModel != null ? ViewModel.StatusMessage : (String)null);
                     //e = new PropertyChangedEventArgs(e.PropertyName + ".handled");
 
                     //ConsoleApplication.defaultOutputDelegate(String.Format("{0}", StatusMessage));
@@ -128,7 +129,8 @@ namespace MVCForms
                 else if (e.PropertyName == "ErrorMessage")
                 {
                     //replace default action by setting control property
-                    StatusBarErrorMessage.Text = ViewModel.ErrorMessage;
+                    //skip status message updates after Viewmodel is null
+                    StatusBarErrorMessage.Text = (ViewModel != null ? ViewModel.ErrorMessage : (String)null);
                     //e = new PropertyChangedEventArgs(e.PropertyName + ".handled");
 
                     //ConsoleApplication.defaultOutputDelegate(String.Format("{0}", ErrorMessage));

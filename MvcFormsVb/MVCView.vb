@@ -102,39 +102,45 @@ Partial Public Class MVCView
                 'e = new PropertyChangedEventArgs(e.PropertyName + ".handled");
 
                 'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", StatusMessage));
-                StatusBarStatusMessage.Text = ViewModel.StatusMessage
+                'skip status message updates after Viewmodel Is null
+                If (ViewModel IsNot Nothing) Then
+                    StatusBarStatusMessage.Text = ViewModel.StatusMessage
+                End If
             ElseIf e.PropertyName = "ErrorMessage" Then
                 'replace default action by setting control property
                 'e = new PropertyChangedEventArgs(e.PropertyName + ".handled");
 
                 'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", ErrorMessage));
-                StatusBarErrorMessage.Text = ViewModel.ErrorMessage
+                'skip status message updates after Viewmodel Is null
+                If (ViewModel IsNot Nothing) Then
+                    StatusBarErrorMessage.Text = ViewModel.ErrorMessage
+                End If
             ElseIf e.PropertyName = "CustomMessage" Then
 
                 'replace default action by setting control property
                 StatusBarCustomMessage.Text = ViewModel.CustomMessage
-                'e = new PropertyChangedEventArgs(e.PropertyName + ".handled")
+                    'e = new PropertyChangedEventArgs(e.PropertyName + ".handled")
 
-                'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", ErrorMessage))
+                    'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", ErrorMessage))
 
-            ElseIf e.PropertyName = "ErrorMessageToolTipText" Then
-                StatusBarErrorMessage.ToolTipText = ViewModel.ErrorMessageToolTipText
-            ElseIf e.PropertyName = "ProgressBarValue" Then
-                StatusBarProgressBar.Value = ViewModel.ProgressBarValue
-            ElseIf e.PropertyName = "ProgressBarMaximum" Then
-                StatusBarProgressBar.Maximum = ViewModel.ProgressBarMaximum
-            ElseIf e.PropertyName = "ProgressBarMinimum" Then
-                StatusBarProgressBar.Minimum = ViewModel.ProgressBarMinimum
-            ElseIf e.PropertyName = "ProgressBarStep" Then
-                StatusBarProgressBar.[Step] = ViewModel.ProgressBarStep
-            ElseIf e.PropertyName = "ProgressBarIsMarquee" Then
-                StatusBarProgressBar.Style = (If(ViewModel.ProgressBarIsMarquee, ProgressBarStyle.Marquee, ProgressBarStyle.Blocks))
-            ElseIf e.PropertyName = "ProgressBarIsVisible" Then
-                StatusBarProgressBar.Visible = (ViewModel.ProgressBarIsVisible)
-            ElseIf e.PropertyName = "DirtyIconIsVisible" Then
-                StatusBarDirtyMessage.Visible = (ViewModel.DirtyIconIsVisible)
-            ElseIf e.PropertyName = "DirtyIconImage" Then
-                StatusBarDirtyMessage.Image = ViewModel.DirtyIconImage
+                ElseIf e.PropertyName = "ErrorMessageToolTipText" Then
+                    StatusBarErrorMessage.ToolTipText = ViewModel.ErrorMessageToolTipText
+                ElseIf e.PropertyName = "ProgressBarValue" Then
+                    StatusBarProgressBar.Value = ViewModel.ProgressBarValue
+                ElseIf e.PropertyName = "ProgressBarMaximum" Then
+                    StatusBarProgressBar.Maximum = ViewModel.ProgressBarMaximum
+                ElseIf e.PropertyName = "ProgressBarMinimum" Then
+                    StatusBarProgressBar.Minimum = ViewModel.ProgressBarMinimum
+                ElseIf e.PropertyName = "ProgressBarStep" Then
+                    StatusBarProgressBar.[Step] = ViewModel.ProgressBarStep
+                ElseIf e.PropertyName = "ProgressBarIsMarquee" Then
+                    StatusBarProgressBar.Style = (If(ViewModel.ProgressBarIsMarquee, ProgressBarStyle.Marquee, ProgressBarStyle.Blocks))
+                ElseIf e.PropertyName = "ProgressBarIsVisible" Then
+                    StatusBarProgressBar.Visible = (ViewModel.ProgressBarIsVisible)
+                ElseIf e.PropertyName = "DirtyIconIsVisible" Then
+                    StatusBarDirtyMessage.Visible = (ViewModel.DirtyIconIsVisible)
+                ElseIf e.PropertyName = "DirtyIconImage" Then
+                    StatusBarDirtyMessage.Image = ViewModel.DirtyIconImage
                 'use if properties cannot be databound
                 'else if (e.PropertyName == "SomeInt")
                 '{

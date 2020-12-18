@@ -172,7 +172,7 @@ Partial Public Class MVCView
         Try
             If e.PropertyName = "Dirty" Then
                 'apply settings that don't have databindings
-                ViewModel.DirtyIconIsVisible = (SettingsController(Of Settings).Settings.Dirty)
+                ViewModel.DirtyIconIsVisible = (SettingsController(Of MVCSettings).Settings.Dirty)
             End If
         Catch ex As Exception
             Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
@@ -307,9 +307,9 @@ Partial Public Class MVCView
             'subscribe view to model notifications
             AddHandler ModelController(Of MVCModel).Model.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
             ''subscribe view to settings notifications
-            'SettingsController(Of Settings).DefaultHandler = AddressOf SettingsPropertyChangedEventHandlerDelegate
+            'SettingsController(Of MVCSettings).DefaultHandler = AddressOf SettingsPropertyChangedEventHandlerDelegate
 
-            Dim settingsFileDialogInfo As New FileDialogInfo(SettingsController(Of Settings).FILE_NEW, Nothing, Nothing, SettingsController(Of Settings).Settings.FileTypeExtension, SettingsController(Of Settings).Settings.FileTypeDescription, SettingsController(Of Settings).Settings.FileTypeName, _
+            Dim settingsFileDialogInfo As New FileDialogInfo(SettingsController(Of MVCSettings).FILE_NEW, Nothing, Nothing, SettingsController(Of MVCSettings).Settings.FileTypeExtension, SettingsController(Of MVCSettings).Settings.FileTypeDescription, SettingsController(Of MVCSettings).Settings.FileTypeName,
                 New [String]() {"XML files (*.xml)|*.xml", "All files (*.*)|*.*"}, False, Nothing, Environment.GetFolderPath(Environment.SpecialFolder.Personal).WithTrailingSeparator())
 
             'set dialog caption
@@ -317,19 +317,19 @@ Partial Public Class MVCView
 
             'class to handle standard behaviors
             ViewModelController(Of Bitmap, MVCViewModel).[New] _
-            ( _
-                ViewName, New MVCViewModel(AddressOf Me.ModelPropertyChangedEventHandlerDelegate, New Dictionary(Of [String], Bitmap)() From _
-                { _
-                    {"New", Resources._New}, _
-                    {"Save", Resources.Save}, _
-                    {"Open", Resources.Open}, _
-                    {"Print", Resources.Print}, _
-                    {"Copy", Resources.Copy}, _
-                    {"Properties", Resources.Properties} _
-                }, _
-                settingsFileDialogInfo, _
+            (
+                ViewName, New MVCViewModel(AddressOf Me.ModelPropertyChangedEventHandlerDelegate, New Dictionary(Of [String], Bitmap)() From
+                {
+                    {"New", Resources._New},
+                    {"Save", Resources.Save},
+                    {"Open", Resources.Open},
+                    {"Print", Resources.Print},
+                    {"Copy", Resources.Copy},
+                    {"Properties", Resources.Properties}
+                },
+                settingsFileDialogInfo,
                 Me
-                ) _
+                )
             )
             ViewModel = ViewModelController(Of Bitmap, MVCViewModel).ViewModel(ViewName)
 
@@ -342,7 +342,7 @@ Partial Public Class MVCView
 
             'DEBUG:filename coming in is being converted/passed as DOS 8.3 format equivalent
             'Load
-            If (SettingsController(Of Settings).FilePath Is Nothing) OrElse (SettingsController(Of Settings).Filename = SettingsController(Of Settings).FILE_NEW) Then
+            If (SettingsController(Of MVCSettings).FilePath Is Nothing) OrElse (SettingsController(Of MVCSettings).Filename = SettingsController(Of MVCSettings).FILE_NEW) Then
                 'NEW
                 ViewModel.FileNew()
             Else
@@ -369,7 +369,7 @@ Partial Public Class MVCView
         'save user and application settings 
         My.MySettings.Default.Save()
 
-        If SettingsController(Of Settings).Settings.Dirty Then
+        If SettingsController(Of MVCSettings).Settings.Dirty Then
             'prompt before saving
             Dim dialogResult__1 As DialogResult = MessageBox.Show("Save changes?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
             Select Case dialogResult__1
@@ -434,7 +434,7 @@ Partial Public Class MVCView
         End Try
     End Sub
 
-    Private Sub BindField(Of TControl As Control, TModel)(fieldControl As TControl, model As TModel, modelPropertyName As [String], Optional controlPropertyName As [String] = "Text", Optional formattingEnabled As [Boolean] = False, Optional dataSourceUpdateMode__1 As DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged, _
+    Private Sub BindField(Of TControl As Control, TModel)(fieldControl As TControl, model As TModel, modelPropertyName As [String], Optional controlPropertyName As [String] = "Text", Optional formattingEnabled As [Boolean] = False, Optional dataSourceUpdateMode__1 As DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged,
         Optional reBind As [Boolean] = True)
         Try
             fieldControl.DataBindings.Clear()
@@ -459,10 +459,10 @@ Partial Public Class MVCView
             'apply settings that shouldn't use databindings
 
             'apply settings that can't use databindings
-            Text = Path.GetFileName(SettingsController(Of Settings).Filename) & " - " & ViewName
+            Text = Path.GetFileName(SettingsController(Of MVCSettings).Filename) & " - " & ViewName
 
             'apply settings that don't have databindings
-            ViewModel.DirtyIconIsVisible = (SettingsController(Of Settings).Settings.Dirty)
+            ViewModel.DirtyIconIsVisible = (SettingsController(Of MVCSettings).Settings.Dirty)
 
             _ValueChangedProgrammatically = False
         Catch ex As Exception
@@ -533,10 +533,10 @@ Partial Public Class MVCView
 #End If
 
         Try
-            If (Program.Filename IsNot Nothing) AndAlso (Program.Filename <> SettingsController(Of Settings).FILE_NEW) Then
+            If (Program.Filename IsNot Nothing) AndAlso (Program.Filename <> SettingsController(Of MVCSettings).FILE_NEW) Then
                 'got filename from command line
                 'DEBUG:filename coming in is being converted/passed as DOS 8.3 format equivalent
-                If Not RegistryAccess.ValidateFileAssociation(Application.ExecutablePath, "." & SettingsController(Of Settings).Settings.FileTypeExtension) Then
+                If Not RegistryAccess.ValidateFileAssociation(Application.ExecutablePath, "." & SettingsController(Of MVCSettings).Settings.FileTypeExtension) Then
                     Throw New ApplicationException([String].Format("Settings filename not associated: '{0}'." & vbLf & "Check filename on command line.", Program.Filename))
                     'it passed; use value from command line
                 End If
@@ -546,15 +546,15 @@ Partial Public Class MVCView
 					If Not Configuration.ReadString("SettingsFilename", _settingsFilename) Then
 						Throw New ApplicationException([String].Format("Unable to load SettingsFilename: {0}", "SettingsFilename"))
 					End If
-					If (_settingsFilename Is Nothing) OrElse (_settingsFilename = SettingsController(Of Settings).FILE_NEW) Then
+					If (_settingsFilename Is Nothing) OrElse (_settingsFilename = SettingsController(Of MVCSettings).FILE_NEW) Then
 						Throw New ApplicationException([String].Format("Settings filename not set: '{0}'." & vbLf & "Check SettingsFilename in app config file.", _settingsFilename))
 					End If
 					'use with the supplied path
-					SettingsController(Of Settings).Filename = _settingsFilename
+					SettingsController(Of MVCSettings).Filename = _settingsFilename
 
 					If Path.GetDirectoryName(_settingsFilename) = [String].Empty Then
 						'supply default path if missing
-						SettingsController(Of Settings).Pathname = Environment.GetFolderPath(Environment.SpecialFolder.Personal).WithTrailingSeparator()
+						SettingsController(Of MVCSettings).Pathname = Environment.GetFolderPath(Environment.SpecialFolder.Personal).WithTrailingSeparator()
                     End If
 #End If
             End If

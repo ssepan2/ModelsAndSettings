@@ -98,7 +98,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Program.vb" />
-    <Compile Include="Settings.vb" />
     <Compile Include="ViewModels\MVCViewModel.vb" />
     <EmbeddedResource Include="MVCView.resx">
       <DependentUpon>MVCView.vb</DependentUpon>

@@ -18,7 +18,7 @@ Imports MvcLibraryVb
 ''' Note: this class can subclass the base without type parameters.
 ''' </summary>
 Public Class MVCViewModel
-    Inherits FormsViewModel(Of Bitmap, Settings, MVCModel, MVCView)
+    Inherits FormsViewModel(Of Bitmap, MVCSettings, MVCModel, MVCView)
 #Region "Declarations"
 
 #Region "Commands"

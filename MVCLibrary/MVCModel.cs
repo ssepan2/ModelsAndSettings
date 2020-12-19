@@ -117,6 +117,8 @@ namespace MVCLibrary
             set 
             {
                 SettingsController<MVCSettings>.Settings.SomeComponent = value;
+                //TODO:update handlers?
+                UpdateHandlers();
                 OnPropertyChanged("SomeComponent");//for completeness; will rely on internal notifications
             }
         }
@@ -127,7 +129,7 @@ namespace MVCLibrary
             set 
             { 
                 SettingsController<MVCSettings>.Settings.SomeInt = value;
-                OnPropertyChanged("SomeOtherInt");
+                OnPropertyChanged("SomeInt");
             }
         }
 
@@ -147,12 +149,25 @@ namespace MVCLibrary
             set 
             { 
                 SettingsController<MVCSettings>.Settings.SomeString = value;
-                OnPropertyChanged("SomeOtherString");
+                OnPropertyChanged("SomeString");
             }
         }
         #endregion Properties
 
         #region Methods
+
+        /// <summary>
+        /// Update child components (used as properties) to use the passed handler.
+        /// Note: for every child component, copy to child and then let child copy to its children
+        /// </summary>
+        public override void UpdateHandlers()
+        {
+            //copy handlers from this object to child conponent
+            ObjectHelper.CopyEvents<ModelBase, SettingsComponentBase>(this, this.SomeComponent, "PropertyChanged");
+
+            //allow child component to copy handlers from itself to it's child conponent (if child component does not implement, this still calls empty method in base).
+            this.SomeComponent.UpdateHandlers();
+        }
         #endregion Methods
     }
 }

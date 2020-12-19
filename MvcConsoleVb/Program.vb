@@ -126,6 +126,7 @@ Namespace MvcConsoleVb
 			If ModelController(Of MVCModel).Model Is Nothing Then
 				ModelController(Of MVCModel).[New]()
 			End If
+			ModelController(Of MVCModel).Model.UpdateHandlers()
 		End Sub
 		#End Region
 

@@ -113,15 +113,25 @@ Namespace MvcConsoleVb
 					ConsoleApplication.defaultOutputDelegate([String].Format("{0}", ViewModel.StatusMessage))
 					e = New PropertyChangedEventArgs(e.PropertyName & ".handled")
 				ElseIf e.PropertyName = "ErrorMessage" Then
-                    ConsoleApplication.defaultOutputDelegate([String].Format("{0}", ViewModel.ErrorMessage))
+					ConsoleApplication.defaultOutputDelegate([String].Format("{0}", ViewModel.ErrorMessage))
 					e = New PropertyChangedEventArgs(e.PropertyName & ".handled")
-				'Note: not databound, so handle event
+					'Note: not databound, so handle event
 				ElseIf e.PropertyName = "SomeInt" Then
 					ConsoleApplication.defaultOutputDelegate([String].Format("SomeInt: {0}", ModelController(Of MVCModel).Model.SomeInt))
 				ElseIf e.PropertyName = "SomeBoolean" Then
 					ConsoleApplication.defaultOutputDelegate([String].Format("SomeBoolean: {0}", ModelController(Of MVCModel).Model.SomeBoolean))
 				ElseIf e.PropertyName = "SomeString" Then
 					ConsoleApplication.defaultOutputDelegate([String].Format("SomeString: {0}", ModelController(Of MVCModel).Model.SomeString))
+				ElseIf (e.PropertyName = "SomeOtherInt") Then
+					ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherInt: {0}", ModelController(Of MVCModel).Model.SomeComponent.SomeOtherInt))
+				ElseIf (e.PropertyName = "SomeOtherBoolean") Then
+					ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherBoolean: {0}", ModelController(Of MVCModel).Model.SomeComponent.SomeOtherBoolean))
+				ElseIf (e.PropertyName = "SomeOtherString") Then
+					ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherString: {0}", ModelController(Of MVCModel).Model.SomeComponent.SomeOtherString))
+				ElseIf (e.PropertyName = "SomeComponent") Then
+					ConsoleApplication.defaultOutputDelegate(String.Format("SomeComponent: {0},{1},{2}", ModelController(Of MVCModel).Model.SomeComponent.SomeOtherInt, ModelController(Of MVCModel).Model.SomeComponent.SomeOtherBoolean, ModelController(Of MVCModel).Model.SomeComponent.SomeOtherString))
+				Else
+					'ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName))
 				End If
 			Catch ex As Exception
 				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])

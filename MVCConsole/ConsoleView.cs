@@ -159,6 +159,26 @@ namespace MVCConsole
                 {
                     ConsoleApplication.defaultOutputDelegate(String.Format("SomeString: {0}", ModelController<MVCModel>.Model.SomeString));
                 }
+                else if (e.PropertyName == "SomeOtherInt")
+                {
+                    ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherInt: {0}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherInt));
+                }
+                else if (e.PropertyName == "SomeOtherBoolean")
+                {
+                    ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherBoolean: {0}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherBoolean));
+                }
+                else if (e.PropertyName == "SomeOtherString")
+                {
+                    ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherString: {0}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherString));
+                }
+                else if (e.PropertyName == "SomeComponent")
+                {
+                    ConsoleApplication.defaultOutputDelegate(String.Format("SomeComponent: {0},{1},{2}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherInt, ModelController<MVCModel>.Model.SomeComponent.SomeOtherBoolean, ModelController<MVCModel>.Model.SomeComponent.SomeOtherString));
+                }
+                else 
+                { 
+                     //ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName));
+                }
             }
             catch (Exception ex)
             {
@@ -313,6 +333,8 @@ namespace MVCConsole
             {
                 ViewModel.StatusMessage = String.Format("{0} starting...", ViewName);
 
+                //init settigns
+                
                 ViewModel.StatusMessage = String.Format("{0} started.", ViewName);
 
                 _Run();

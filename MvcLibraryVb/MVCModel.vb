@@ -94,6 +94,8 @@ Namespace MvcLibraryVb
             End Get
             Set(value As MVCSettingsComponent)
                 SettingsController(Of MVCSettings).Settings.SomeComponent = value
+                'TODO:update handlers?
+                UpdateHandlers()
                 'for completeness; will rely on internal notifications
                 OnPropertyChanged("SomeComponent")
             End Set
@@ -105,7 +107,7 @@ Namespace MvcLibraryVb
             End Get
             Set(value As Int32)
                 SettingsController(Of MVCSettings).Settings.SomeInt = value
-                OnPropertyChanged("SomeOtherInt")
+                OnPropertyChanged("SomeInt")
             End Set
         End Property
 
@@ -125,12 +127,24 @@ Namespace MvcLibraryVb
             End Get
             Set(value As [String])
                 SettingsController(Of MVCSettings).Settings.SomeString = value
-                OnPropertyChanged("SomeOtherString")
+                OnPropertyChanged("SomeString")
             End Set
         End Property
 #End Region
 
 #Region "Methods"
+
+        ''' <summary>
+        ''' Update child components (used as properties) to use the passed handler.
+        ''' Note: for every child component, copy to child and then let child copy to its children
+        ''' </summary>
+        Public Overrides Sub UpdateHandlers()
+            'copy handlers from this object to child conponent
+            ObjectHelper.CopyEvents(Of ModelBase, SettingsComponentBase)(Me, Me.SomeComponent, "PropertyChanged")
+
+            'allow child component to copy handlers from itself to it's child conponent (if child component does not implement, this still calls empty method in base).
+            Me.SomeComponent.UpdateHandlers()
+        End Sub
 #End Region
     End Class
 End Namespace

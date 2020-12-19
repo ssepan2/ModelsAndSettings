@@ -117,8 +117,8 @@ namespace MVCConsole
             {
                 #if debug
                 Console.Write("Press ENTER to continue> ");
-                Console.ReadLine();
                 #endif
+                Console.ReadLine();
             }
             return returnValue;
         }
@@ -157,6 +157,7 @@ namespace MVCConsole
             {
                 ModelController<MVCModel>.New();
             }
+            ModelController<MVCModel>.Model.UpdateHandlers();
         }
         #endregion ConsoleAppBase
 

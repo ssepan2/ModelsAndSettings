@@ -71,6 +71,7 @@ namespace MVCConsole
         {
             StatusMessage = String.Empty;
             ErrorMessage = String.Empty;
+            MVCModel m = ModelController<MVCModel>.Model;
 
             try
             {
@@ -82,6 +83,8 @@ namespace MVCConsole
                     true,
                     33
                 );
+
+                //ConsoleApplication.defaultOutputDelegate(String.Format("SomeBoolean: {0}", m.SomeBoolean.ToString()));
 
                 ModelController<MVCModel>.Model.SomeBoolean = !ModelController<MVCModel>.Model.SomeBoolean;
                 ModelController<MVCModel>.Model.SomeInt += 1;

@@ -10,11 +10,11 @@ Imports System.Text
 Imports Ssepan.Application
 Imports Ssepan.Utility
 
-Namespace MvcLibraryVb
-    ''' <summary>
-    ''' run-time model; relies on settings
-    ''' </summary>
-    <TypeConverter(GetType(ExpandableObjectConverter))> _
+'Namespace MvcLibraryVb
+''' <summary>
+''' run-time model; relies on settings
+''' </summary>
+<TypeConverter(GetType(ExpandableObjectConverter))> _
     Public Class MVCModel
         Inherits ModelBase
 #Region "Declarations"
@@ -147,4 +147,4 @@ Namespace MvcLibraryVb
         End Sub
 #End Region
     End Class
-End Namespace
+'End Namespace

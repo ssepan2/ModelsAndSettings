@@ -3,23 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCConsole", "MVCConsole\MVCConsole.csproj", "{827CFE5C-7668-4AB0-BBA1-4BBCB9A11942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVCConsole", "MVCConsole\MVCConsole.csproj", "{827CFE5C-7668-4AB0-BBA1-4BBCB9A11942}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssepan.Application", "..\Ssepan.Application\Ssepan.Application.csproj", "{C69040CF-5ACD-4F55-8540-49FB7C2A7AA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCLibrary", "MVCLibrary\MVCLibrary.csproj", "{6B7318C1-B755-4691-B950-3B1FEC562F1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVCLibrary", "MVCLibrary\MVCLibrary.csproj", "{6B7318C1-B755-4691-B950-3B1FEC562F1E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssepan.Io", "..\Ssepan.Io\Ssepan.Io.csproj", "{9EFE2EC6-F48E-4E4E-927F-068B54210E09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCForms", "MVCForms\MVCForms.csproj", "{A85EB4ED-5A74-4486-93CE-6ADFBDEFCC11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVCForms", "MVCForms\MVCForms.csproj", "{A85EB4ED-5A74-4486-93CE-6ADFBDEFCC11}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MvcConsoleVb", "MvcConsoleVb\MvcConsoleVb.vbproj", "{241CD4BF-A7B4-4D2A-8A9D-2A8D922EB991}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MvcConsoleVb", "MvcConsoleVb\MvcConsoleVb.vbproj", "{241CD4BF-A7B4-4D2A-8A9D-2A8D922EB991}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MvcLibraryVb", "MvcLibraryVb\MvcLibraryVb.vbproj", "{39F41CB4-845C-485F-ADD7-064822A14403}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MvcFormsVb", "MvcFormsVb\MvcFormsVb.vbproj", "{8F2AD434-25E2-4D83-BED0-6A561FA8728C}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MvcLibraryVb", "MvcLibraryVb\MvcLibraryVb.vbproj", "{39F41CB4-845C-485F-ADD7-064822A14403}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssepan.Utility", "..\Ssepan.Utility\Ssepan.Utility\Ssepan.Utility.csproj", "{4D407426-E4D4-46AF-8A5E-BB9422E7B44B}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MvcFormsVb", "MvcFormsVb\MvcFormsVb.vbproj", "{F6E36008-E8DF-498E-886B-AC8CBDE68BAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,14 +55,14 @@ Global
 		{39F41CB4-845C-485F-ADD7-064822A14403}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39F41CB4-845C-485F-ADD7-064822A14403}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39F41CB4-845C-485F-ADD7-064822A14403}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F2AD434-25E2-4D83-BED0-6A561FA8728C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F2AD434-25E2-4D83-BED0-6A561FA8728C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F2AD434-25E2-4D83-BED0-6A561FA8728C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F2AD434-25E2-4D83-BED0-6A561FA8728C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D407426-E4D4-46AF-8A5E-BB9422E7B44B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D407426-E4D4-46AF-8A5E-BB9422E7B44B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D407426-E4D4-46AF-8A5E-BB9422E7B44B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D407426-E4D4-46AF-8A5E-BB9422E7B44B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E36008-E8DF-498E-886B-AC8CBDE68BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E36008-E8DF-498E-886B-AC8CBDE68BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E36008-E8DF-498E-886B-AC8CBDE68BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E36008-E8DF-498E-886B-AC8CBDE68BAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

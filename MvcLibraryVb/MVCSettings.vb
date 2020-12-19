@@ -12,11 +12,11 @@ Imports System.Xml.Serialization
 Imports Ssepan.Application
 Imports Ssepan.Utility
 
-Namespace MvcLibraryVb
-    ''' <summary>
-    ''' persisted settings; run-time model depends on this
-    ''' </summary>
-    <TypeConverter(GetType(ExpandableObjectConverter))> _
+'Namespace MvcLibraryVb
+''' <summary>
+''' persisted settings; run-time model depends on this
+''' </summary>
+<TypeConverter(GetType(ExpandableObjectConverter))> _
     <Serializable> _
     Public Class MVCSettings
         Inherits SettingsBase
@@ -274,4 +274,4 @@ Namespace MvcLibraryVb
         End Sub
 #End Region
     End Class
-End Namespace
+'End Namespace

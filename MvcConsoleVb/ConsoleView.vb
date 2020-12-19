@@ -1,5 +1,5 @@
-﻿'#Define USE_CONFIG_FILEPATH
-'#Define USE_CUSTOM_VIEWMODEL
+﻿#Const USE_CONFIG_FILEPATH = True
+#Const USE_CUSTOM_VIEWMODEL = True
 
 Imports System
 Imports System.Collections.Generic

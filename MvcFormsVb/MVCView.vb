@@ -1,4 +1,4 @@
-﻿'#define USE_CONFIG_FILEPATH
+﻿#Const USE_CONFIG_FILEPATH = True
 
 Imports System
 Imports System.Collections.Generic
@@ -319,12 +319,12 @@ Partial Public Class MVCView
             (
                 ViewName, New MVCViewModel(AddressOf Me.ModelPropertyChangedEventHandlerDelegate, New Dictionary(Of [String], Bitmap)() From
                 {
-                    {"New", Resources._New},
-                    {"Save", Resources.Save},
-                    {"Open", Resources.Open},
-                    {"Print", Resources.Print},
-                    {"Copy", Resources.Copy},
-                    {"Properties", Resources.Properties}
+                    {"New", Global.My.Resources._New},
+                    {"Save", Global.My.Resources.Save},
+                    {"Open", Global.My.Resources.Open},
+                    {"Print", Global.My.Resources.Print},
+                    {"Copy", Global.My.Resources.Copy},
+                    {"Properties", Global.My.Resources.Properties}
                 },
                 settingsFileDialogInfo,
                 Me
@@ -366,7 +366,7 @@ Partial Public Class MVCView
 
     Protected Sub DisposeSettings()
         'save user and application settings 
-        MySettings.Default.Save()
+        Global.Settings.Save()
 
         If SettingsController(Of MVCSettings).Settings.Dirty Then
             'prompt before saving
@@ -570,8 +570,8 @@ Partial Public Class MVCView
         'Note:Size must be done after InitializeComponent(); do Location this way as well.--SJS
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Location", My.MySettings.Default, "Location", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", My.MySettings.Default, "Size", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.ClientSize = My.MySettings.Default.Size
-        Me.Location = My.MySettings.Default.Location
+        Me.ClientSize = Global.My.MySettings.Default.Size
+        Me.Location = Global.My.MySettings.Default.Location
     End Sub
 #End Region
 #End Region

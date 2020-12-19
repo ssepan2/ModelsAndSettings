@@ -1,4 +1,5 @@
-﻿'Namespace MvcFormsVb
+﻿Imports System.Windows.Forms
+'Namespace MvcFormsVb
 Partial Class MVCView
     ''' <summary>
     ''' Required designer variable.

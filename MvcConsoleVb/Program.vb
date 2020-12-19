@@ -128,9 +128,9 @@ Namespace MvcConsoleVb
 			End If
 			ModelController(Of MVCModel).Model.UpdateHandlers()
 		End Sub
-		#End Region
+#End Region
 
-		#Region "CommandLineSwitch Action Delegates"
+#Region "CommandLineSwitch Action Delegates"
 		''' <summary>
 		''' Instance of an action conforming to delegate Action(Of TSettings), where TSettings is String.
 		''' Command 't' tests the use of parameters.

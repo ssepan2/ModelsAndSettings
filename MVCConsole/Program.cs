@@ -157,7 +157,7 @@ namespace MVCConsole
             {
                 ModelController<MVCModel>.New();
             }
-            ModelController<MVCModel>.Model.UpdateHandlers();
+            //ModelController<MVCModel>.Model.UpdateHandlers();
         }
         #endregion ConsoleAppBase
 

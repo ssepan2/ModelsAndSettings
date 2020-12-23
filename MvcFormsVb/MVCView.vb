@@ -1,4 +1,4 @@
-﻿#Const USE_CONFIG_FILEPATH = True
+﻿'#Const USE_CONFIG_FILEPATH = True
 
 Imports System
 Imports System.Collections.Generic

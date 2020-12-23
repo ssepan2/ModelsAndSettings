@@ -4,10 +4,15 @@
     <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>True</UseWindowsForms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <StartupObject>Sub Main</StartupObject>
     <RootNamespace></RootNamespace>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <ApplicationIcon>Resources\App.ico</ApplicationIcon>
+    <StartupObject>Program</StartupObject>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>_MYTYPE="WindowsForms"</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Resources\**" />
@@ -15,9 +20,13 @@
     <None Remove="Resources\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="My Project\Application.Designer.vb" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="App.ico" />
     <None Remove="Copy.png" />
     <None Remove="Delete.png" />
+    <None Remove="My Project\Application.myapp" />
     <None Remove="New.png" />
     <None Remove="Open.png" />
     <None Remove="Print.png" />

@@ -366,7 +366,7 @@ Partial Public Class MVCView
 
     Protected Sub DisposeSettings()
         'save user and application settings 
-        Global.Settings.Save()
+        Global.My.Settings.Save()
 
         If SettingsController(Of MVCSettings).Settings.Dirty Then
             'prompt before saving

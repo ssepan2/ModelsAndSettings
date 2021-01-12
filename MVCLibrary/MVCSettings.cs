@@ -36,7 +36,7 @@ namespace MVCLibrary
             FileTypeDescription = FILE_TYPE_DESCRIPTION;
             SerializeAs = SerializationFormat.Xml;//default
 
-            SomeComponent = new MVCSettingsComponent();
+            SomeComponent = new MVCSettingsComponent();//TODO:call factory method on controller to get object with handler already set?
         }
 
         public MVCSettings
@@ -100,6 +100,7 @@ namespace MVCLibrary
                     if (disposeManagedResources)
                     {
                         // dispose managed resources
+                        SomeComponent = null;
                     }
 
                     disposed = true;
@@ -221,15 +222,32 @@ namespace MVCLibrary
         }
 
         #region Persisted Properties
-        //private MVCSettingsComponent __SomeComponent = default(MVCSettingsComponent);
+        //private MVCSettingsComponent __SomeComponent = default(MVCSettingsComponent);//not needed; individual properties are backed in settings
         private MVCSettingsComponent _SomeComponent = default(MVCSettingsComponent);
         public MVCSettingsComponent SomeComponent
         {
             get { return _SomeComponent; }
-            set 
-            {
+            set
+            {//DEBUG:find a way to get a reference to the settings handler
+                if (SettingsController<MVCSettings>.DefaultHandler != null)
+                {
+                    if (_SomeComponent != null)
+                    {
+                        _SomeComponent.PropertyChanged -= SettingsController<MVCSettings>.DefaultHandler;
+                    }
+                }
+
                 _SomeComponent = value;
-                UpdateHandlers();
+
+                if (SettingsController<MVCSettings>.DefaultHandler != null)
+                {
+                    if (_SomeComponent != null)
+                    {
+                        _SomeComponent.PropertyChanged += SettingsController<MVCSettings>.DefaultHandler;
+                    }
+                }
+
+                OnPropertyChanged("SomeComponent");
             }
         }
 
@@ -327,19 +345,6 @@ namespace MVCLibrary
                 Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Update child components (used as properties) to use the passed handler.
-        /// Note: for every child component, copy to child and then let child copy to its children
-        /// </summary>
-        public override void UpdateHandlers() 
-        {
-            //copy handlers from this object to child conponent
-            ObjectHelper.CopyEvents<SettingsBase, SettingsComponentBase>(this, this.SomeComponent, "PropertyChanged");
-            
-            //allow child component to copy handlers from itself to it's child conponent (if child component does not implement, this still calls empty method in base).
-            this.SomeComponent.UpdateHandlers();
         }
         #endregion Methods
     }

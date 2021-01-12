@@ -27,7 +27,9 @@ namespace MVCLibrary
         {
             if (SettingsController<MVCSettings>.Settings == null)
             {
+                //ensures that there is a new instance of Settings backing persisted properties in model
                 SettingsController<MVCSettings>.New();
+ 
             }
             Debug.Assert(SettingsController<MVCSettings>.Settings != null, "SettingsController<MVCSettings>.Settings != null");
         }
@@ -43,6 +45,24 @@ namespace MVCLibrary
             SomeInt = someInt;
             SomeBoolean = someBoolean;
             SomeString = someString;
+
+        }
+
+        public MVCModel
+        (
+            Int32 someInt,
+            Boolean someBoolean,
+            String someString,
+            Int32 someOtherInt,
+            Boolean someOtherBoolean,
+            String someOtherString
+        ) :
+            this(someInt,someBoolean,someString)
+        {
+            SomeComponent.SomeOtherInt = someOtherInt;
+            SomeComponent.SomeOtherBoolean = someOtherBoolean;
+            SomeComponent.SomeOtherString = someOtherString;
+
         }
         #endregion Constructors
 
@@ -52,7 +72,7 @@ namespace MVCLibrary
         /// </summary>
         /// <param name="anotherSettings"></param>
         /// <returns></returns>
-        public override Boolean Equals(IModel other)
+        public override Boolean Equals(IModelComponent other)
         {
             Boolean returnValue = default(Boolean);
             MVCModel otherModel = default(MVCModel);
@@ -116,10 +136,10 @@ namespace MVCLibrary
             get { return SettingsController<MVCSettings>.Settings.SomeComponent; }
             set 
             {
+
                 SettingsController<MVCSettings>.Settings.SomeComponent = value;
-                //TODO:update handlers?
-                UpdateHandlers();
-                OnPropertyChanged("SomeComponent");//for completeness; will rely on internal notifications
+
+                //OnPropertyChanged("SomeComponent");//not needed if fired by settings
             }
         }
 
@@ -129,7 +149,7 @@ namespace MVCLibrary
             set 
             { 
                 SettingsController<MVCSettings>.Settings.SomeInt = value;
-                OnPropertyChanged("SomeInt");
+                //OnPropertyChanged("SomeInt");//not needed if fired by settings
             }
         }
 
@@ -139,7 +159,7 @@ namespace MVCLibrary
             set 
             { 
                 SettingsController<MVCSettings>.Settings.SomeBoolean = value;
-                OnPropertyChanged("SomeBoolean");
+                //OnPropertyChanged("SomeBoolean");//not needed if fired by settings
             }
         }
 
@@ -149,25 +169,12 @@ namespace MVCLibrary
             set 
             { 
                 SettingsController<MVCSettings>.Settings.SomeString = value;
-                OnPropertyChanged("SomeString");
+                //OnPropertyChanged("SomeString");//not needed if fired by settings
             }
         }
         #endregion Properties
 
         #region Methods
-
-        /// <summary>
-        /// Update child components (used as properties) to use the passed handler.
-        /// Note: for every child component, copy to child and then let child copy to its children
-        /// </summary>
-        public override void UpdateHandlers()
-        {
-            //copy handlers from this object to child conponent
-            ObjectHelper.CopyEvents<ModelBase, SettingsComponentBase>(this, this.SomeComponent, "PropertyChanged");
-
-            //allow child component to copy handlers from itself to it's child conponent (if child component does not implement, this still calls empty method in base).
-            this.SomeComponent.UpdateHandlers();
-        }
         #endregion Methods
     }
 }

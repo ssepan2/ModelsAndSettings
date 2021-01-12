@@ -42,7 +42,7 @@ namespace MVCConsole
         }
         #endregion INotifyPropertyChanged
 
-        #region ModelPropertyChangedEventHandlerDelegate
+        #region PropertyChangedEventHandlerDelegate
         /// <summary>
         /// Note: property changes update UI manually.
         /// </summary>
@@ -66,7 +66,7 @@ namespace MVCConsole
                 Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error);
             }
         }
-        #endregion ModelPropertyChangedEventHandlerDelegate
+        #endregion PropertyChangedEventHandlerDelegate
 
         #region Properties
         private static String _Filename = default(String);
@@ -103,8 +103,6 @@ namespace MVCConsole
                 
                 //load, parse, run switches
                 DoSwitches(args);
-                
-                InitModelAndSettings();
 
                 returnValue = new ConsoleView()._Main();
             }
@@ -145,20 +143,7 @@ namespace MVCConsole
             //Note: switches are processed before Model or Settings are accessed.
         }
 
-        static void InitModelAndSettings()
-        {
-            //create Settings before first use by Model
-            if (SettingsController<MVCSettings>.Settings == null)
-            {
-                SettingsController<MVCSettings>.New();
-            }
-            //Model properties rely on Settings, so don't call Refresh before this is run.
-            if (ModelController<MVCModel>.Model == null)
-            {
-                ModelController<MVCModel>.New();
-            }
-            //ModelController<MVCModel>.Model.UpdateHandlers();
-        }
+        //Note:model, Settings init done in viewmodel (after default handler set)
         #endregion ConsoleAppBase
 
         #region CommandLineSwitch Action Delegates

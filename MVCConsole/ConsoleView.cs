@@ -1,5 +1,7 @@
 ﻿#define USE_CONFIG_FILEPATH
 #define USE_CUSTOM_VIEWMODEL
+//#define DEBUG_MODEL_PROPERTYCHANGED
+//#define DEBUG_SETTINGS_PROPERTYCHANGED
 
 using System;
 using System.Collections.Generic;
@@ -42,7 +44,10 @@ namespace MVCConsole
                 //ConsoleApplication.defaultOutputDelegate = ConsoleApplication.writeLineWrapperOutputDelegate;
 
                 //subscribe to notifications
-                this.PropertyChanged += ModelPropertyChangedEventHandlerDelegate;
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged += PropertyChangedEventHandlerDelegate;
+                }
 
                 InitViewModel();
             }
@@ -80,7 +85,10 @@ namespace MVCConsole
                 {
                     // dispose managed resources
                     //unsubscribe from model notifications
-                    this.PropertyChanged -= ModelPropertyChangedEventHandlerDelegate;
+                    if (this.PropertyChanged != null)
+                    {
+                        this.PropertyChanged -= PropertyChangedEventHandlerDelegate;
+                    }
                 }
                 // dispose unmanaged resources
                 disposed = true;
@@ -113,13 +121,19 @@ namespace MVCConsole
         }
         #endregion INotifyPropertyChanged
 
-        #region ModelPropertyChangedEventHandlerDelegate
+        #region PropertyChangedEventHandlerDelegate
         /// <summary>
-        /// Note: property changes update UI manually.
+        /// Note: model property changes update UI manually.
+        /// Note: handle settings property changes manually.
+        /// Note: because settings properties are a subset of the model 
+        ///  (every settings property should be in the model, 
+        ///  but not every model property is persisted to settings)
+        ///  it is decided that for now the settigns handler will 
+        ///  invoke the model handler as well.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void ModelPropertyChangedEventHandlerDelegate
+        protected void PropertyChangedEventHandlerDelegate
         (
             Object sender,
             PropertyChangedEventArgs e
@@ -127,6 +141,7 @@ namespace MVCConsole
         {
             try
             {
+#region Model
                 if (e.PropertyName == "IsChanged")
                 {
                     //ConsoleApplication.defaultOutputDelegate(String.Format("{0}", e.PropertyName));
@@ -147,6 +162,7 @@ namespace MVCConsole
                     e = new PropertyChangedEventArgs(e.PropertyName + ".handled");
                 }
                 //Note: not databound, so handle event
+                //Note: handled by both?
                 else if (e.PropertyName == "SomeInt")
                 {
                     ConsoleApplication.defaultOutputDelegate(String.Format("SomeInt: {0}", ModelController<MVCModel>.Model.SomeInt));
@@ -176,43 +192,35 @@ namespace MVCConsole
                     ConsoleApplication.defaultOutputDelegate(String.Format("SomeComponent: {0},{1},{2}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherInt, ModelController<MVCModel>.Model.SomeComponent.SomeOtherBoolean, ModelController<MVCModel>.Model.SomeComponent.SomeOtherString));
                 }
                 else 
-                { 
-                     //ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName));
+                {
+                    #if DEBUG_MODEL_PROPERTYCHANGED
+                        ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName));
+                    #endif
                 }
-            }
-            catch (Exception ex)
-            {
-                Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error);
-            }
-        }
+#endregion Model
 
-        /// <summary>
-        /// Note: handle settings property changes manually.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void SettingsPropertyChangedEventHandlerDelegate
-        (
-            Object sender,
-            PropertyChangedEventArgs e
-        )
-        {
-            try
-            {
+#region Settings
                 if (e.PropertyName == "Dirty")
                 {
                     //apply settings that don't have databindings
                     ViewModel.DirtyIconIsVisible = (SettingsController<MVCSettings>.Settings.Dirty);
                 }
+                else
+                {
+#if DEBUG_SETTINGS_PROPERTYCHANGED
+                    ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName));
+#endif
+                }
+#endregion Settings
             }
             catch (Exception ex)
             {
                 Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error);
             }
         }
-        #endregion ModelPropertyChangedEventHandlerDelegate
+#endregion PropertyChangedEventHandlerDelegate
 
-        #region Properties
+#region Properties
         private String _ViewName = Program.APP_NAME;
         public String ViewName
         {
@@ -234,19 +242,24 @@ namespace MVCConsole
                 OnPropertyChanged("Progress");
             }
         }
-        #endregion Properties
+#endregion Properties
 
-        #region Methods
-        #region ConsoleAppBase
+#region Methods
+#region ConsoleAppBase
         protected void InitViewModel()
         {
             try
             {
-                //subscribe to notifications
-                ModelController<MVCModel>.Model.PropertyChanged += ModelPropertyChangedEventHandlerDelegate;
-                //subscribe view to settings notifications
-                SettingsController<MVCSettings>.DefaultHandler = SettingsPropertyChangedEventHandlerDelegate;
-            
+
+                //tell controller how model should notify view about non-persisted properties AND including model properties that may be part of settings
+                ModelController<MVCModel>.DefaultHandler = PropertyChangedEventHandlerDelegate;
+                
+                //tell controller how settings should notify view about persisted properties
+                SettingsController<MVCSettings>.DefaultHandler = PropertyChangedEventHandlerDelegate;
+                
+                InitModelAndSettings();
+
+                //DEBUG:why is New seeing un-set defaulthandler after defaulthandler has been set
                 //class to handle standard behaviors
 #if USE_CUSTOM_VIEWMODEL
                 ViewModelController<String, MVCConsoleViewModel>.New
@@ -261,7 +274,7 @@ namespace MVCConsole
 //                    new ConsoleViewModel<String, MVCSettings, MVCModel>
 #endif
                     (
-                        this.ModelPropertyChangedEventHandlerDelegate,
+                        this.PropertyChangedEventHandlerDelegate,
                         new Dictionary<String, String>() 
                         { 
                             { "New", "New" }, 
@@ -273,6 +286,8 @@ namespace MVCConsole
                         }
                     )
                 );
+                
+                //select a viewmodel by view name
                 ViewModel = 
 #if USE_CUSTOM_VIEWMODEL
                     ViewModelController<String, MVCConsoleViewModel>.ViewModel[ViewName];
@@ -309,6 +324,21 @@ namespace MVCConsole
             }
         }
 
+        void InitModelAndSettings()
+        {
+            //create Settings before first use by Model
+            if (SettingsController<MVCSettings>.Settings == null)
+            {
+                SettingsController<MVCSettings>.New();
+            }
+            //Model properties rely on Settings, so don't call Refresh before this is run.
+            if (ModelController<MVCModel>.Model == null)
+            {
+                ModelController<MVCModel>.New();
+            }
+            //ModelController<MVCModel>.Model.UpdateHandlers();
+        }
+
         protected void DisposeSettings()
         {
 
@@ -322,7 +352,7 @@ namespace MVCConsole
             }
 
             //unsubscribe from model notifications
-            ModelController<MVCModel>.Model.PropertyChanged -= ModelPropertyChangedEventHandlerDelegate;
+            ModelController<MVCModel>.Model.PropertyChanged -= PropertyChangedEventHandlerDelegate;
         }
         
         public Int32 _Main()
@@ -364,17 +394,10 @@ namespace MVCConsole
         {
             ViewModel.DoSomething();
 
-            //ModelController<MVCModel>.Model.SomeBoolean = !ModelController<MVCModel>.Model.SomeBoolean;
-            //ModelController<MVCModel>.Model.SomeInt += 1;
-            //ModelController<MVCModel>.Model.SomeString = DateTime.Now.ToString();
-
-            ////SettingsController<MVCSettings>.Settings.SomeBoolean = true;
-            ////SettingsController<MVCSettings>.Settings.SomeInt += 1;
-            ////SettingsController<MVCSettings>.Settings.SomeString = "test";
         }
-        #endregion ConsoleAppBase
+#endregion ConsoleAppBase
         
-        #region Utility
+#region Utility
         /// <summary>
         /// Apply Settings to viewer.
         /// </summary>
@@ -459,7 +482,7 @@ namespace MVCConsole
             }
             return returnValue;
         }
-        #endregion Utility
-        #endregion Methods
+#endregion Utility
+#endregion Methods
     }
 }

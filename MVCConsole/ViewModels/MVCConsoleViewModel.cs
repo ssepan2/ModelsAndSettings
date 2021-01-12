@@ -94,9 +94,6 @@ namespace MVCConsole
                 ModelController<MVCModel>.Model.SomeComponent.SomeOtherInt += 1;
                 ModelController<MVCModel>.Model.SomeComponent.SomeOtherString = DateTime.Now.ToString();
 
-                //SettingsController<MVCSettings>.Settings.SomeBoolean = true;
-                //SettingsController<MVCSettings>.Settings.SomeInt += 1;
-                //SettingsController<MVCSettings>.Settings.SomeString = "test";
 
                 ModelController<MVCModel>.Model.Refresh();
             }
@@ -108,7 +105,7 @@ namespace MVCConsole
             }
             finally
             {
-                StopProgressBar("Did something.");
+                StopProgressBar("\nDid something.");
             }
         }
         #endregion Methods

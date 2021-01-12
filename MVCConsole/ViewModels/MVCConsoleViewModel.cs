@@ -94,6 +94,10 @@ namespace MVCConsole
                 ModelController<MVCModel>.Model.SomeComponent.SomeOtherInt += 1;
                 ModelController<MVCModel>.Model.SomeComponent.SomeOtherString = DateTime.Now.ToString();
 
+                ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean = !ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean;
+                ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherInt += 1;
+                ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherString = DateTime.Now.ToString();
+
 
                 ModelController<MVCModel>.Model.Refresh();
             }

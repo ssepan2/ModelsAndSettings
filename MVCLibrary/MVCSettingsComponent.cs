@@ -13,7 +13,8 @@ using Ssepan.Utility;
 namespace MVCLibrary
 {
     /// <summary>
-    /// component of persisted settings; run-time model depends on this
+    /// component of persisted settings; 
+    /// run-time model depends on this;
     /// </summary>
     [TypeConverter(typeof(ExpandableObjectConverter))]
     [Serializable]

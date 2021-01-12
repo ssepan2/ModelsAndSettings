@@ -25,6 +25,7 @@ namespace MVCLibrary
         #region Constructors
         public MVCModel()
         {
+            //init SomeComponent property backed by setting component
             if (SettingsController<MVCSettings>.Settings == null)
             {
                 //ensures that there is a new instance of Settings backing persisted properties in model
@@ -32,6 +33,11 @@ namespace MVCLibrary
  
             }
             Debug.Assert(SettingsController<MVCSettings>.Settings != null, "SettingsController<MVCSettings>.Settings != null");
+
+            //init some other component property NOT backed by settings, but backed by model component
+
+           StillAnotherComponent = new MVCModelComponent();
+
         }
 
         public MVCModel
@@ -62,6 +68,26 @@ namespace MVCLibrary
             SomeComponent.SomeOtherInt = someOtherInt;
             SomeComponent.SomeOtherBoolean = someOtherBoolean;
             SomeComponent.SomeOtherString = someOtherString;
+
+        }
+
+        public MVCModel
+        (
+            Int32 someInt,
+            Boolean someBoolean,
+            String someString,
+            Int32 someOtherInt,
+            Boolean someOtherBoolean,
+            String someOtherString,
+            Int32 stillAnotherInt,
+            Boolean stillAnotherBoolean,
+            String stillAnotherString
+        ) :
+            this(someInt,someBoolean,someString, someOtherInt, someOtherBoolean, someOtherString)
+        {
+            StillAnotherComponent.StillAnotherInt = stillAnotherInt;
+            StillAnotherComponent.StillAnotherBoolean = stillAnotherBoolean;
+            StillAnotherComponent.StillAnotherString = stillAnotherString;
 
         }
         #endregion Constructors
@@ -140,6 +166,36 @@ namespace MVCLibrary
                 SettingsController<MVCSettings>.Settings.SomeComponent = value;
 
                 //OnPropertyChanged("SomeComponent");//not needed if fired by settings
+            }
+        }
+
+        //private MVCModelComponent __StillAnotherComponent = default(MVCModelComponent);//not needed; individual properties are backed in model component
+        private MVCModelComponent _StillAnotherComponent = default(MVCModelComponent);
+        public MVCModelComponent StillAnotherComponent
+        {
+            get { return _StillAnotherComponent; }
+            set 
+            {
+
+                if (ModelController<MVCModel>.DefaultHandler != null)
+                {
+                    if (_StillAnotherComponent != null)
+                    {
+                        _StillAnotherComponent.PropertyChanged -= ModelController<MVCModel>.DefaultHandler;
+                    }
+                }
+
+                _StillAnotherComponent = value;
+
+                if (ModelController<MVCModel>.DefaultHandler != null)
+                {
+                    if (_StillAnotherComponent != null)
+                    {
+                        _StillAnotherComponent.PropertyChanged += ModelController<MVCModel>.DefaultHandler;
+                    }
+                }
+
+                OnPropertyChanged("StillAnotherComponent");//needed because NOT backed by settings
             }
         }
 

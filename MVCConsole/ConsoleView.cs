@@ -191,6 +191,22 @@ namespace MVCConsole
                 {
                     ConsoleApplication.defaultOutputDelegate(String.Format("SomeComponent: {0},{1},{2}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherInt, ModelController<MVCModel>.Model.SomeComponent.SomeOtherBoolean, ModelController<MVCModel>.Model.SomeComponent.SomeOtherString));
                 }
+                else if (e.PropertyName == "StillAnotherInt")
+                {
+                    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherInt: {0}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherInt));
+                }
+                else if (e.PropertyName == "StillAnotherBoolean")
+                {
+                    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherBoolean: {0}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean));
+                }
+                else if (e.PropertyName == "StillAnotherString")
+                {
+                    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherString: {0}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherString));
+                }
+                else if (e.PropertyName == "StillAnotherComponent")
+                {
+                    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherComponent: {0},{1},{2}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherInt, ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean, ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherString));
+                }
                 else 
                 {
                     #if DEBUG_MODEL_PROPERTYCHANGED

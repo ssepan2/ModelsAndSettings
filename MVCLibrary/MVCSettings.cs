@@ -36,7 +36,7 @@ namespace MVCLibrary
             FileTypeDescription = FILE_TYPE_DESCRIPTION;
             SerializeAs = SerializationFormat.Xml;//default
 
-            SomeComponent = new MVCSettingsComponent();//TODO:call factory method on controller to get object with handler already set?
+            SomeComponent = new MVCSettingsComponent();
         }
 
         public MVCSettings
@@ -228,7 +228,7 @@ namespace MVCLibrary
         {
             get { return _SomeComponent; }
             set
-            {//DEBUG:find a way to get a reference to the settings handler
+            {
                 if (SettingsController<MVCSettings>.DefaultHandler != null)
                 {
                     if (_SomeComponent != null)

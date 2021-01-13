@@ -22,22 +22,6 @@ namespace MVCConsole
         ConsoleViewModel<String, MVCSettings, MVCModel>
     {
         #region Declarations
-
-        #region Commands
-        //public ICommand FileNewCommand { get; private set; }
-        //public ICommand FileOpenCommand { get; private set; }
-        //public ICommand FileSaveCommand { get; private set; }
-        //public ICommand FileSaveAsCommand { get; private set; }
-        //public ICommand FilePrintCommand { get; private set; }
-        //public ICommand FileExitCommand { get; private set; }
-        //public ICommand EditCopyToClipboardCommand { get; private set; }
-        //public ICommand EditPropertiesCommand { get; private set; }
-        //public ICommand ViewPreviousMonthCommand { get; private set; }
-        //public ICommand ViewPreviousWeekCommand { get; private set; }
-        //public ICommand ViewNextWeekCommand { get; private set; }
-        //public ICommand ViewNextMonthCommand { get; private set; }
-        //public ICommand HelpAboutCommand { get; private set; }
-        #endregion Commands
         #endregion Declarations
 
         #region Constructors
@@ -71,7 +55,6 @@ namespace MVCConsole
         {
             StatusMessage = String.Empty;
             ErrorMessage = String.Empty;
-            MVCModel m = ModelController<MVCModel>.Model;
 
             try
             {

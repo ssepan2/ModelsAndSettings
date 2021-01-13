@@ -162,7 +162,6 @@ namespace MVCConsole
                     e = new PropertyChangedEventArgs(e.PropertyName + ".handled");
                 }
                 //Note: not databound, so handle event
-                //Note: handled by both?
                 else if (e.PropertyName == "SomeInt")
                 {
                     ConsoleApplication.defaultOutputDelegate(String.Format("SomeInt: {0}", ModelController<MVCModel>.Model.SomeInt));
@@ -275,20 +274,35 @@ namespace MVCConsole
                 
                 InitModelAndSettings();
 
-                //DEBUG:why is New seeing un-set defaulthandler after defaulthandler has been set
+#if USE_CUSTOM_VIEWMODEL
                 //class to handle standard behaviors
-#if USE_CUSTOM_VIEWMODEL
                 ViewModelController<String, MVCConsoleViewModel>.New
-#else
-//                ViewModelController<String, ConsoleViewModel<String, MVCSettings, MVCModel>>.New
-#endif
-(
+                (
                     ViewName,
-#if USE_CUSTOM_VIEWMODEL
                     new MVCConsoleViewModel
+                    (
+                        this.PropertyChangedEventHandlerDelegate,
+                        new Dictionary<String, String>()
+                        {
+                            { "New", "New" },
+                            { "Save", "Save" },
+                            { "Open", "Open" },
+                            { "Print", "Print" },
+                            { "Copy", "Copy" },
+                            { "Properties", "Properties" }
+                        }
+                    )
+                );
+
+                //select a viewmodel by view name
+                ViewModel =
+                    ViewModelController<String, MVCConsoleViewModel>.ViewModel[ViewName];
 #else
-//                    new ConsoleViewModel<String, MVCSettings, MVCModel>
-#endif
+                //class to handle standard behaviors
+                ViewModelController<String, ConsoleViewModel<String, MVCSettings, MVCModel>>.New
+                (
+                    ViewName,
+                    new ConsoleViewModel<String, MVCSettings, MVCModel>
                     (
                         this.PropertyChangedEventHandlerDelegate,
                         new Dictionary<String, String>() 
@@ -305,9 +319,6 @@ namespace MVCConsole
                 
                 //select a viewmodel by view name
                 ViewModel = 
-#if USE_CUSTOM_VIEWMODEL
-                    ViewModelController<String, MVCConsoleViewModel>.ViewModel[ViewName];
-#else
                     ViewModelController<String, ConsoleViewModel<String, MVCSettings, MVCModel>>.ViewModel[ViewName];
 #endif
 
@@ -352,7 +363,6 @@ namespace MVCConsole
             {
                 ModelController<MVCModel>.New();
             }
-            //ModelController<MVCModel>.Model.UpdateHandlers();
         }
 
         protected void DisposeSettings()

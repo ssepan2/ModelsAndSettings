@@ -135,7 +135,6 @@ namespace MVCLibrary
         #region Properties
 
         #region Non-Persisted Properties
-        private Int32 __StillAnotherInt = default(Int32);
         private Int32 _StillAnotherInt = default(Int32);
         public Int32 StillAnotherInt
         {
@@ -147,7 +146,6 @@ namespace MVCLibrary
             }
         }
 
-        private Boolean __StillAnotherBoolean = default(Boolean);
         private Boolean _StillAnotherBoolean = default(Boolean);
         public Boolean StillAnotherBoolean
         {
@@ -159,7 +157,6 @@ namespace MVCLibrary
             }
         }
 
-        private String __StillAnotherString = String.Empty;//default(String);
         private String _StillAnotherString = String.Empty;//default(String);
         public String StillAnotherString
         {

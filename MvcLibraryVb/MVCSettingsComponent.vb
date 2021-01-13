@@ -212,15 +212,6 @@ Imports Ssepan.Utility
                 Throw
             End Try
         End Sub
-
-        '''' <summary>
-        '''' Update child components (used as properties) to use the passed handler.
-        '''' </summary>
-        '''' <param name="defaultHandler"></param>
-        'public override void UpdateHandlers()
-        '{
-        '    ObjectHelper.CopyEvents<SettingsBase, SettingsComponentBase>(this, this._SomeSubComponent, "PropertyChanged");
-        '}
 #End Region
-    End Class
+End Class
 'End Namespace

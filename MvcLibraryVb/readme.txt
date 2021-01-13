@@ -12,6 +12,11 @@ Usage notes:
 
 Enhancements:
 
+0.3:TODO
+~Handlers were not being correctly wired up to sub-components of Settings or Model
+~Using Ssepan.Application 2.8
+~Added ModelCompoment sub-component to Model, to demonstrate notification from component NOT backed by Settings or SettignsComponent (which DO perform notification internally).
+
 0.2:
 ~Created VB version of apps and library.
 ~Handler in Program.cs was not wired up in forms or console; added 'PropertyChanged += PropertyChangedEventHandlerDelegate;' to Main.

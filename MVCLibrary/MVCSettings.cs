@@ -85,6 +85,7 @@ namespace MVCLibrary
         ~MVCSettings()
         {
             Dispose(false);
+            //base.Finalize();//not called directly in C#; called by Destructor
         }
 
         //inherited; override if additional cleanup needed
@@ -124,7 +125,7 @@ namespace MVCLibrary
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public override Boolean Equals(/*ISettings*/ISettingsComponent other)
+        public override Boolean Equals(ISettingsComponent other)
         {
             Boolean returnValue = default(Boolean);
             MVCSettings otherSettings = default(MVCSettings);

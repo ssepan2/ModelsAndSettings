@@ -35,9 +35,7 @@ namespace MVCLibrary
             Debug.Assert(SettingsController<MVCSettings>.Settings != null, "SettingsController<MVCSettings>.Settings != null");
 
             //init some other component property NOT backed by settings, but backed by model component
-
            StillAnotherComponent = new MVCModelComponent();
-
         }
 
         public MVCModel
@@ -92,11 +90,50 @@ namespace MVCLibrary
         }
         #endregion Constructors
 
+
+        #region IDisposable support
+        ~MVCModel()
+        {
+            Dispose(false);
+            //base.Finalize();//not called directly in C#; called by Destructor
+        }
+
+        //inherited; override if additional cleanup needed
+        protected override void Dispose(Boolean disposeManagedResources)
+        {
+            // process only if mananged and unmanaged resources have
+            // not been disposed of.
+            if (!disposed)
+            {
+                try
+                {
+                    //Resources not disposed
+                    if (disposeManagedResources)
+                    {
+                        // dispose managed resources
+                        StillAnotherComponent = null;
+                    }
+
+                    disposed = true;
+                }
+                finally
+                {
+                    // dispose unmanaged resources
+                    base.Dispose(disposeManagedResources);
+                }
+            }
+            else
+            {
+                //Resources already disposed
+            }
+        }
+        #endregion
+
         #region IEquatable<IModel>
         /// <summary>
         /// Compare property values of two specified Model objects.
         /// </summary>
-        /// <param name="anotherSettings"></param>
+        /// <param name="other"></param>
         /// <returns></returns>
         public override Boolean Equals(IModelComponent other)
         {
@@ -169,7 +206,6 @@ namespace MVCLibrary
             }
         }
 
-        //private MVCModelComponent __StillAnotherComponent = default(MVCModelComponent);//not needed; individual properties are backed in model component
         private MVCModelComponent _StillAnotherComponent = default(MVCModelComponent);
         public MVCModelComponent StillAnotherComponent
         {

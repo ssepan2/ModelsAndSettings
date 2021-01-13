@@ -13,29 +13,13 @@ Imports Ssepan.Application
 Imports Ssepan.Io
 Imports MvcLibraryVb
 
-Namespace MvcConsoleVb
-    ''' <summary>
-    ''' Note: this class can subclass the base without type parameters.
-    ''' </summary>
-    Public Class MVCConsoleViewModel
+'Namespace MvcConsoleVb
+''' <summary>
+''' Note: this class can subclass the base without type parameters.
+''' </summary>
+Public Class MVCConsoleViewModel
         Inherits ConsoleViewModel(Of [String], MVCSettings, MVCModel)
 #Region "Declarations"
-
-#Region "Commands"
-        'public ICommand FileNewCommand { get; private set; }
-        'public ICommand FileOpenCommand { get; private set; }
-        'public ICommand FileSaveCommand { get; private set; }
-        'public ICommand FileSaveAsCommand { get; private set; }
-        'public ICommand FilePrintCommand { get; private set; }
-        'public ICommand FileExitCommand { get; private set; }
-        'public ICommand EditCopyToClipboardCommand { get; private set; }
-        'public ICommand EditPropertiesCommand { get; private set; }
-        'public ICommand ViewPreviousMonthCommand { get; private set; }
-        'public ICommand ViewPreviousWeekCommand { get; private set; }
-        'public ICommand ViewNextWeekCommand { get; private set; }
-        'public ICommand ViewNextMonthCommand { get; private set; }
-        'public ICommand HelpAboutCommand { get; private set; }
-#End Region
 #End Region
 
 #Region "Constructors"
@@ -74,9 +58,9 @@ Namespace MvcConsoleVb
                 ModelController(Of MVCModel).Model.SomeComponent.SomeOtherInt += 1
                 ModelController(Of MVCModel).Model.SomeComponent.SomeOtherString = DateTime.Now.ToString()
 
-                'SettingsController<MVCSettings>.Settings.SomeBoolean = true;
-                'SettingsController<MVCSettings>.Settings.SomeInt += 1;
-                'SettingsController<MVCSettings>.Settings.SomeString = "test";
+                ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherBoolean = Not ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherBoolean
+                ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherInt += 1
+                ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherString = DateTime.Now.ToString()
 
                 ModelController(Of MVCModel).Model.Refresh()
             Catch ex As Exception
@@ -90,4 +74,4 @@ Namespace MvcConsoleVb
 #End Region
 
     End Class
-End Namespace
+'End Namespace

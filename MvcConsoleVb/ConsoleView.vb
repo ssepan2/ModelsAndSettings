@@ -1,5 +1,7 @@
 ﻿#Const USE_CONFIG_FILEPATH = True
 #Const USE_CUSTOM_VIEWMODEL = True
+'#Const DEBUG_MODEL_PROPERTYCHANGED = True
+'#Const DEBUG_SETTINGS_PROPERTYCHANGED = True
 
 Imports System
 Imports System.Collections.Generic
@@ -16,8 +18,8 @@ Imports Ssepan.Io
 Imports Ssepan.Utility
 Imports MvcLibraryVb
 
-Namespace MvcConsoleVb
-	Public Class ConsoleView
+'Namespace MvcConsoleVb
+Public Class ConsoleView
 		Implements INotifyPropertyChanged
 #Region "Declarations"
         Protected disposed As [Boolean]
@@ -36,7 +38,7 @@ Namespace MvcConsoleVb
 				'ConsoleApplication.defaultOutputDelegate = ConsoleApplication.writeLineWrapperOutputDelegate;
 
 				'subscribe to notifications
-				AddHandler Me.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
+				AddHandler Me.PropertyChanged, AddressOf PropertyChangedEventHandlerDelegate
 
 				InitViewModel()
 			Catch ex As Exception
@@ -71,7 +73,7 @@ Namespace MvcConsoleVb
 				If disposeManagedResources Then
 					' dispose managed resources
 					'unsubscribe from model notifications
-					RemoveHandler Me.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
+					RemoveHandler Me.PropertyChanged, AddressOf PropertyChangedEventHandlerDelegate
 				End If
 				' dispose unmanaged resources
 				disposed = True
@@ -85,7 +87,6 @@ Namespace MvcConsoleVb
         Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 		Protected Sub OnPropertyChanged(propertyName As [String])
 			Try
-
 				RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
 			Catch ex As Exception
 				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
@@ -93,16 +94,23 @@ Namespace MvcConsoleVb
 				Throw
 			End Try
 		End Sub
-		#End Region
+#End Region
 
-		#Region "ModelPropertyChangedEventHandlerDelegate"
+#Region "PropertyChangedEventHandlerDelegate"
 		''' <summary>
-		''' Note: property changes update UI manually.
+		''' Note: model property changes update UI manually.
+		''' Note: handle settings property changes manually.
+		''' Note: because settings properties are a subset of the model 
+		'''  (every settings property should be in the model, 
+		'''  but not every model property is persisted to settings)
+		'''  it is decided that for now the settigns handler will 
+		'''  invoke the model handler as well.
 		''' </summary>
 		''' <param name="sender"></param>
 		''' <param name="e"></param>
-		Protected Sub ModelPropertyChangedEventHandlerDelegate(sender As [Object], e As PropertyChangedEventArgs)
+		Protected Sub PropertyChangedEventHandlerDelegate(sender As [Object], e As PropertyChangedEventArgs)
 			Try
+#Region "Model"
 				If e.PropertyName = "IsChanged" Then
 					'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", e.PropertyName));
 					ApplySettings()
@@ -130,32 +138,39 @@ Namespace MvcConsoleVb
 					ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherString: {0}", ModelController(Of MVCModel).Model.SomeComponent.SomeOtherString))
 				ElseIf (e.PropertyName = "SomeComponent") Then
 					ConsoleApplication.defaultOutputDelegate(String.Format("SomeComponent: {0},{1},{2}", ModelController(Of MVCModel).Model.SomeComponent.SomeOtherInt, ModelController(Of MVCModel).Model.SomeComponent.SomeOtherBoolean, ModelController(Of MVCModel).Model.SomeComponent.SomeOtherString))
+				ElseIf e.PropertyName = "StillAnotherInt" Then
+					ConsoleApplication.defaultOutputDelegate([String].Format("StillAnotherInt: {0}", ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherInt))
+				ElseIf e.PropertyName = "StillAnotherBoolean" Then
+					ConsoleApplication.defaultOutputDelegate([String].Format("StillAnotherBoolean: {0}", ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherBoolean))
+				ElseIf e.PropertyName = "StillAnotherString" Then
+					ConsoleApplication.defaultOutputDelegate([String].Format("StillAnotherString: {0}", ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherString))
+				ElseIf e.PropertyName = "StillAnotherComponent" Then
+					ConsoleApplication.defaultOutputDelegate([String].Format("StillAnotherComponent: {0},{1},{2}", ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherInt, ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherBoolean, ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherString))
 				Else
-					'ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName))
+#If DEBUG_MODEL_PROPERTYCHANGED Then
+					ConsoleApplication.defaultOutputDelegate([String].Format("e.PropertyName: {0}", e.PropertyName))
+#End If
 				End If
-			Catch ex As Exception
-				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
-			End Try
-		End Sub
+#End Region
 
-		''' <summary>
-		''' Note: handle settings property changes manually.
-		''' </summary>
-		''' <param name="sender"></param>
-		''' <param name="e"></param>
-		Protected Sub SettingsPropertyChangedEventHandlerDelegate(sender As [Object], e As PropertyChangedEventArgs)
-			Try
+#Region "Settings"
 				If e.PropertyName = "Dirty" Then
 					'apply settings that don't have databindings
 					ViewModel.DirtyIconIsVisible = (SettingsController(Of MVCSettings).Settings.Dirty)
+				Else
+#If DEBUG_SETTINGS_PROPERTYCHANGED Then
+					ConsoleApplication.defaultOutputDelegate([String].Format("e.PropertyName: {0}", e.PropertyName))
+#End If
+#End Region
 				End If
 			Catch ex As Exception
 				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
 			End Try
 		End Sub
-		#End Region
+#End Region
 
-		#Region "Properties"
+
+#Region "Properties"
 		Private _ViewName As [String] = Program.APP_NAME
 		Public Property ViewName() As [String]
 			Get
@@ -183,50 +198,40 @@ Namespace MvcConsoleVb
 		#Region "ConsoleAppBase"
 		Protected Sub InitViewModel()
 			Try
-				'subscribe to notifications
-				AddHandler ModelController(Of MVCModel).Model.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
-				'subscribe view to settings notifications
-				SettingsController(Of MVCSettings).DefaultHandler = AddressOf SettingsPropertyChangedEventHandlerDelegate
+				'tell controller how model should notify view about non-persisted properties AND including model properties that may be part of settings
+				ModelController(Of MVCModel).DefaultHandler = AddressOf PropertyChangedEventHandlerDelegate
 
-				'class to handle standard behaviors
+				'tell controller how settings should notify view about persisted properties
+				SettingsController(Of MVCSettings).DefaultHandler = AddressOf PropertyChangedEventHandlerDelegate
+
+				InitModelAndSettings()
+
 #If USE_CUSTOM_VIEWMODEL Then
-                ViewModelController(Of [String], MVCConsoleViewModel).[New] _
-                ( _
-                    ViewName, _
-                    New MVCConsoleViewModel _
-                    ( _
-                        AddressOf Me.ModelPropertyChangedEventHandlerDelegate, _
-                        New Dictionary(Of [String], [String])() From _
-                        { _
-                            {"New", "New"}, _
-                            {"Save", "Save"}, _
-                            {"Open", "Open"}, _
-                            {"Print", "Print"}, _
-                            {"Copy", "Copy"}, _
-                            {"Properties", "Properties"} _
-                        } _
-                    ) _
-                )
-                ViewModel = ViewModelController(Of [String], MVCConsoleViewModel).ViewModel(ViewName)
+				'class to handle standard behaviors
+				ViewModelController(Of [String], MVCConsoleViewModel).[New](ViewName, New MVCConsoleViewModel(AddressOf Me.PropertyChangedEventHandlerDelegate, New Dictionary(Of [String], [String])() From {
+					{"New", "New"},
+					{"Save", "Save"},
+					{"Open", "Open"},
+					{"Print", "Print"},
+					{"Copy", "Copy"},
+					{"Properties", "Properties"}
+				}))
+
+				'select a viewmodel by view name
+				ViewModel = ViewModelController(Of [String], MVCConsoleViewModel).ViewModel(ViewName)
 #Else
-                ViewModelController(Of [String], ConsoleViewModel(Of [String], MVCSettings, MVCModel)).[New] _
-                ( _
-                    ViewName, _
-                    New ConsoleViewModel( Of [String], MVCSettings, MVCModel) _
-                    ( _
-                        AddressOf Me.ModelPropertyChangedEventHandlerDelegate, _
-                        New Dictionary(Of [String], [String])() From _
-                        { _
-                            {"New", "New"}, _
-                            {"Save", "Save"}, _
-                            {"Open", "Open"}, _
-                            {"Print", "Print"}, _
-                            {"Copy", "Copy"}, _
-                            {"Properties", "Properties"} _
-                        } _
-                    ) _
-                )
-                ViewModel = ViewModelController(Of [String], ConsoleViewModel(Of [String], MVCSettings, MVCModel)).ViewModel(ViewName)
+				'class to handle standard behaviors
+				ViewModelController(Of [String], ConsoleViewModel(Of [String], MVCSettings, MVCModel)).[New](ViewName, New ConsoleViewModel(Of [String], MVCSettings, MVCModel)(AddressOf Me.PropertyChangedEventHandlerDelegate, New Dictionary(Of [String], [String])() From { _
+					{"New", "New"}, _
+					{"Save", "Save"}, _
+					{"Open", "Open"}, _
+					{"Print", "Print"}, _
+					{"Copy", "Copy"}, _
+					{"Properties", "Properties"} _
+				}))
+
+				'select a viewmodel by view name
+				ViewModel = ViewModelController(Of [String], ConsoleViewModel(Of [String], MVCSettings, MVCModel)).ViewModel(ViewName)
 #End If
 
 				'Init config parameters
@@ -251,6 +256,17 @@ Namespace MvcConsoleVb
 			End Try
 		End Sub
 
+		Private Shared Sub InitModelAndSettings()
+			'create Settings before first use by Model
+			If SettingsController(Of MVCSettings).Settings Is Nothing Then
+				SettingsController(Of MVCSettings).[New]()
+			End If
+			'Model properties rely on Settings, so don't call Refresh before this is run.
+			If ModelController(Of MVCModel).Model Is Nothing Then
+				ModelController(Of MVCModel).[New]()
+			End If
+		End Sub
+
 		Protected Sub DisposeSettings()
 
 			'save user and application settings 
@@ -262,7 +278,7 @@ Namespace MvcConsoleVb
 			End If
 
 			'unsubscribe from model notifications
-			RemoveHandler ModelController(Of MVCModel).Model.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
+			RemoveHandler ModelController(Of MVCModel).Model.PropertyChanged, AddressOf PropertyChangedEventHandlerDelegate
 		End Sub
 
 		Public Function _Main() As Int32
@@ -294,18 +310,10 @@ Namespace MvcConsoleVb
 
 		Protected Sub _Run()
 			ViewModel.DoSomething()
-
-			'ModelController<MVCModel>.Model.SomeBoolean = !ModelController<MVCModel>.Model.SomeBoolean;
-			'ModelController<MVCModel>.Model.SomeInt += 1;
-			'ModelController<MVCModel>.Model.SomeString = DateTime.Now.ToString();
-
-			'''/SettingsController<MVCSettings>.Settings.SomeBoolean = true;
-			'''/SettingsController<MVCSettings>.Settings.SomeInt += 1;
-			'''/SettingsController<MVCSettings>.Settings.SomeString = "test";
 		End Sub
-		#End Region
+#End Region
 
-		#Region "Utility"
+#Region "Utility"
 		''' <summary>
 		''' Apply Settings to viewer.
 		''' </summary>
@@ -378,4 +386,4 @@ Namespace MvcConsoleVb
 		#End Region
 		#End Region
 	End Class
-End Namespace
+'End Namespace

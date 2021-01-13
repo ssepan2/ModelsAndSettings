@@ -12,21 +12,23 @@ Imports MvcLibraryVb
 Imports Ssepan.Application
 Imports Ssepan.Utility
 
-Namespace MvcConsoleVb
-	'Note: wasn't static originally; changed to match winforms
-	NotInheritable Class Program
+'Namespace MvcConsoleVb
+'Note: wasn't static originally; changed to match winforms
+NotInheritable Class Program
 		Private Sub New()
 		End Sub
-		#Region "Declarations"
-		Public Const APP_NAME As [String] = "MVCConsole"
-		#End Region
 
-		#Region "INotifyPropertyChanged"
+#Region "Declarations"
+		Public Const APP_NAME As [String] = "MVCConsoleVb"
+#End Region
+
+#Region "INotifyPropertyChanged"
 		Public Shared Event PropertyChanged As PropertyChangedEventHandler
 		Public Shared Sub OnPropertyChanged(propertyName As [String])
 			Try
-
+				'If PropertyChanged IsNot Nothing Then'cannot access directly in VB
 				RaiseEvent PropertyChanged(Nothing, New PropertyChangedEventArgs(propertyName))
+				'End If
 			Catch ex As Exception
 				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
 
@@ -79,8 +81,11 @@ Namespace MvcConsoleVb
             Dim returnValue As Int32 = -1
 
             Try
-                'define default output delegate
-                ConsoleApplication.defaultOutputDelegate = ConsoleApplication.writeLineWrapperOutputDelegate
+			System.Diagnostics.Debug.WriteLine("Test")
+			Debug.WriteLine("debugtest")
+			Console.WriteLine("consoletest")
+			'define default output delegate
+			ConsoleApplication.defaultOutputDelegate = ConsoleApplication.writeLineWrapperOutputDelegate
 
                 'subscribe to notifications
                 AddHandler PropertyChanged, AddressOf PropertyChangedEventHandlerDelegate
@@ -88,9 +93,7 @@ Namespace MvcConsoleVb
                 'load, parse, run switches
                 DoSwitches(args)
 
-                InitModelAndSettings()
-
-                returnValue = New ConsoleView()._Main()
+				returnValue = New ConsoleView()._Main()
             Catch ex As Exception
                 Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
                 Console.WriteLine([String].Format("{0} did NOT complete: '{1}'", APP_NAME, ex.Message))
@@ -117,17 +120,6 @@ Namespace MvcConsoleVb
 			'Note: switches are processed before Model or Settings are accessed.
 		End Sub
 
-		Private Shared Sub InitModelAndSettings()
-			'create Settings before first use by Model
-			If SettingsController(Of MVCSettings).Settings Is Nothing Then
-				SettingsController(Of MVCSettings).[New]()
-			End If
-			'Model properties rely on Settings, so don't call Refresh before this is run.
-			If ModelController(Of MVCModel).Model Is Nothing Then
-				ModelController(Of MVCModel).[New]()
-			End If
-			ModelController(Of MVCModel).Model.UpdateHandlers()
-		End Sub
 #End Region
 
 #Region "CommandLineSwitch Action Delegates"
@@ -171,4 +163,4 @@ Namespace MvcConsoleVb
 		#End Region
 		#End Region
 	End Class
-End Namespace
+'End Namespace

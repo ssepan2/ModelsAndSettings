@@ -27,37 +27,37 @@ Imports Ssepan.Utility
 #End Region
 
 #Region "Constructors"
-        Public Sub New()
-            FileTypeExtension = FILE_TYPE_EXTENSION
-            FileTypeName = FILE_TYPE_NAME
-            FileTypeDescription = FILE_TYPE_DESCRIPTION
-            SerializeAs = SerializationFormat.Xml
-            'default
-            SomeComponent = New MVCSettingsComponent()
-        End Sub
+    Public Sub New()
+        FileTypeExtension = FILE_TYPE_EXTENSION
+        FileTypeName = FILE_TYPE_NAME
+        FileTypeDescription = FILE_TYPE_DESCRIPTION
+        'default
+        SerializeAs = SerializationFormat.Xml
+        SomeComponent = New MVCSettingsComponent()
+    End Sub
 
-        Public Sub New(someInt__1 As Int32, someBoolean__2 As [Boolean], someString__3 As [String])
-            Me.New()
-            SomeInt = someInt__1
-            SomeBoolean = someBoolean__2
-            SomeString = someString__3
-        End Sub
+    Public Sub New(someInt__1 As Int32, someBoolean__2 As [Boolean], someString__3 As [String])
+        Me.New()
+        SomeInt = someInt__1
+        SomeBoolean = someBoolean__2
+        SomeString = someString__3
+    End Sub
 
-        Public Sub New(someInt As Int32, someBoolean As [Boolean], someString As [String], someOtherInt As Int32, someOtherBoolean As [Boolean], someOtherString As [String])
-            Me.New(someInt, someBoolean, someString)
-            SomeComponent.SomeOtherInt = someOtherInt
-            SomeComponent.SomeOtherBoolean = someOtherBoolean
-            SomeComponent.SomeOtherString = someOtherString
-        End Sub
+    Public Sub New(someInt As Int32, someBoolean As [Boolean], someString As [String], someOtherInt As Int32, someOtherBoolean As [Boolean], someOtherString As [String])
+        Me.New(someInt, someBoolean, someString)
+        SomeComponent.SomeOtherInt = someOtherInt
+        SomeComponent.SomeOtherBoolean = someOtherBoolean
+        SomeComponent.SomeOtherString = someOtherString
+    End Sub
 
-        Public Sub New(someInt As Int32, someBoolean As [Boolean], someString As [String], someComponent__1 As MVCSettingsComponent)
-            Me.New(someInt, someBoolean, someString)
-            SomeComponent = someComponent__1
-        End Sub
+    Public Sub New(someInt As Int32, someBoolean As [Boolean], someString As [String], someComponent__1 As MVCSettingsComponent)
+        Me.New(someInt, someBoolean, someString)
+        SomeComponent = someComponent__1
+    End Sub
 #End Region
 
 #Region "IDisposable support"
-        Protected Overrides Sub Finalize()
+    Protected Overrides Sub Finalize()
             Try
                 Dispose(False)
             Finally
@@ -71,12 +71,13 @@ Imports Ssepan.Utility
             ' not been disposed of.
             If Not disposed Then
                 Try
-                    'Resources not disposed
+                'Resources not disposed
+                If disposeManagedResources Then
                     ' dispose managed resources
-                    If disposeManagedResources Then
-                    End If
+                    SomeComponent = Nothing
+                End If
 
-                    disposed = True
+                disposed = True
                 Finally
                     ' dispose unmanaged resources
                     MyBase.Dispose(disposeManagedResources)
@@ -94,9 +95,8 @@ Imports Ssepan.Utility
         ''' <param name="other"></param>
         ''' <returns></returns>
         Public Overrides Function Equals(other As ISettingsComponent) As [Boolean]
-            'ISettings
-            Dim returnValue As [Boolean] = Nothing
-            Dim otherSettings As MVCSettings = Nothing
+        Dim returnValue As [Boolean] = Nothing
+        Dim otherSettings As MVCSettings = Nothing
 
             Try
                 otherSettings = TryCast(other, MVCSettings)
@@ -158,17 +158,30 @@ Imports Ssepan.Utility
         End Property
 
 #Region "Persisted Properties"
-        'private MVCSettingsComponent __SomeComponent = default(MVCSettingsComponent);
-        Private _SomeComponent As MVCSettingsComponent = Nothing
+    'private MVCSettingsComponent __SomeComponent = default(MVCSettingsComponent);//not needed; individual properties are backed in settings
+    Private _SomeComponent As MVCSettingsComponent = Nothing
         Public Property SomeComponent As MVCSettingsComponent
             Get
                 Return _SomeComponent
             End Get
             Set(value As MVCSettingsComponent)
-                _SomeComponent = value
-                UpdateHandlers()
-            End Set
-        End Property
+            If SettingsController(Of MVCSettings).DefaultHandler IsNot Nothing Then
+                If _SomeComponent IsNot Nothing Then
+                    RemoveHandler _SomeComponent.PropertyChanged, SettingsController(Of MVCSettings).DefaultHandler
+                End If
+            End If
+
+            _SomeComponent = value
+
+            If SettingsController(Of MVCSettings).DefaultHandler IsNot Nothing Then
+                If _SomeComponent IsNot Nothing Then
+                    AddHandler _SomeComponent.PropertyChanged, SettingsController(Of MVCSettings).DefaultHandler
+                End If
+            End If
+
+            OnPropertyChanged("SomeComponent")
+        End Set
+    End Property
 
         Private __SomeInt As Int32 = Nothing
         Private _SomeInt As Int32 = Nothing
@@ -260,18 +273,6 @@ Imports Ssepan.Utility
                 Throw
             End Try
         End Sub
-
-        ''' <summary>
-        ''' Update child components (used as properties) to use the passed handler.
-        ''' Note: for every child component, copy to child and then let child copy to its children
-        ''' </summary>
-        Public Overrides Sub UpdateHandlers()
-            'copy handlers from this object to child conponent
-            ObjectHelper.CopyEvents(Of SettingsBase, SettingsComponentBase)(Me, Me.SomeComponent, "PropertyChanged")
-
-            'allow child component to copy handlers from itself to it's child conponent (if child component does not implement, this still calls empty method in base).
-            Me.SomeComponent.UpdateHandlers()
-        End Sub
 #End Region
-    End Class
+End Class
 'End Namespace

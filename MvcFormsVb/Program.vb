@@ -12,7 +12,7 @@ NotInheritable Class Program
     Private Sub New()
     End Sub
 #Region "Declarations"
-    Public Const APP_NAME As [String] = "MVCView"
+    Public Const APP_NAME As [String] = "MVCViewVb"
 #End Region
 
 #Region "INotifyPropertyChanged"
@@ -28,13 +28,13 @@ NotInheritable Class Program
     End Sub
 #End Region
 
-#Region "ModelPropertyChangedEventHandlerDelegate"
+#Region "PropertyChangedEventHandlerDelegate"
     ''' <summary>
     ''' Note: property changes update UI manually.
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Public Shared Sub ModelPropertyChangedEventHandlerDelegate(sender As [Object], e As PropertyChangedEventArgs)
+    Public Shared Sub PropertyChangedEventHandlerDelegate(sender As [Object], e As PropertyChangedEventArgs)
         Try
             If e.PropertyName = "Filename" Then
                 ConsoleApplication.defaultOutputDelegate([String].Format("{0}", Filename))
@@ -74,16 +74,14 @@ NotInheritable Class Program
             ConsoleApplication.defaultOutputDelegate = ConsoleApplication.messageBoxWrapperOutputDelegate
 
             'subscribe to notifications
-            AddHandler PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
+            AddHandler PropertyChanged, AddressOf PropertyChangedEventHandlerDelegate
 
             'load, parse, run switches
             DoSwitches(args)
 
-            InitModelAndSettings()
-
             Application.EnableVisualStyles()
             Application.SetCompatibleTextRenderingDefault(False)
-            Application.Run(New MVCView(args))
+            Application.Run(New MVCView()) ' Application.Run(New MVCView(args))'args put into model
 
             'return success code
             returnValue = 0
@@ -103,17 +101,6 @@ NotInheritable Class Program
         ' -t -f:"filename" -h
         'new CommandLineSwitch("H", "H invokes the Help command.", false, ConsoleApplication.Help)//may already be loaded
         ConsoleApplication.DoCommandLineSwitches(args, New CommandLineSwitch() {New CommandLineSwitch("f", "f filename; overrides app.config", True, AddressOf f)})
-    End Sub
-
-    Private Shared Sub InitModelAndSettings()
-        'create Settings before first use by Model
-        'If SettingsController(Of Settings).Settings Is Nothing Then
-        '    SettingsController(Of Settings).[New]()
-        'End If
-        'Model properties rely on Settings, so don't call Refresh before this is run.
-        If ModelController(Of MVCModel).Model Is Nothing Then
-            ModelController(Of MVCModel).[New]()
-        End If
     End Sub
 #End Region
 

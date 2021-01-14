@@ -1,23 +1,22 @@
 ﻿'#Const USE_CONFIG_FILEPATH = True
+'#Const USE_CUSTOM_VIEWMODEL = True
+'#Const DEBUG_MODEL_PROPERTYCHANGED = True
+'#Const DEBUG_SETTINGS_PROPERTYCHANGED = True
 
 Imports System
 Imports System.Collections.Generic
 Imports System.ComponentModel
-Imports System.Configuration
-Imports System.Data
 Imports System.Diagnostics
 Imports System.Drawing
 Imports System.IO
-Imports System.Linq
 Imports System.Reflection
-Imports System.Text
 Imports System.Windows.Forms
 Imports Ssepan.Application
 Imports Ssepan.Io
 Imports Ssepan.Utility
 Imports MvcLibraryVb
+Imports MvcLibraryVb.Properties
 
-'Namespace MvcFormsVb
 ''' <summary>
 ''' This is the View.
 ''' </summary>
@@ -25,56 +24,83 @@ Partial Public Class MVCView
     Inherits Form
     Implements INotifyPropertyChanged
 #Region "Declarations"
-    'Protected disposed As [Boolean]
-
-    Private _ValueChangedProgrammatically As [Boolean]
+    Protected disposed As Boolean
+    Private _ValueChangedProgrammatically As Boolean
 
     'cancellation hook
     Private cancelDelegate As Action = Nothing
-    Friend ViewModel As MVCViewModel = Nothing
-    Private permitEnabledStateAdd = True
-    Private rememberedStateAdd = False
-    Private permitEnabledStateRemove = True
-    Private rememberedStateRemove = False
+    Protected ViewModel As MVCViewModel = Nothing
 #End Region
 
 #Region "Constructors"
-    Public Sub New() 'required to compile
-
-    End Sub
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="args"></param>
-    Public Sub New(args As [String]())
+    Public Sub New()
         Try
-            InitializeComponent()
+            Me.InitializeComponent()
 
-            '(re)define default output delegate
+            '''(re)define default output delegate
             'ConsoleApplication.defaultOutputDelegate = ConsoleApplication.messageBoxWrapperOutputDelegate;
 
             'subscribe to view's notifications
-            AddHandler Me.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
-
+            AddHandler PropertyChanged, AddressOf PropertyChangedEventHandlerDelegate
             InitViewModel()
-
             BindSizeAndLocation()
         Catch ex As Exception
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
         End Try
     End Sub
 #End Region
 
+#Region "IDisposable"
+    '~MVCView()
+    '{
+    '    Dispose(false);
+    '}
+
+    'public virtual void Dispose()
+    '{
+    '    // dispose of the managed and unmanaged resources
+    '    Dispose(true);
+
+    '    // tell the GC that the Finalize process no longer needs
+    '    // to be run for this object.
+    '    GC.SuppressFinalize(this);
+    '}
+
+    'protected virtual void Dispose(bool disposeManagedResources)
+    '{
+    '    // process only if mananged and unmanaged resources have
+    '    // not been disposed of.
+    '    if (!this.disposed)
+    '    {
+    '        //Resources not disposed
+    '        if (disposeManagedResources)
+    '        {
+    '            // dispose managed resources
+    '            //unsubscribe from model notifications
+    '            if (this.PropertyChanged != null)
+    '            {
+    '                this.PropertyChanged -= PropertyChangedEventHandlerDelegate;
+    '            }
+    '        }
+    '        // dispose unmanaged resources
+    '        disposed = true;
+    '    }
+    '    else
+    '    {
+    '        //Resources already disposed
+    '    }
+    '}
+#End Region
+
 #Region "INotifyPropertyChanged"
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
-    Protected Sub OnPropertyChanged(propertyName As [String])
+
+    Protected Sub OnPropertyChanged(ByVal propertyName As String)
         Try
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
         Catch ex As Exception
             ViewModel.ErrorMessage = ex.Message
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
-
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
             Throw
         End Try
     End Sub
@@ -82,110 +108,142 @@ Partial Public Class MVCView
 
 #Region "PropertyChangedEventHandlerDelegates"
     ''' <summary>
-    ''' Note: handle model property changes manually.
+    ''' Note: model property changes update UI manually.
+    ''' Note: handle settings property changes manually.
+    ''' Note: because settings properties are a subset of the model 
+    '''  (every settings property should be in the model, 
+    '''  but not every model property is persisted to settings)
+    '''  it is decided that for now the settigns handler will 
+    '''  invoke the model handler as well.
     ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Protected Sub ModelPropertyChangedEventHandlerDelegate(sender As [Object], e As PropertyChangedEventArgs)
+    ''' <paramname="sender"></param>
+    ''' <paramname="e"></param>
+    Protected Sub PropertyChangedEventHandlerDelegate(ByVal sender As Object, ByVal e As PropertyChangedEventArgs)
         Try
-            If e.PropertyName = "IsChanged" Then
+#Region "Model"
+            If Equals(e.PropertyName, "IsChanged") Then
                 'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", e.PropertyName));
                 ApplySettings()
                 'Status Bar
-            ElseIf e.PropertyName = "ActionIconIsVisible" Then
-                StatusBarActionIcon.Visible = (ViewModel.ActionIconIsVisible)
-            ElseIf e.PropertyName = "ActionIconImage" Then
-                StatusBarActionIcon.Image = (If(ViewModel IsNot Nothing, ViewModel.ActionIconImage, DirectCast(Nothing, Image)))
-            ElseIf e.PropertyName = "StatusMessage" Then
+            ElseIf Equals(e.PropertyName, "ActionIconIsVisible") Then
+                Me.StatusBarActionIcon.Visible = ViewModel.ActionIconIsVisible
+            ElseIf Equals(e.PropertyName, "ActionIconImage") Then
+                Me.StatusBarActionIcon.Image = If(ViewModel IsNot Nothing, ViewModel.ActionIconImage, Nothing)
+            ElseIf Equals(e.PropertyName, "StatusMessage") Then
                 'replace default action by setting control property
+                'skip status message updates after Viewmodel is null
                 'e = new PropertyChangedEventArgs(e.PropertyName + ".handled");
 
                 'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", StatusMessage));
-                'skip status message updates after Viewmodel Is null
-                If (ViewModel IsNot Nothing) Then
-                    StatusBarStatusMessage.Text = ViewModel.StatusMessage
-                End If
-            ElseIf e.PropertyName = "ErrorMessage" Then
+                Me.StatusBarStatusMessage.Text = If(ViewModel IsNot Nothing, ViewModel.StatusMessage, Nothing)
+            ElseIf Equals(e.PropertyName, "ErrorMessage") Then
+                'replace default action by setting control property
+                'skip status message updates after Viewmodel is null
+                'e = new PropertyChangedEventArgs(e.PropertyName + ".handled");
+
+                'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", ErrorMessage));
+                Me.StatusBarErrorMessage.Text = If(ViewModel IsNot Nothing, ViewModel.ErrorMessage, Nothing)
+            ElseIf Equals(e.PropertyName, "CustomMessage") Then
                 'replace default action by setting control property
                 'e = new PropertyChangedEventArgs(e.PropertyName + ".handled");
 
                 'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", ErrorMessage));
-                'skip status message updates after Viewmodel Is null
-                If (ViewModel IsNot Nothing) Then
-                    StatusBarErrorMessage.Text = ViewModel.ErrorMessage
-                End If
-            ElseIf e.PropertyName = "CustomMessage" Then
-
-                'replace default action by setting control property
-                StatusBarCustomMessage.Text = ViewModel.CustomMessage
-                    'e = new PropertyChangedEventArgs(e.PropertyName + ".handled")
-
-                    'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", ErrorMessage))
-
-                ElseIf e.PropertyName = "ErrorMessageToolTipText" Then
-                    StatusBarErrorMessage.ToolTipText = ViewModel.ErrorMessageToolTipText
-                ElseIf e.PropertyName = "ProgressBarValue" Then
-                    StatusBarProgressBar.Value = ViewModel.ProgressBarValue
-                ElseIf e.PropertyName = "ProgressBarMaximum" Then
-                    StatusBarProgressBar.Maximum = ViewModel.ProgressBarMaximum
-                ElseIf e.PropertyName = "ProgressBarMinimum" Then
-                    StatusBarProgressBar.Minimum = ViewModel.ProgressBarMinimum
-                ElseIf e.PropertyName = "ProgressBarStep" Then
-                    StatusBarProgressBar.[Step] = ViewModel.ProgressBarStep
-                ElseIf e.PropertyName = "ProgressBarIsMarquee" Then
-                    StatusBarProgressBar.Style = (If(ViewModel.ProgressBarIsMarquee, ProgressBarStyle.Marquee, ProgressBarStyle.Blocks))
-                ElseIf e.PropertyName = "ProgressBarIsVisible" Then
-                    StatusBarProgressBar.Visible = (ViewModel.ProgressBarIsVisible)
-                ElseIf e.PropertyName = "DirtyIconIsVisible" Then
-                    StatusBarDirtyMessage.Visible = (ViewModel.DirtyIconIsVisible)
-                ElseIf e.PropertyName = "DirtyIconImage" Then
-                    StatusBarDirtyMessage.Image = ViewModel.DirtyIconImage
+                Me.StatusBarCustomMessage.Text = ViewModel.CustomMessage
+            ElseIf Equals(e.PropertyName, "ErrorMessageToolTipText") Then
+                Me.StatusBarErrorMessage.ToolTipText = ViewModel.ErrorMessageToolTipText
+            ElseIf Equals(e.PropertyName, "ProgressBarValue") Then
+                Me.StatusBarProgressBar.Value = ViewModel.ProgressBarValue
+            ElseIf Equals(e.PropertyName, "ProgressBarMaximum") Then
+                Me.StatusBarProgressBar.Maximum = ViewModel.ProgressBarMaximum
+            ElseIf Equals(e.PropertyName, "ProgressBarMinimum") Then
+                Me.StatusBarProgressBar.Minimum = ViewModel.ProgressBarMinimum
+            ElseIf Equals(e.PropertyName, "ProgressBarStep") Then
+                Me.StatusBarProgressBar.Step = ViewModel.ProgressBarStep
+            ElseIf Equals(e.PropertyName, "ProgressBarIsMarquee") Then
+                Me.StatusBarProgressBar.Style = If(ViewModel.ProgressBarIsMarquee, ProgressBarStyle.Marquee, ProgressBarStyle.Blocks)
+            ElseIf Equals(e.PropertyName, "ProgressBarIsVisible") Then
+                Me.StatusBarProgressBar.Visible = ViewModel.ProgressBarIsVisible
+            ElseIf Equals(e.PropertyName, "DirtyIconIsVisible") Then
+                Me.StatusBarDirtyMessage.Visible = ViewModel.DirtyIconIsVisible
+            ElseIf Equals(e.PropertyName, "DirtyIconImage") Then
                 'use if properties cannot be databound
                 'else if (e.PropertyName == "SomeInt")
                 '{
-                '    //SettingsController<Settings>.Settings.
-                '    ModelController<Model>.Model.IsChanged = true;
+                '    //SettingsController<MVCSettings>.Settings.
+                '    ModelController<MVCModel>.Model.IsChanged = true;
                 '}
                 'else if (e.PropertyName == "SomeBoolean")
                 '{
-                '    //SettingsController<Settings>.Settings.
-                '    ModelController<Model>.Model.IsChanged = true;
+                '    //SettingsController<MVCSettings>.Settings.
+                '    ModelController<MVCModel>.Model.IsChanged = true;
                 '}
                 'else if (e.PropertyName == "SomeString")
                 '{
-                '    //SettingsController<Settings>.Settings.
-                '    ModelController<Model>.Model.IsChanged = true;
+                '    //SettingsController<MVCSettings>.Settings.
+                '    ModelController<MVCModel>.Model.IsChanged = true;
                 '}
+                'else if (e.PropertyName == "SomeOtherBoolean")
+                '{
+                '    ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherBoolean: {0}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherBoolean));
+                '}
+                'else if (e.PropertyName == "SomeOtherString")
+                '{
+                '    ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherString: {0}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherString));
+                '}
+                'else if (e.PropertyName == "SomeComponent")
+                '{
+                '    ConsoleApplication.defaultOutputDelegate(String.Format("SomeComponent: {0},{1},{2}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherInt, ModelController<MVCModel>.Model.SomeComponent.SomeOtherBoolean, ModelController<MVCModel>.Model.SomeComponent.SomeOtherString));
+                '}
+                'else if (e.PropertyName == "StillAnotherInt")
+                '{
+                '    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherInt: {0}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherInt));
+                '}
+                'else if (e.PropertyName == "StillAnotherBoolean")
+                '{
+                '    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherBoolean: {0}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean));
+                '}
+                'else if (e.PropertyName == "StillAnotherString")
+                '{
+                '    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherString: {0}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherString));
+                '}
+                'else if (e.PropertyName == "StillAnotherComponent")
+                '{
+                '    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherComponent: {0},{1},{2}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherInt, ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean, ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherString));
+                '}
+                Me.StatusBarDirtyMessage.Image = ViewModel.DirtyIconImage
+            Else
+#If DEBUG_MODEL_PROPERTYCHANGED Then
+                        ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName));
+#End If
             End If
+#End Region
+
+#Region "Settings"
+            If Equals(e.PropertyName, "Dirty") Then
+                'apply settings that don't have databindings
+                ViewModel.DirtyIconIsVisible = SettingsController(Of MVCSettings).Settings.Dirty
+            Else
+#If DEBUG_SETTINGS_PROPERTYCHANGED Then
+                    ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName));
+#End If
+#End Region
+            End If
+
         Catch ex As Exception
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
         End Try
     End Sub
 
-    ''' <summary>
-    ''' Note: handle settings property changes manually.
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Protected Sub SettingsPropertyChangedEventHandlerDelegate(sender As [Object], e As PropertyChangedEventArgs)
-        Try
-            If e.PropertyName = "Dirty" Then
-                'apply settings that don't have databindings
-                ViewModel.DirtyIconIsVisible = (SettingsController(Of MVCSettings).Settings.Dirty)
-            End If
-        Catch ex As Exception
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
-        End Try
-    End Sub
 #End Region
 
 #Region "Properties"
-    Private _ViewName As [String] = Program.APP_NAME
-    Public Property ViewName() As [String]
+    Private _ViewName As String = Program.APP_NAME
+
+    Public Property ViewName As String
         Get
             Return _ViewName
         End Get
-        Set(value As [String])
+        Set(ByVal value As String)
             _ViewName = value
             OnPropertyChanged("ViewName")
         End Set
@@ -197,11 +255,12 @@ Partial Public Class MVCView
     ''' <summary>
     ''' Process Form key presses.
     ''' </summary>
-    ''' <param name="msg"></param>
-    ''' <param name="keyData"></param>
+    ''' <paramname="msg"></param>
+    ''' <paramname="keyData"></param>
     ''' <returns></returns>
-    Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As [Boolean]
-        Dim returnValue As [Boolean] = Nothing
+    Protected Overrides Function ProcessCmdKey(ByRef msg As Message, ByVal keyData As Keys) As Boolean
+        Dim returnValue As Boolean = Nothing
+
         Try
             ' Implement the Escape / Cancel keystroke
             If keyData = Keys.Cancel OrElse keyData = Keys.Escape Then
@@ -214,41 +273,36 @@ Partial Public Class MVCView
                 returnValue = True
             Else
                 returnValue = MyBase.ProcessCmdKey(msg, keyData)
-
             End If
+
         Catch ex As Exception
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
         End Try
+
         Return returnValue
     End Function
 
-    Private Sub View_Load(sender As [Object], e As EventArgs) Handles MyBase.Load
+    Private Sub View_Load(ByVal sender As Object, ByVal e As EventArgs)
         Try
-            ViewModel.StatusMessage = [String].Format("{0} starting...", ViewName)
-
-            ViewModel.StatusMessage = [String].Format("{0} started.", ViewName)
-
+            ViewModel.StatusMessage = String.Format("{0} starting...", ViewName)
+            ViewModel.StatusMessage = String.Format("{0} started.", ViewName)
             _Run()
         Catch ex As Exception
             ViewModel.ErrorMessage = ex.Message
-            ViewModel.StatusMessage = [String].Empty
-
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            ViewModel.StatusMessage = String.Empty
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
         End Try
     End Sub
 
-    Private Sub View_FormClosing(sender As [Object], e As FormClosingEventArgs) Handles MyBase.FormClosing
+    Private Sub View_FormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs)
         Try
-            ViewModel.StatusMessage = [String].Format("{0} completing...", ViewName)
-
+            ViewModel.StatusMessage = String.Format("{0} completing...", ViewName)
             DisposeSettings()
-
-            ViewModel.StatusMessage = [String].Format("{0} completed.", ViewName)
+            ViewModel.StatusMessage = String.Format("{0} completed.", ViewName)
         Catch ex As Exception
             ViewModel.ErrorMessage = ex.Message.ToString()
             ViewModel.StatusMessage = ""
-
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
         Finally
             ViewModel = Nothing
         End Try
@@ -256,46 +310,44 @@ Partial Public Class MVCView
 #End Region
 
 #Region "Menu Events"
-    Private Sub menuFileNew_Click(sender As [Object], e As EventArgs) Handles menuFileNew.Click, buttonFileNew.Click
+    Private Sub menuFileNew_Click(ByVal sender As Object, ByVal e As EventArgs)
         ViewModel.FileNew()
     End Sub
 
-    Private Sub menuFileOpen_Click(sender As [Object], e As EventArgs) Handles menuFileOpen.Click, buttonFileOpen.Click
+    Private Sub menuFileOpen_Click(ByVal sender As Object, ByVal e As EventArgs)
         ViewModel.FileOpen()
     End Sub
 
-    Private Sub menuFileSave_Click(sender As [Object], e As EventArgs) Handles menuFileSave.Click, buttonFileSave.Click
+    Private Sub menuFileSave_Click(ByVal sender As Object, ByVal e As EventArgs)
         ViewModel.FileSave()
     End Sub
 
-    Private Sub menuFileSaveAs_Click(sender As [Object], e As EventArgs) Handles menuFileSaveAs.Click
+    Private Sub menuFileSaveAs_Click(ByVal sender As Object, ByVal e As EventArgs)
         ViewModel.FileSaveAs()
     End Sub
 
-    Private Sub menuFileExit_Click(sender As [Object], e As EventArgs) Handles menuFileExit.Click
+    Private Sub menuFileExit_Click(ByVal sender As Object, ByVal e As EventArgs)
         ViewModel.FileExit()
     End Sub
 
-    Private Sub menuEditProperties_Click(sender As [Object], e As EventArgs) Handles menuEditProperties.Click, buttonEditProperties.Click
+    Private Sub menuEditProperties_Click(ByVal sender As Object, ByVal e As EventArgs)
         ViewModel.EditProperties()
     End Sub
 
-    Private Sub menuEditCopyToClipboard_Click(sender As [Object], e As EventArgs) Handles menuEditCopyToClipboard.Click, buttonEditCopyToClipboard.Click
+    Private Sub menuEditCopyToClipboard_Click(ByVal sender As Object, ByVal e As EventArgs)
         ViewModel.EditCopy()
     End Sub
 
-    Private Sub menuHelpAbout_Click(sender As [Object], e As EventArgs) Handles menuHelpAbout.Click
+    Private Sub menuHelpAbout_Click(ByVal sender As Object, ByVal e As EventArgs)
         ViewModel.HelpAbout(Of AssemblyInfo)()
     End Sub
 #End Region
 
 #Region "Control Events"
-    Private Sub cmdRun_Click(sender As Object, e As EventArgs) Handles cmdRun.Click
+    Private Sub cmdRun_Click(ByVal sender As Object, ByVal e As EventArgs)
         ViewModel.DoSomething()
         'ViewModel.CustomMessage = "blah";//done in DoSomething
-
     End Sub
-
 #End Region
 #End Region
 
@@ -303,45 +355,40 @@ Partial Public Class MVCView
 #Region "FormAppBase"
     Protected Sub InitViewModel()
         Try
-            'subscribe view to model notifications
-            AddHandler ModelController(Of MVCModel).Model.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
-            ''subscribe view to settings notifications
-            'SettingsController(Of MVCSettings).DefaultHandler = AddressOf SettingsPropertyChangedEventHandlerDelegate
+            'tell controller how model should notify view about non-persisted properties AND including model properties that may be part of settings
+            ModelController(Of MVCModel).DefaultHandler = AddressOf PropertyChangedEventHandlerDelegate
 
-            Dim settingsFileDialogInfo As New FileDialogInfo(SettingsController(Of MVCSettings).FILE_NEW, Nothing, Nothing, SettingsController(Of MVCSettings).Settings.FileTypeExtension, SettingsController(Of MVCSettings).Settings.FileTypeDescription, SettingsController(Of MVCSettings).Settings.FileTypeName,
-                New [String]() {"XML files (*.xml)|*.xml", "All files (*.*)|*.*"}, False, Nothing, Environment.GetFolderPath(Environment.SpecialFolder.Personal).WithTrailingSeparator())
+            'tell controller how settings should notify view about persisted properties
+            SettingsController(Of MVCSettings).DefaultHandler = AddressOf PropertyChangedEventHandlerDelegate
+            InitModelAndSettings()
+            Dim settingsFileDialogInfo As FileDialogInfo = New FileDialogInfo(SettingsController(Of MVCSettings).FILE_NEW, Nothing, Nothing, SettingsBase.FileTypeExtension, SettingsBase.FileTypeDescription, SettingsBase.FileTypeName, New String() {"XML files (*.xml)|*.xml", "All files (*.*)|*.*"}, False, Nothing, Environment.GetFolderPath(Environment.SpecialFolder.Personal).WithTrailingSeparator())
 
             'set dialog caption
-            settingsFileDialogInfo.Title = Me.Text
+            settingsFileDialogInfo.Title = Text
 
             'class to handle standard behaviors
-            ViewModelController(Of Bitmap, MVCViewModel).[New] _
-            (
-                ViewName, New MVCViewModel(AddressOf Me.ModelPropertyChangedEventHandlerDelegate, New Dictionary(Of [String], Bitmap)() From
-                {
-                    {"New", Global.My.Resources._New},
-                    {"Save", Global.My.Resources.Save},
-                    {"Open", Global.My.Resources.Open},
-                    {"Print", Global.My.Resources.Print},
-                    {"Copy", Global.My.Resources.Copy},
-                    {"Properties", Global.My.Resources.Properties}
-                },
-                settingsFileDialogInfo,
-                Me
-                )
-            )
+            ViewModelController(Of Bitmap, MVCViewModel).[New](ViewName, New MVCViewModel(AddressOf Me.PropertyChangedEventHandlerDelegate, New Dictionary(Of String, Bitmap)() From {
+                    {"New", My.Resources.Resources._New},
+                    {"Save", My.Resources.Resources.Save},
+                    {"Open", My.Resources.Resources.Open},
+                    {"Print", My.Resources.Resources.Print},
+                    {"Copy", My.Resources.Resources.Copy},
+                    {"Properties", My.Resources.Resources.Properties}
+                }, settingsFileDialogInfo))
+
+            'select a viewmodel by view name
             ViewModel = ViewModelController(Of Bitmap, MVCViewModel).ViewModel(ViewName)
 
             BindFormUi()
 
             'Init config parameters
             If Not LoadParameters() Then
-                Throw New Exception([String].Format("Unable to load config file parameter(s)."))
+                Throw New Exception(String.Format("Unable to load config file parameter(s)."))
             End If
 
             'DEBUG:filename coming in is being converted/passed as DOS 8.3 format equivalent
             'Load
-            If (SettingsController(Of MVCSettings).FilePath Is Nothing) OrElse (SettingsController(Of MVCSettings).Filename = SettingsController(Of MVCSettings).FILE_NEW) Then
+            If Equals(SettingsController(Of MVCSettings).FilePath, Nothing) OrElse Equals(SettingsController(Of MVCSettings).Filename, SettingsController(Of MVCSettings).FILE_NEW) Then
                 'NEW
                 ViewModel.FileNew()
             Else
@@ -351,47 +398,54 @@ Partial Public Class MVCView
 
 #If DEBUG Then
             'debug view
-            'menuEditProperties_Click(sender, e)
+            ' menuEditProperties_Click(sender, e)
 #End If
 
             'Display dirty state
             ModelController(Of MVCModel).Model.Refresh()
         Catch ex As Exception
+
             If ViewModel IsNot Nothing Then
                 ViewModel.ErrorMessage = ex.Message
             End If
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
         End Try
+    End Sub
+
+    Protected Sub InitModelAndSettings()
+        'create Settings before first use by Model
+        If SettingsController(Of MVCSettings).Settings Is Nothing Then
+            SettingsController(Of MVCSettings).[New]()
+        End If
+        'Model properties rely on Settings, so don't call Refresh before this is run.
+        If ModelController(Of MVCModel).Model Is Nothing Then
+            ModelController(Of MVCModel).[New]()
+        End If
     End Sub
 
     Protected Sub DisposeSettings()
         'save user and application settings 
-        Global.My.Settings.Save()
+        Global.My.MySettings.Default.Save() 'Properties.Settings.Default.Save()
 
         If SettingsController(Of MVCSettings).Settings.Dirty Then
             'prompt before saving
-            Dim dialogResult__1 As DialogResult = MessageBox.Show("Save changes?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-            Select Case dialogResult__1
-                Case DialogResult.Yes
-                    If True Then
-                        'SAVE
-                        ViewModel.FileSave()
+            Dim dialogResult = MessageBox.Show("Save changes?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
-                        Exit Select
-                    End If
+            Select Case dialogResult
+                Case DialogResult.Yes
+                    'SAVE
+                    ViewModel.FileSave()
+                    Exit Select
                 Case DialogResult.No
-                    If True Then
-                        Exit Select
-                    End If
+                    Exit Select
                 Case Else
-                    If True Then
-                        Throw New InvalidEnumArgumentException()
-                    End If
+                    Throw New InvalidEnumArgumentException()
             End Select
         End If
 
         'unsubscribe from model notifications
-        RemoveHandler ModelController(Of MVCModel).Model.PropertyChanged, AddressOf ModelPropertyChangedEventHandlerDelegate
+        RemoveHandler ModelController(Of MVCModel).Model.PropertyChanged, AddressOf PropertyChangedEventHandlerDelegate
     End Sub
 
     Protected Sub _Run()
@@ -404,13 +458,12 @@ Partial Public Class MVCView
     ''' Bind static Model controls to Model Controller
     ''' </summary>
     Private Sub BindFormUi()
+        'Form
+
+        'Controls
         Try
-            'Form
-
-            'Controls
-
         Catch ex As Exception
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
             Throw
         End Try
     End Sub
@@ -420,28 +473,31 @@ Partial Public Class MVCView
     ''' </summary>
     Private Sub BindModelUi()
         Try
-            BindField(Of TextBox, MVCModel)(txtSomeInt, ModelController(Of MVCModel).Model, "SomeInt")
-            BindField(Of TextBox, MVCModel)(txtSomeString, ModelController(Of MVCModel).Model, "SomeString")
-            BindField(Of CheckBox, MVCModel)(chkSomeBoolean, ModelController(Of MVCModel).Model, "SomeBoolean", "Checked")
-
-            BindField(Of TextBox, MVCModel)(txtSomeOtherInt, ModelController(Of MVCModel).Model, "SomeComponent.SomeOtherInt")
-            BindField(Of TextBox, MVCModel)(txtSomeOtherString, ModelController(Of MVCModel).Model, "SomeComponent.SomeOtherString")
-            BindField(Of CheckBox, MVCModel)(chkSomeOtherBoolean, ModelController(Of MVCModel).Model, "SomeComponent.SomeOtherBoolean", "Checked")
+            BindField(Of TextBox, MVCModel)(Me.txtSomeInt, ModelController(Of MVCModel).Model, "SomeInt")
+            BindField(Of TextBox, MVCModel)(Me.txtSomeString, ModelController(Of MVCModel).Model, "SomeString")
+            BindField(Of CheckBox, MVCModel)(Me.chkSomeBoolean, ModelController(Of MVCModel).Model, "SomeBoolean", "Checked")
+            BindField(Of TextBox, MVCModel)(Me.txtSomeOtherInt, ModelController(Of MVCModel).Model, "SomeComponent.SomeOtherInt")
+            BindField(Of TextBox, MVCModel)(Me.txtSomeOtherString, ModelController(Of MVCModel).Model, "SomeComponent.SomeOtherString")
+            BindField(Of CheckBox, MVCModel)(Me.chkSomeOtherBoolean, ModelController(Of MVCModel).Model, "SomeComponent.SomeOtherBoolean", "Checked")
+            BindField(Of TextBox, MVCModel)(Me.txtStillAnotherInt, ModelController(Of MVCModel).Model, "StillAnotherComponent.StillAnotherInt")
+            BindField(Of TextBox, MVCModel)(Me.txtStillAnotherString, ModelController(Of MVCModel).Model, "StillAnotherComponent.StillAnotherString")
+            BindField(Of CheckBox, MVCModel)(Me.chkStillAnotherBoolean, ModelController(Of MVCModel).Model, "StillAnotherComponent.StillAnotherBoolean", "Checked")
         Catch ex As Exception
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
             Throw
         End Try
     End Sub
 
-    Private Sub BindField(Of TControl As Control, TModel)(fieldControl As TControl, model As TModel, modelPropertyName As [String], Optional controlPropertyName As [String] = "Text", Optional formattingEnabled As [Boolean] = False, Optional dataSourceUpdateMode__1 As DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged,
-        Optional reBind As [Boolean] = True)
+    Private Sub BindField(Of TControl As Control, TModel)(ByVal fieldControl As TControl, ByVal model As TModel, ByVal modelPropertyName As String, ByVal Optional controlPropertyName As String = "Text", ByVal Optional formattingEnabled As Boolean = False, ByVal Optional dataSourceUpdateMode As DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged, ByVal Optional reBind As Boolean = True)
         Try
             fieldControl.DataBindings.Clear()
+
             If reBind Then
-                fieldControl.DataBindings.Add(controlPropertyName, model, modelPropertyName, formattingEnabled, dataSourceUpdateMode__1)
+                fieldControl.DataBindings.Add(controlPropertyName, model, modelPropertyName, formattingEnabled, dataSourceUpdateMode)
             End If
+
         Catch ex As Exception
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
         End Try
     End Sub
 
@@ -461,11 +517,10 @@ Partial Public Class MVCView
             Text = Path.GetFileName(SettingsController(Of MVCSettings).Filename) & " - " & ViewName
 
             'apply settings that don't have databindings
-            ViewModel.DirtyIconIsVisible = (SettingsController(Of MVCSettings).Settings.Dirty)
-
+            ViewModel.DirtyIconIsVisible = SettingsController(Of MVCSettings).Settings.Dirty
             _ValueChangedProgrammatically = False
         Catch ex As Exception
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
             Throw
         End Try
     End Sub
@@ -475,11 +530,11 @@ Partial Public Class MVCView
     ''' For now, do only disabling here and leave enabling based on biz logic 
     '''  to be triggered by refresh?
     ''' </summary>
-    ''' <param name="functionButton"></param>
-    ''' <param name="functionMenu"></param>
-    ''' <param name="cancelButton"></param>
-    ''' <param name="enable"></param>
-    Private Sub SetFunctionControlsEnable(functionButton As Button, functionToolbarButton As ToolStripButton, functionMenu As ToolStripMenuItem, cancelButton As Button, enable As [Boolean])
+    ''' <paramname="functionButton"></param>
+    ''' <paramname="functionMenu"></param>
+    ''' <paramname="cancelButton"></param>
+    ''' <paramname="enable"></param>
+    Private Sub SetFunctionControlsEnable(ByVal functionButton As Button, ByVal functionToolbarButton As ToolStripButton, ByVal functionMenu As ToolStripMenuItem, ByVal cancelButton As Button, ByVal enable As Boolean)
         Try
             'stand-alone button
             If functionButton IsNot Nothing Then
@@ -500,8 +555,9 @@ Partial Public Class MVCView
             If cancelButton IsNot Nothing Then
                 cancelButton.Enabled = Not enable
             End If
+
         Catch ex As Exception
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
         End Try
     End Sub
 
@@ -512,12 +568,12 @@ Partial Public Class MVCView
     Private Sub InvokeActionCancel()
         Try
             'execute cancellation hook
-            If (cancelDelegate IsNot Nothing) Then
+            If cancelDelegate IsNot Nothing Then
                 cancelDelegate()
             End If
-            'RaiseEvent cancelDelegate()
+
         Catch ex As Exception
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
         End Try
     End Sub
 
@@ -525,56 +581,60 @@ Partial Public Class MVCView
     ''' Load from app config; override with command line if present
     ''' </summary>
     ''' <returns></returns>
-    Private Function LoadParameters() As [Boolean]
-        Dim returnValue As [Boolean] = Nothing
+    Private Function LoadParameters() As Boolean
+        Dim returnValue As Boolean = Nothing
 #If USE_CONFIG_FILEPATH Then
-			Dim _settingsFilename As [String] = Nothing
+            String _settingsFilename = default(String);
 #End If
 
         Try
-            If (Program.Filename IsNot Nothing) AndAlso (Program.Filename <> SettingsController(Of MVCSettings).FILE_NEW) Then
+
+            If Not Equals(Program.Filename, Nothing) AndAlso Not Equals(Program.Filename, SettingsController(Of MVCSettings).FILE_NEW) Then
                 'got filename from command line
                 'DEBUG:filename coming in is being converted/passed as DOS 8.3 format equivalent
-                If Not RegistryAccess.ValidateFileAssociation(Application.ExecutablePath, "." & SettingsController(Of MVCSettings).Settings.FileTypeExtension) Then
-                    Throw New ApplicationException([String].Format("Settings filename not associated: '{0}'." & vbLf & "Check filename on command line.", Program.Filename))
+                If Not RegistryAccess.ValidateFileAssociation(Application.ExecutablePath, "." & SettingsBase.FileTypeExtension) Then
+                    Throw New ApplicationException(String.Format("Settings filename not associated: '{0}'." & Microsoft.VisualBasic.Constants.vbLf & "Check filename on command line.", Program.Filename))
                     'it passed; use value from command line
                 End If
             Else
 #If USE_CONFIG_FILEPATH Then
-					'get filename from app.config
-					If Not Configuration.ReadString("SettingsFilename", _settingsFilename) Then
-						Throw New ApplicationException([String].Format("Unable to load SettingsFilename: {0}", "SettingsFilename"))
-					End If
-					If (_settingsFilename Is Nothing) OrElse (_settingsFilename = SettingsController(Of MVCSettings).FILE_NEW) Then
-						Throw New ApplicationException([String].Format("Settings filename not set: '{0}'." & vbLf & "Check SettingsFilename in app config file.", _settingsFilename))
-					End If
-					'use with the supplied path
-					SettingsController(Of MVCSettings).Filename = _settingsFilename
+                    //get filename from app.config
+                    if (!Configuration.ReadString("SettingsFilename", out _settingsFilename))
+                    {
+                        throw new ApplicationException(String.Format("Unable to load SettingsFilename: {0}", "SettingsFilename"));
+                    }
+                    if ((_settingsFilename == null) || (_settingsFilename == SettingsController<MVCSettings>.FILE_NEW))
+                    {
+                        throw new ApplicationException(String.Format("Settings filename not set: '{0}'.\nCheck SettingsFilename in app config file.", _settingsFilename));
+                    }
+                    //use with the supplied path
+                    SettingsController<MVCSettings>.Filename = _settingsFilename;
 
-					If Path.GetDirectoryName(_settingsFilename) = [String].Empty Then
-						'supply default path if missing
-						SettingsController(Of MVCSettings).Pathname = Environment.GetFolderPath(Environment.SpecialFolder.Personal).WithTrailingSeparator()
-                    End If
+                    if (Path.GetDirectoryName(_settingsFilename) == String.Empty)
+                    {
+                        //supply default path if missing
+                        SettingsController<MVCSettings>.Pathname = Environment.GetFolderPath(Environment.SpecialFolder.Personal).WithTrailingSeparator();
+                    }
 #End If
             End If
 
             returnValue = True
         Catch ex As Exception
+            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error)
             'throw;
-            Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
         End Try
+
         Return returnValue
     End Function
 
     Private Sub BindSizeAndLocation()
         'Note:Size must be done after InitializeComponent(); do Location this way as well.--SJS
-        Me.DataBindings.Add(New System.Windows.Forms.Binding("Location", My.MySettings.Default, "Location", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", My.MySettings.Default, "Size", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.ClientSize = Global.My.MySettings.Default.Size
-        Me.Location = Global.My.MySettings.Default.Location
+        DataBindings.Add(New Binding("Location", Global.My.MySettings.Default, "Location", True, DataSourceUpdateMode.OnPropertyChanged)) 'Global.Properties.Settings.Default
+        DataBindings.Add(New Binding("ClientSize", Global.My.MySettings.Default, "Size", True, DataSourceUpdateMode.OnPropertyChanged)) 'Global.Properties.Settings.Default
+        ClientSize = Global.My.MySettings.Default.Size 'Global.Properties.Settings.Default.Size
+        Location = Global.My.MySettings.Default.Location 'Global.My.Properties.Settings.Default.Location
+
     End Sub
 #End Region
 #End Region
-
 End Class
-'End Namespace

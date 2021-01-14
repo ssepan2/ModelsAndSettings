@@ -72,8 +72,8 @@
             this.chkStillAnotherBoolean = new System.Windows.Forms.CheckBox();
             this.txtStillAnotherString = new System.Windows.Forms.TextBox();
             this.txtStillAnotherInt = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblStillAnotherString = new System.Windows.Forms.Label();
+            this.lblStillAnotherInt = new System.Windows.Forms.Label();
             this.toolbar.SuspendLayout();
             this.menu.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -466,23 +466,23 @@
             this.txtStillAnotherInt.Size = new System.Drawing.Size(100, 20);
             this.txtStillAnotherInt.TabIndex = 133;
             // 
-            // label5
+            // lblStillAnotherString
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(378, 81);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
-            this.label5.TabIndex = 132;
-            this.label5.Text = "String";
+            this.lblStillAnotherString.AutoSize = true;
+            this.lblStillAnotherString.Location = new System.Drawing.Point(378, 81);
+            this.lblStillAnotherString.Name = "lblStillAnotherString";
+            this.lblStillAnotherString.Size = new System.Drawing.Size(34, 13);
+            this.lblStillAnotherString.TabIndex = 132;
+            this.lblStillAnotherString.Text = "String";
             // 
-            // label6
+            // lblStillAnotherInt
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(378, 55);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(31, 13);
-            this.label6.TabIndex = 131;
-            this.label6.Text = "Int32";
+            this.lblStillAnotherInt.AutoSize = true;
+            this.lblStillAnotherInt.Location = new System.Drawing.Point(378, 55);
+            this.lblStillAnotherInt.Name = "lblStillAnotherInt";
+            this.lblStillAnotherInt.Size = new System.Drawing.Size(31, 13);
+            this.lblStillAnotherInt.TabIndex = 131;
+            this.lblStillAnotherInt.Text = "Int32";
             // 
             // MVCView
             // 
@@ -492,8 +492,8 @@
             this.Controls.Add(this.chkStillAnotherBoolean);
             this.Controls.Add(this.txtStillAnotherString);
             this.Controls.Add(this.txtStillAnotherInt);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lblStillAnotherString);
+            this.Controls.Add(this.lblStillAnotherInt);
             this.Controls.Add(this.chkSomeOtherBoolean);
             this.Controls.Add(this.txtSomeOtherString);
             this.Controls.Add(this.txtSomeOtherInt);
@@ -570,8 +570,8 @@
         private System.Windows.Forms.CheckBox chkStillAnotherBoolean;
         private System.Windows.Forms.TextBox txtStillAnotherString;
         private System.Windows.Forms.TextBox txtStillAnotherInt;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblStillAnotherString;
+        private System.Windows.Forms.Label lblStillAnotherInt;
     }
 }
 

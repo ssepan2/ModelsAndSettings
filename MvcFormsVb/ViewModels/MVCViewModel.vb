@@ -20,28 +20,13 @@ Imports MvcLibraryVb
 Public Class MVCViewModel
     Inherits FormsViewModel(Of Bitmap, MVCSettings, MVCModel, MVCView)
 #Region "Declarations"
-
-#Region "Commands"
-    'public ICommand FileNewCommand { get; private set; }
-    'public ICommand FileOpenCommand { get; private set; }
-    'public ICommand FileSaveCommand { get; private set; }
-    'public ICommand FileSaveAsCommand { get; private set; }
-    'public ICommand FilePrintCommand { get; private set; }
-    'public ICommand FileExitCommand { get; private set; }
-    'public ICommand EditCopyToClipboardCommand { get; private set; }
-    'public ICommand EditPropertiesCommand { get; private set; }
-    'public ICommand ViewPreviousMonthCommand { get; private set; }
-    'public ICommand ViewPreviousWeekCommand { get; private set; }
-    'public ICommand ViewNextWeekCommand { get; private set; }
-    'public ICommand ViewNextMonthCommand { get; private set; }
-    'public ICommand HelpAboutCommand { get; private set; }
-#End Region
 #End Region
 
 #Region "Constructors"
+    'Note: not called, but need to be present to compile--SJS
     Public Sub New()
     End Sub
-    'Note: not called, but need to be present to compile--SJS
+
     Public Sub New _
     (
         propertyChangedEventHandlerDelegate As PropertyChangedEventHandler,
@@ -54,7 +39,7 @@ Public Class MVCViewModel
             Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
         End Try
     End Sub
-    'Note: not called, but need to be present to compile--SJS
+
     Public Sub New _
     (
         propertyChangedEventHandlerDelegate As PropertyChangedEventHandler,
@@ -93,11 +78,13 @@ Public Class MVCViewModel
             ModelController(Of MVCModel).Model.SomeComponent.SomeOtherInt += 1
             ModelController(Of MVCModel).Model.SomeComponent.SomeOtherString = DateTime.Now.ToString()
 
-            'SettingsController(Of MVCSettings).Settings.SomeBoolean = true
-            'SettingsController(Of MVCSettings).Settings.SomeInt += 1
-            'SettingsController(Of MVCSettings).Settings.SomeString = "test"
+            ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherBoolean = Not ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherBoolean
+            ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherInt += 1
+            ModelController(Of MVCModel).Model.StillAnotherComponent.StillAnotherString = DateTime.Now.ToString()
 
             UpdateStatusBarMessages(Nothing, Nothing, DateTime.Now.ToLongTimeString())
+
+            ModelController(Of MVCModel).Model.Refresh()
         Catch ex As Exception
             Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
 
@@ -106,51 +93,6 @@ Public Class MVCViewModel
             StopProgressBar("Did something.")
         End Try
     End Sub
-
-    ' ''' <summary>
-    ' ''' model specific, not generic
-    ' ''' </summary>
-    'Public Sub DoSomethingElse()
-    '    StatusMessage = [String].Empty
-    '    ErrorMessage = [String].Empty
-
-    '    Try
-    '        '_actionIconImages["Xxx"],
-    '        StartProgressBar("Doing something else...", Nothing, Nothing, True, 33)
-
-    '        'ModelController(Of Model).Model.DoSomethingElse()
-
-    '        UpdateStatusBarMessages(Nothing, Nothing, DateTime.Now.ToLongTimeString())
-    '    Catch ex As Exception
-    '        Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
-
-    '        StopProgressBar(Nothing, [String].Format("{0}", ex.Message))
-    '    Finally
-    '        StopProgressBar("Did something else.")
-    '    End Try
-    'End Sub
-    ' ''' <summary>
-    ' ''' model specific, not generic
-    ' ''' </summary>
-    'Public Sub DoSomethingOnce()
-    '    StatusMessage = [String].Empty
-    '    ErrorMessage = [String].Empty
-
-    '    Try
-    '        '_actionIconImages["Xxx"],
-    '        StartProgressBar("Doing something once...", Nothing, Nothing, True, 33)
-
-    '        'ModelController(Of Model).Model.DoSomethingOnce()
-
-    '        UpdateStatusBarMessages(Nothing, Nothing, DateTime.Now.ToLongTimeString())
-    '    Catch ex As Exception
-    '        Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
-
-    '        StopProgressBar(Nothing, [String].Format("{0}", ex.Message))
-    '    Finally
-    '        StopProgressBar("Did something once.")
-    '    End Try
-    'End Sub
 #End Region
 
 End Class

@@ -35,13 +35,13 @@ namespace MVCForms
         }
         #endregion INotifyPropertyChanged
 
-        #region ModelPropertyChangedEventHandlerDelegate
+        #region PropertyChangedEventHandlerDelegate
         /// <summary>
         /// Note: property changes update UI manually.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void ModelPropertyChangedEventHandlerDelegate
+        public static void PropertyChangedEventHandlerDelegate
         (
             Object sender,
             PropertyChangedEventArgs e
@@ -59,7 +59,7 @@ namespace MVCForms
                 Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error);
             }
         }
-        #endregion ModelPropertyChangedEventHandlerDelegate
+        #endregion PropertyChangedEventHandlerDelegate
 
         #region Properties
         private static String _Filename = default(String);
@@ -92,12 +92,10 @@ namespace MVCForms
                 ConsoleApplication.defaultOutputDelegate = ConsoleApplication.messageBoxWrapperOutputDelegate;
 
                 //subscribe to notifications
-                PropertyChanged += ModelPropertyChangedEventHandlerDelegate;
+                PropertyChanged += PropertyChangedEventHandlerDelegate;
 
                 //load, parse, run switches
                 DoSwitches(args);
-
-                InitModelAndSettings();
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -131,20 +129,6 @@ namespace MVCForms
                     //new CommandLineSwitch("H", "H invokes the Help command.", false, ConsoleApplication.Help)//may already be loaded
                 }
             );
-        }
-
-        static void InitModelAndSettings()
-        {
-            //create Settings before first use by Model
-            if (SettingsController<MVCSettings>.Settings == null)
-            {
-                SettingsController<MVCSettings>.New();
-            }
-            //Model properties rely on Settings, so don't call Refresh before this is run.
-            if (ModelController<MVCModel>.Model == null)
-            {
-                ModelController<MVCModel>.New();
-            }
         }
         #endregion FormAppBase
 

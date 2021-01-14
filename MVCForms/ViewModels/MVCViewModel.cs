@@ -22,22 +22,6 @@ namespace MVCForms
         FormsViewModel<Bitmap, MVCSettings, MVCModel, MVCView>
     {
         #region Declarations
-
-        #region Commands
-        //public ICommand FileNewCommand { get; private set; }
-        //public ICommand FileOpenCommand { get; private set; }
-        //public ICommand FileSaveCommand { get; private set; }
-        //public ICommand FileSaveAsCommand { get; private set; }
-        //public ICommand FilePrintCommand { get; private set; }
-        //public ICommand FileExitCommand { get; private set; }
-        //public ICommand EditCopyToClipboardCommand { get; private set; }
-        //public ICommand EditPropertiesCommand { get; private set; }
-        //public ICommand ViewPreviousMonthCommand { get; private set; }
-        //public ICommand ViewPreviousWeekCommand { get; private set; }
-        //public ICommand ViewNextWeekCommand { get; private set; }
-        //public ICommand ViewNextMonthCommand { get; private set; }
-        //public ICommand HelpAboutCommand { get; private set; }
-        #endregion Commands
         #endregion Declarations
 
         #region Constructors
@@ -92,9 +76,9 @@ namespace MVCForms
                 ModelController<MVCModel>.Model.SomeComponent.SomeOtherInt += 1;
                 ModelController<MVCModel>.Model.SomeComponent.SomeOtherString = DateTime.Now.ToString();
 
-                //SettingsController<MVCSettings>.Settings.SomeBoolean = true;
-                //SettingsController<MVCSettings>.Settings.SomeInt += 1;
-                //SettingsController<MVCSettings>.Settings.SomeString = "test";
+                ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean = !ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean;
+                ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherInt += 1;
+                ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherString = DateTime.Now.ToString();
 
                 UpdateStatusBarMessages(null, null, DateTime.Now.ToLongTimeString());
 

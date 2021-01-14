@@ -8,10 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-//using System.Threading.Tasks;
 using System.Windows.Forms;
 using Ssepan.Application;
 using Ssepan.Io;
@@ -110,10 +107,10 @@ namespace MVCConsole
                 {
                     this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
                 }
-
             }
             catch (Exception ex)
             {
+                ViewModel.ErrorMessage = ex.Message;
                 Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error);
 
                 throw;
@@ -265,7 +262,6 @@ namespace MVCConsole
         {
             try
             {
-
                 //tell controller how model should notify view about non-persisted properties AND including model properties that may be part of settings
                 ModelController<MVCModel>.DefaultHandler = PropertyChangedEventHandlerDelegate;
                 
@@ -351,7 +347,7 @@ namespace MVCConsole
             }
         }
 
-        void InitModelAndSettings()
+        protected void InitModelAndSettings()
         {
             //create Settings before first use by Model
             if (SettingsController<MVCSettings>.Settings == null)

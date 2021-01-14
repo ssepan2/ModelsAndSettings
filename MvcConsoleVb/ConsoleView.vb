@@ -89,9 +89,10 @@ Public Class ConsoleView
 			Try
 				RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
 			Catch ex As Exception
-				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
+			ViewModel.ErrorMessage = ex.Message
+			Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])
 
-				Throw
+			Throw
 			End Try
 		End Sub
 #End Region

@@ -67,8 +67,6 @@ namespace MVCConsole
                     33
                 );
 
-                //ConsoleApplication.defaultOutputDelegate(String.Format("SomeBoolean: {0}", m.SomeBoolean.ToString()));
-
                 ModelController<MVCModel>.Model.SomeBoolean = !ModelController<MVCModel>.Model.SomeBoolean;
                 ModelController<MVCModel>.Model.SomeInt += 1;
                 ModelController<MVCModel>.Model.SomeString = DateTime.Now.ToString();
@@ -80,7 +78,6 @@ namespace MVCConsole
                 ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean = !ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean;
                 ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherInt += 1;
                 ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherString = DateTime.Now.ToString();
-
 
                 ModelController<MVCModel>.Model.Refresh();
             }

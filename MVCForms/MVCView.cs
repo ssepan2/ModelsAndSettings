@@ -1,15 +1,15 @@
 ﻿//#define USE_CONFIG_FILEPATH
+//#define USE_CUSTOM_VIEWMODEL
+//#define DEBUG_MODEL_PROPERTYCHANGED
+//#define DEBUG_SETTINGS_PROPERTYCHANGED
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 using Ssepan.Application;
 using Ssepan.Io;
@@ -47,7 +47,7 @@ namespace MVCForms
                 //ConsoleApplication.defaultOutputDelegate = ConsoleApplication.messageBoxWrapperOutputDelegate;
 
                 //subscribe to view's notifications
-                this.PropertyChanged += ModelPropertyChangedEventHandlerDelegate;
+                this.PropertyChanged += PropertyChangedEventHandlerDelegate;
 
                 InitViewModel();
 
@@ -58,15 +58,49 @@ namespace MVCForms
                 Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error);
             }
         }
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="args"></param>
-        //public MVCView(String[] args) 
-        //{
-        //}
         #endregion Constructors
+
+        #region IDisposable
+        //~MVCView()
+        //{
+        //    Dispose(false);
+        //}
+
+        //public virtual void Dispose()
+        //{
+        //    // dispose of the managed and unmanaged resources
+        //    Dispose(true);
+
+        //    // tell the GC that the Finalize process no longer needs
+        //    // to be run for this object.
+        //    GC.SuppressFinalize(this);
+        //}
+
+        //protected virtual void Dispose(bool disposeManagedResources)
+        //{
+        //    // process only if mananged and unmanaged resources have
+        //    // not been disposed of.
+        //    if (!this.disposed)
+        //    {
+        //        //Resources not disposed
+        //        if (disposeManagedResources)
+        //        {
+        //            // dispose managed resources
+        //            //unsubscribe from model notifications
+        //            if (this.PropertyChanged != null)
+        //            {
+        //                this.PropertyChanged -= PropertyChangedEventHandlerDelegate;
+        //            }
+        //        }
+        //        // dispose unmanaged resources
+        //        disposed = true;
+        //    }
+        //    else
+        //    {
+        //        //Resources already disposed
+        //    }
+        //}
+        #endregion IDisposable
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -91,11 +125,17 @@ namespace MVCForms
 
         #region PropertyChangedEventHandlerDelegates
         /// <summary>
-        /// Note: handle model property changes manually.
+        /// Note: model property changes update UI manually.
+        /// Note: handle settings property changes manually.
+        /// Note: because settings properties are a subset of the model 
+        ///  (every settings property should be in the model, 
+        ///  but not every model property is persisted to settings)
+        ///  it is decided that for now the settigns handler will 
+        ///  invoke the model handler as well.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void ModelPropertyChangedEventHandlerDelegate
+        protected void PropertyChangedEventHandlerDelegate
         (
             Object sender,
             PropertyChangedEventArgs e
@@ -103,6 +143,7 @@ namespace MVCForms
         {
             try
             {
+#region Model
                 if (e.PropertyName == "IsChanged")
                 {
                     //ConsoleApplication.defaultOutputDelegate(String.Format("{0}", e.PropertyName));
@@ -195,6 +236,55 @@ namespace MVCForms
                 //    //SettingsController<MVCSettings>.Settings.
                 //    ModelController<MVCModel>.Model.IsChanged = true;
                 //}
+                //else if (e.PropertyName == "SomeOtherBoolean")
+                //{
+                //    ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherBoolean: {0}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherBoolean));
+                //}
+                //else if (e.PropertyName == "SomeOtherString")
+                //{
+                //    ConsoleApplication.defaultOutputDelegate(String.Format("SomeOtherString: {0}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherString));
+                //}
+                //else if (e.PropertyName == "SomeComponent")
+                //{
+                //    ConsoleApplication.defaultOutputDelegate(String.Format("SomeComponent: {0},{1},{2}", ModelController<MVCModel>.Model.SomeComponent.SomeOtherInt, ModelController<MVCModel>.Model.SomeComponent.SomeOtherBoolean, ModelController<MVCModel>.Model.SomeComponent.SomeOtherString));
+                //}
+                //else if (e.PropertyName == "StillAnotherInt")
+                //{
+                //    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherInt: {0}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherInt));
+                //}
+                //else if (e.PropertyName == "StillAnotherBoolean")
+                //{
+                //    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherBoolean: {0}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean));
+                //}
+                //else if (e.PropertyName == "StillAnotherString")
+                //{
+                //    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherString: {0}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherString));
+                //}
+                //else if (e.PropertyName == "StillAnotherComponent")
+                //{
+                //    ConsoleApplication.defaultOutputDelegate(String.Format("StillAnotherComponent: {0},{1},{2}", ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherInt, ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherBoolean, ModelController<MVCModel>.Model.StillAnotherComponent.StillAnotherString));
+                //}
+                else
+                {
+#if DEBUG_MODEL_PROPERTYCHANGED
+                        ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName));
+#endif
+                }
+                #endregion Model
+
+                #region Settings
+                if (e.PropertyName == "Dirty")
+                {
+                    //apply settings that don't have databindings
+                    ViewModel.DirtyIconIsVisible = (SettingsController<MVCSettings>.Settings.Dirty);
+                }
+                else
+                {
+#if DEBUG_SETTINGS_PROPERTYCHANGED
+                    ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName));
+#endif
+                }
+                #endregion Settings
             }
             catch (Exception ex)
             {
@@ -202,30 +292,6 @@ namespace MVCForms
             }
         }
 
-        /// <summary>
-        /// Note: handle settings property changes manually.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void SettingsPropertyChangedEventHandlerDelegate
-        (
-            Object sender,
-            PropertyChangedEventArgs e
-        )
-        {
-            try
-            {
-                if (e.PropertyName == "Dirty")
-                {
-                    //apply settings that don't have databindings
-                    ViewModel.DirtyIconIsVisible = (SettingsController<MVCSettings>.Settings.Dirty);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.Error);
-            }
-        }
         #endregion PropertyChangedEventHandlerDelegates
 
         #region Properties
@@ -378,10 +444,13 @@ namespace MVCForms
         {
             try
             {
-                //subscribe view to model notifications
-                ModelController<MVCModel>.Model.PropertyChanged += ModelPropertyChangedEventHandlerDelegate;
-                //subscribe view to settings notifications
-                SettingsController<MVCSettings>.DefaultHandler = SettingsPropertyChangedEventHandlerDelegate;
+                //tell controller how model should notify view about non-persisted properties AND including model properties that may be part of settings
+                ModelController<MVCModel>.DefaultHandler = PropertyChangedEventHandlerDelegate;
+
+                //tell controller how settings should notify view about persisted properties
+                SettingsController<MVCSettings>.DefaultHandler = PropertyChangedEventHandlerDelegate;
+
+                InitModelAndSettings();
 
                 FileDialogInfo settingsFileDialogInfo =
                     new FileDialogInfo
@@ -411,7 +480,7 @@ namespace MVCForms
                     ViewName,
                     new MVCViewModel
                     (
-                        this.ModelPropertyChangedEventHandlerDelegate,
+                        this.PropertyChangedEventHandlerDelegate,
                         new Dictionary<String, Bitmap>() 
                         { 
                             { "New", Resources.New }, 
@@ -424,6 +493,8 @@ namespace MVCForms
                         settingsFileDialogInfo
                     )
                 );
+
+                //select a viewmodel by view name
                 ViewModel = ViewModelController<Bitmap, MVCViewModel>.ViewModel[ViewName];
 
                 BindFormUi();
@@ -465,6 +536,20 @@ namespace MVCForms
             }
         }
 
+        protected void InitModelAndSettings()
+        {
+            //create Settings before first use by Model
+            if (SettingsController<MVCSettings>.Settings == null)
+            {
+                SettingsController<MVCSettings>.New();
+            }
+            //Model properties rely on Settings, so don't call Refresh before this is run.
+            if (ModelController<MVCModel>.Model == null)
+            {
+                ModelController<MVCModel>.New();
+            }
+        }
+
         protected void DisposeSettings()
         {
             //save user and application settings 
@@ -495,7 +580,7 @@ namespace MVCForms
             }
 
             //unsubscribe from model notifications
-            ModelController<MVCModel>.Model.PropertyChanged -= ModelPropertyChangedEventHandlerDelegate;
+            ModelController<MVCModel>.Model.PropertyChanged -= PropertyChangedEventHandlerDelegate;
         }
 
         protected void _Run()
@@ -537,6 +622,10 @@ namespace MVCForms
                 BindField<TextBox, MVCModel>(txtSomeOtherInt, ModelController<MVCModel>.Model, "SomeComponent.SomeOtherInt");
                 BindField<TextBox, MVCModel>(txtSomeOtherString, ModelController<MVCModel>.Model, "SomeComponent.SomeOtherString");
                 BindField<CheckBox, MVCModel>(chkSomeOtherBoolean, ModelController<MVCModel>.Model, "SomeComponent.SomeOtherBoolean", "Checked");
+                
+                BindField<TextBox, MVCModel>(txtStillAnotherInt, ModelController<MVCModel>.Model, "StillAnotherComponent.StillAnotherInt");
+                BindField<TextBox, MVCModel>(txtStillAnotherString, ModelController<MVCModel>.Model, "StillAnotherComponent.StillAnotherString");
+                BindField<CheckBox, MVCModel>(chkStillAnotherBoolean, ModelController<MVCModel>.Model, "StillAnotherComponent.StillAnotherBoolean", "Checked");
             }
             catch (Exception ex)
             {

@@ -69,6 +69,11 @@
             this.txtSomeOtherInt = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.chkStillAnotherBoolean = new System.Windows.Forms.CheckBox();
+            this.txtStillAnotherString = new System.Windows.Forms.TextBox();
+            this.txtStillAnotherInt = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.toolbar.SuspendLayout();
             this.menu.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -293,7 +298,7 @@
             this.StatusBarErrorMessage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.StatusBarErrorMessage.ForeColor = System.Drawing.Color.Red;
             this.StatusBarErrorMessage.Name = "StatusBarErrorMessage";
-            this.StatusBarErrorMessage.Size = new System.Drawing.Size(617, 17);
+            this.StatusBarErrorMessage.Size = new System.Drawing.Size(609, 17);
             this.StatusBarErrorMessage.Spring = true;
             this.StatusBarErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -385,7 +390,7 @@
             // 
             // cmdRun
             // 
-            this.cmdRun.Location = new System.Drawing.Point(381, 50);
+            this.cmdRun.Location = new System.Drawing.Point(537, 45);
             this.cmdRun.Name = "cmdRun";
             this.cmdRun.Size = new System.Drawing.Size(75, 23);
             this.cmdRun.TabIndex = 125;
@@ -436,11 +441,59 @@
             this.label4.TabIndex = 126;
             this.label4.Text = "Int32";
             // 
+            // chkStillAnotherBoolean
+            // 
+            this.chkStillAnotherBoolean.AutoSize = true;
+            this.chkStillAnotherBoolean.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkStillAnotherBoolean.Location = new System.Drawing.Point(368, 104);
+            this.chkStillAnotherBoolean.Name = "chkStillAnotherBoolean";
+            this.chkStillAnotherBoolean.Size = new System.Drawing.Size(65, 17);
+            this.chkStillAnotherBoolean.TabIndex = 135;
+            this.chkStillAnotherBoolean.Text = "Boolean";
+            this.chkStillAnotherBoolean.UseVisualStyleBackColor = true;
+            // 
+            // txtStillAnotherString
+            // 
+            this.txtStillAnotherString.Location = new System.Drawing.Point(419, 78);
+            this.txtStillAnotherString.Name = "txtStillAnotherString";
+            this.txtStillAnotherString.Size = new System.Drawing.Size(100, 20);
+            this.txtStillAnotherString.TabIndex = 134;
+            // 
+            // txtStillAnotherInt
+            // 
+            this.txtStillAnotherInt.Location = new System.Drawing.Point(419, 52);
+            this.txtStillAnotherInt.Name = "txtStillAnotherInt";
+            this.txtStillAnotherInt.Size = new System.Drawing.Size(100, 20);
+            this.txtStillAnotherInt.TabIndex = 133;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(378, 81);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 132;
+            this.label5.Text = "String";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(378, 55);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 13);
+            this.label6.TabIndex = 131;
+            this.label6.Text = "Int32";
+            // 
             // MVCView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 442);
+            this.Controls.Add(this.chkStillAnotherBoolean);
+            this.Controls.Add(this.txtStillAnotherString);
+            this.Controls.Add(this.txtStillAnotherInt);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.chkSomeOtherBoolean);
             this.Controls.Add(this.txtSomeOtherString);
             this.Controls.Add(this.txtSomeOtherInt);
@@ -514,6 +567,11 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripStatusLabel StatusBarCustomMessage;
+        private System.Windows.Forms.CheckBox chkStillAnotherBoolean;
+        private System.Windows.Forms.TextBox txtStillAnotherString;
+        private System.Windows.Forms.TextBox txtStillAnotherInt;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }
 

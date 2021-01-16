@@ -12,6 +12,10 @@ Usage notes:
 
 Enhancements:
 
+0.4:
+~TODO:modify forms interface to include more standard menus/buttons/actions
+~TODO:review design around args param, and whether it should go into view (now that model is not init until view loaded)
+
 0.3:
 ~Handlers were not being correctly wired up to sub-components of Settings or Model
 ~Using Ssepan.Application 2.8

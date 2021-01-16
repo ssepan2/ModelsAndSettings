@@ -408,9 +408,69 @@ namespace MVCForms
             ViewModel.FileSaveAs();
         }
 
+        private void menuFilePrint_Click(object sender, EventArgs e)
+        {
+            ViewModel.FilePrint();
+        }
+
         private void menuFileExit_Click(Object sender, EventArgs e)
         {
             ViewModel.FileExit();
+        }
+
+        private void menuEditUndo_Click(object sender, EventArgs e)
+        {
+            // ViewModel.EditUndo();
+        }
+
+        private void menuEditRedo_Click(object sender, EventArgs e)
+        {
+            // ViewModel.EditRedo();
+        }
+
+        private void menuEditSelectAll_Click(object sender, EventArgs e)
+        {
+            // ViewModel.EditSelectAll();
+        }
+
+        private void menuEditCut_Click(object sender, EventArgs e)
+        {
+            // ViewModel.EditCut();
+        }
+
+        private void menuEditCopy_Click(Object sender, EventArgs e)
+        {
+            ViewModel.EditCopy();
+        }
+
+        private void menuEditPaste_Click(object sender, EventArgs e)
+        {
+            // ViewModel.EditPaste();
+        }
+
+        private void menuEditDelete_Click(object sender, EventArgs e)
+        {
+            // ViewModel.EditDelete();
+        }
+
+        private void menuEditFind_Click(object sender, EventArgs e)
+        {
+            // ViewModel.EditFind();
+        }
+
+        private void menuEditReplace_Click(object sender, EventArgs e)
+        {
+            // ViewModel.EditReplace();
+        }
+
+        private void menuEditRefresh_Click(object sender, EventArgs e)
+        {
+            // ViewModel.EditRefresh();
+        }
+
+        private void menuEditPreferences_Click(object sender, EventArgs e)
+        {
+            // ViewModel.EditPreferences();
         }
 
         private void menuEditProperties_Click(Object sender, EventArgs e)
@@ -418,9 +478,29 @@ namespace MVCForms
             ViewModel.EditProperties();
         }
 
-        private void menuEditCopyToClipboard_Click(Object sender, EventArgs e)
+        private void menuHelpContents_Click(object sender, EventArgs e)
         {
-            ViewModel.EditCopy();
+            // ViewModel.HelpContents();
+        }
+
+        private void menuHelpIndex_Click(object sender, EventArgs e)
+        {
+            // ViewModel.HelpIndex();
+        }
+
+        private void menuHelpOnlineHelp_Click(object sender, EventArgs e)
+        {
+            // ViewModel.HelpOnlineHel();
+        }
+
+        private void menuHelpLicenceInformation_Click(object sender, EventArgs e)
+        {
+            // ViewModel.HelpLicenceInformation();
+        }
+
+        private void menuHelpCheckForUpdates_Click(object sender, EventArgs e)
+        {
+            // ViewModel.HelpCheckForUpdates();
         }
 
         private void menuHelpAbout_Click(Object sender, EventArgs e)
@@ -824,6 +904,7 @@ namespace MVCForms
             this.Location = global::MVCForms.Properties.Settings.Default.Location;
         }
         #endregion Utility
+
         #endregion Methods
     }
 }

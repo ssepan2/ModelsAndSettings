@@ -32,7 +32,7 @@ Imports Ssepan.Application
 '
 ' You can specify all the values or you can default the Build and Revision Numbers 
 ' by using the '*' as shown below:
-<Assembly: AssemblyVersion("0.3")>
+<Assembly: AssemblyVersion("0.4")>
 
 
 #Region " Helper class to get information for the About form. "

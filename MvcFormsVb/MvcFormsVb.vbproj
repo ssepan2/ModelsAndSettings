@@ -13,6 +13,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>_MYTYPE="WindowsForms"</DefineConstants>
     <DefineDebug>false</DefineDebug>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Resources\**" />

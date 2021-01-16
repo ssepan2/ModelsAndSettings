@@ -33,22 +33,54 @@
             this.buttonFileNew = new System.Windows.Forms.ToolStripButton();
             this.buttonFileOpen = new System.Windows.Forms.ToolStripButton();
             this.buttonFileSave = new System.Windows.Forms.ToolStripButton();
+            this.buttonFilePrint = new System.Windows.Forms.ToolStripButton();
             this.buttonSeparator0 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonEditCopyToClipboard = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditUndo = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditRedo = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditCut = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditCopy = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditFind = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditReplace = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditRefresh = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditPreferences = new System.Windows.Forms.ToolStripButton();
             this.buttonEditProperties = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonHelpContents = new System.Windows.Forms.ToolStripButton();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuFileNew = new System.Windows.Forms.ToolStripMenuItem();
             this.menuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.menuFileSave = new System.Windows.Forms.ToolStripMenuItem();
             this.menuFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuFilePrint = new System.Windows.Forms.ToolStripMenuItem();
             this.menuFileSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuEditCopyToClipboard = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuEditUndo = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuEditRedo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuEditSelectAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuEditCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuEditCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuEditPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuEditDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuEditFind = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuEditReplace = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuEditRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.menuEditSeparator0 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuEditPreferences = new System.Windows.Forms.ToolStripMenuItem();
             this.menuEditProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHelpContents = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHelpIndex = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHelpOnlineHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuHelpLicenceInformation = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHelpCheckForUpdates = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.StatusBarStatusMessage = new System.Windows.Forms.ToolStripStatusLabel();
@@ -74,6 +106,8 @@
             this.txtStillAnotherInt = new System.Windows.Forms.TextBox();
             this.lblStillAnotherString = new System.Windows.Forms.Label();
             this.lblStillAnotherInt = new System.Windows.Forms.Label();
+            this.buttonEditDelete = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditPaste = new System.Windows.Forms.ToolStripButton();
             this.toolbar.SuspendLayout();
             this.menu.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -86,9 +120,21 @@
             this.buttonFileNew,
             this.buttonFileOpen,
             this.buttonFileSave,
+            this.buttonFilePrint,
             this.buttonSeparator0,
-            this.buttonEditCopyToClipboard,
-            this.buttonEditProperties});
+            this.buttonEditUndo,
+            this.buttonEditRedo,
+            this.buttonEditCut,
+            this.buttonEditCopy,
+            this.buttonEditPaste,
+            this.buttonEditDelete,
+            this.buttonEditFind,
+            this.buttonEditReplace,
+            this.buttonEditRefresh,
+            this.buttonEditPreferences,
+            this.buttonEditProperties,
+            this.toolStripSeparator7,
+            this.buttonHelpContents});
             this.toolbar.Location = new System.Drawing.Point(0, 24);
             this.toolbar.Name = "toolbar";
             this.toolbar.Size = new System.Drawing.Size(624, 25);
@@ -125,20 +171,100 @@
             this.buttonFileSave.Text = "&Save";
             this.buttonFileSave.Click += new System.EventHandler(this.menuFileSave_Click);
             // 
+            // buttonFilePrint
+            // 
+            this.buttonFilePrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonFilePrint.Image = global::MVCForms.Properties.Resources.Print;
+            this.buttonFilePrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonFilePrint.Name = "buttonFilePrint";
+            this.buttonFilePrint.Size = new System.Drawing.Size(23, 22);
+            this.buttonFilePrint.Text = "Print";
+            this.buttonFilePrint.Click += new System.EventHandler(this.menuFilePrint_Click);
+            // 
             // buttonSeparator0
             // 
             this.buttonSeparator0.Name = "buttonSeparator0";
             this.buttonSeparator0.Size = new System.Drawing.Size(6, 25);
             // 
-            // buttonEditCopyToClipboard
+            // buttonEditUndo
             // 
-            this.buttonEditCopyToClipboard.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditCopyToClipboard.Image = ((System.Drawing.Image)(resources.GetObject("buttonEditCopyToClipboard.Image")));
-            this.buttonEditCopyToClipboard.ImageTransparentColor = System.Drawing.Color.Black;
-            this.buttonEditCopyToClipboard.Name = "buttonEditCopyToClipboard";
-            this.buttonEditCopyToClipboard.Size = new System.Drawing.Size(23, 22);
-            this.buttonEditCopyToClipboard.Text = "Copy to Clipboard";
-            this.buttonEditCopyToClipboard.Click += new System.EventHandler(this.menuEditCopyToClipboard_Click);
+            this.buttonEditUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditUndo.Image = global::MVCForms.Properties.Resources.undo;
+            this.buttonEditUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditUndo.Name = "buttonEditUndo";
+            this.buttonEditUndo.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditUndo.Text = "Undo";
+            this.buttonEditUndo.Click += new System.EventHandler(this.menuEditUndo_Click);
+            // 
+            // buttonEditRedo
+            // 
+            this.buttonEditRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditRedo.Image = global::MVCForms.Properties.Resources.redo;
+            this.buttonEditRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditRedo.Name = "buttonEditRedo";
+            this.buttonEditRedo.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditRedo.Text = "Redo";
+            this.buttonEditRedo.Click += new System.EventHandler(this.menuEditRedo_Click);
+            // 
+            // buttonEditCut
+            // 
+            this.buttonEditCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditCut.Image = global::MVCForms.Properties.Resources.editcut;
+            this.buttonEditCut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditCut.Name = "buttonEditCut";
+            this.buttonEditCut.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditCut.Text = "Cut";
+            this.buttonEditCut.Click += new System.EventHandler(this.menuEditCut_Click);
+            // 
+            // buttonEditCopy
+            // 
+            this.buttonEditCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditCopy.Image = ((System.Drawing.Image)(resources.GetObject("buttonEditCopy.Image")));
+            this.buttonEditCopy.ImageTransparentColor = System.Drawing.Color.Black;
+            this.buttonEditCopy.Name = "buttonEditCopy";
+            this.buttonEditCopy.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditCopy.Text = "Copy";
+            this.buttonEditCopy.Click += new System.EventHandler(this.menuEditCopy_Click);
+            // 
+            // buttonEditFind
+            // 
+            this.buttonEditFind.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditFind.Image = global::MVCForms.Properties.Resources.edit_find;
+            this.buttonEditFind.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditFind.Name = "buttonEditFind";
+            this.buttonEditFind.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditFind.Text = "Find";
+            this.buttonEditFind.Click += new System.EventHandler(this.menuEditFind_Click);
+            // 
+            // buttonEditReplace
+            // 
+            this.buttonEditReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditReplace.Image = global::MVCForms.Properties.Resources.edit_find_replace;
+            this.buttonEditReplace.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditReplace.Name = "buttonEditReplace";
+            this.buttonEditReplace.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditReplace.Text = "Replace";
+            this.buttonEditReplace.Click += new System.EventHandler(this.menuEditReplace_Click);
+            // 
+            // buttonEditRefresh
+            // 
+            this.buttonEditRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditRefresh.Image = global::MVCForms.Properties.Resources.reload;
+            this.buttonEditRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditRefresh.Name = "buttonEditRefresh";
+            this.buttonEditRefresh.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditRefresh.Text = "Refresh";
+            this.buttonEditRefresh.Click += new System.EventHandler(this.menuEditRefresh_Click);
+            // 
+            // buttonEditPreferences
+            // 
+            this.buttonEditPreferences.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditPreferences.Image = global::MVCForms.Properties.Resources.stock_properties;
+            this.buttonEditPreferences.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditPreferences.Name = "buttonEditPreferences";
+            this.buttonEditPreferences.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditPreferences.Text = "Preferences";
+            this.buttonEditPreferences.Click += new System.EventHandler(this.menuEditPreferences_Click);
             // 
             // buttonEditProperties
             // 
@@ -149,6 +275,21 @@
             this.buttonEditProperties.Size = new System.Drawing.Size(23, 22);
             this.buttonEditProperties.Text = "P&roperties...";
             this.buttonEditProperties.Click += new System.EventHandler(this.menuEditProperties_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // buttonHelpContents
+            // 
+            this.buttonHelpContents.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonHelpContents.Image = global::MVCForms.Properties.Resources.stock_help;
+            this.buttonHelpContents.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonHelpContents.Name = "buttonHelpContents";
+            this.buttonHelpContents.Size = new System.Drawing.Size(23, 22);
+            this.buttonHelpContents.Text = "Contents";
+            this.buttonHelpContents.Click += new System.EventHandler(this.menuHelpContents_Click);
             // 
             // menu
             // 
@@ -169,6 +310,8 @@
             this.menuFileOpen,
             this.menuFileSave,
             this.menuFileSaveAs,
+            this.toolStripSeparator1,
+            this.menuFilePrint,
             this.menuFileSeparator2,
             this.menuFileExit});
             this.menuFile.Name = "menuFile";
@@ -179,7 +322,7 @@
             // 
             this.menuFileNew.Image = ((System.Drawing.Image)(resources.GetObject("menuFileNew.Image")));
             this.menuFileNew.Name = "menuFileNew";
-            this.menuFileNew.Size = new System.Drawing.Size(146, 22);
+            this.menuFileNew.Size = new System.Drawing.Size(149, 22);
             this.menuFileNew.Text = "&New";
             this.menuFileNew.Click += new System.EventHandler(this.menuFileNew_Click);
             // 
@@ -188,7 +331,7 @@
             this.menuFileOpen.Image = ((System.Drawing.Image)(resources.GetObject("menuFileOpen.Image")));
             this.menuFileOpen.Name = "menuFileOpen";
             this.menuFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.menuFileOpen.Size = new System.Drawing.Size(146, 22);
+            this.menuFileOpen.Size = new System.Drawing.Size(149, 22);
             this.menuFileOpen.Text = "&Open";
             this.menuFileOpen.Click += new System.EventHandler(this.menuFileOpen_Click);
             // 
@@ -197,73 +340,260 @@
             this.menuFileSave.Image = ((System.Drawing.Image)(resources.GetObject("menuFileSave.Image")));
             this.menuFileSave.Name = "menuFileSave";
             this.menuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.menuFileSave.Size = new System.Drawing.Size(146, 22);
+            this.menuFileSave.Size = new System.Drawing.Size(149, 22);
             this.menuFileSave.Text = "&Save";
             this.menuFileSave.Click += new System.EventHandler(this.menuFileSave_Click);
             // 
             // menuFileSaveAs
             // 
             this.menuFileSaveAs.Name = "menuFileSaveAs";
-            this.menuFileSaveAs.Size = new System.Drawing.Size(146, 22);
+            this.menuFileSaveAs.Size = new System.Drawing.Size(149, 22);
             this.menuFileSaveAs.Text = "Save &As...";
             this.menuFileSaveAs.Click += new System.EventHandler(this.menuFileSaveAs_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(146, 6);
+            // 
+            // menuFilePrint
+            // 
+            this.menuFilePrint.Image = global::MVCForms.Properties.Resources.Print;
+            this.menuFilePrint.Name = "menuFilePrint";
+            this.menuFilePrint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.menuFilePrint.Size = new System.Drawing.Size(149, 22);
+            this.menuFilePrint.Text = "&Print...";
+            this.menuFilePrint.Click += new System.EventHandler(this.menuFilePrint_Click);
             // 
             // menuFileSeparator2
             // 
             this.menuFileSeparator2.Name = "menuFileSeparator2";
-            this.menuFileSeparator2.Size = new System.Drawing.Size(143, 6);
+            this.menuFileSeparator2.Size = new System.Drawing.Size(146, 6);
             // 
             // menuFileExit
             // 
             this.menuFileExit.Name = "menuFileExit";
-            this.menuFileExit.Size = new System.Drawing.Size(146, 22);
+            this.menuFileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.menuFileExit.Size = new System.Drawing.Size(149, 22);
             this.menuFileExit.Text = "E&xit";
             this.menuFileExit.Click += new System.EventHandler(this.menuFileExit_Click);
             // 
             // menuEdit
             // 
             this.menuEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuEditCopyToClipboard,
+            this.menuEditUndo,
+            this.menuEditRedo,
+            this.toolStripSeparator4,
+            this.menuEditSelectAll,
+            this.menuEditCut,
+            this.menuEditCopy,
+            this.menuEditPaste,
+            this.menuEditDelete,
+            this.toolStripSeparator5,
+            this.menuEditFind,
+            this.menuEditReplace,
+            this.toolStripSeparator6,
+            this.menuEditRefresh,
             this.menuEditSeparator0,
+            this.menuEditPreferences,
             this.menuEditProperties});
             this.menuEdit.Name = "menuEdit";
             this.menuEdit.Size = new System.Drawing.Size(39, 20);
             this.menuEdit.Text = "&Edit";
             // 
-            // menuEditCopyToClipboard
+            // menuEditUndo
             // 
-            this.menuEditCopyToClipboard.Image = ((System.Drawing.Image)(resources.GetObject("menuEditCopyToClipboard.Image")));
-            this.menuEditCopyToClipboard.ImageTransparentColor = System.Drawing.Color.Black;
-            this.menuEditCopyToClipboard.Name = "menuEditCopyToClipboard";
-            this.menuEditCopyToClipboard.Size = new System.Drawing.Size(171, 22);
-            this.menuEditCopyToClipboard.Text = "&Copy to Clipboard";
-            this.menuEditCopyToClipboard.Click += new System.EventHandler(this.menuEditCopyToClipboard_Click);
+            this.menuEditUndo.Image = global::MVCForms.Properties.Resources.undo;
+            this.menuEditUndo.Name = "menuEditUndo";
+            this.menuEditUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.menuEditUndo.Size = new System.Drawing.Size(180, 22);
+            this.menuEditUndo.Text = "&Undo";
+            this.menuEditUndo.Click += new System.EventHandler(this.menuEditUndo_Click);
+            // 
+            // menuEditRedo
+            // 
+            this.menuEditRedo.Image = global::MVCForms.Properties.Resources.redo;
+            this.menuEditRedo.Name = "menuEditRedo";
+            this.menuEditRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.menuEditRedo.Size = new System.Drawing.Size(180, 22);
+            this.menuEditRedo.Text = "&Redo";
+            this.menuEditRedo.Click += new System.EventHandler(this.menuEditRedo_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            // 
+            // menuEditSelectAll
+            // 
+            this.menuEditSelectAll.Name = "menuEditSelectAll";
+            this.menuEditSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.menuEditSelectAll.Size = new System.Drawing.Size(180, 22);
+            this.menuEditSelectAll.Text = "Select &All";
+            this.menuEditSelectAll.Click += new System.EventHandler(this.menuEditSelectAll_Click);
+            // 
+            // menuEditCut
+            // 
+            this.menuEditCut.Image = global::MVCForms.Properties.Resources.editcut;
+            this.menuEditCut.Name = "menuEditCut";
+            this.menuEditCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.menuEditCut.Size = new System.Drawing.Size(180, 22);
+            this.menuEditCut.Text = "Cu&t";
+            this.menuEditCut.Click += new System.EventHandler(this.menuEditCut_Click);
+            // 
+            // menuEditCopy
+            // 
+            this.menuEditCopy.Image = ((System.Drawing.Image)(resources.GetObject("menuEditCopy.Image")));
+            this.menuEditCopy.ImageTransparentColor = System.Drawing.Color.Black;
+            this.menuEditCopy.Name = "menuEditCopy";
+            this.menuEditCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.menuEditCopy.Size = new System.Drawing.Size(180, 22);
+            this.menuEditCopy.Text = "&Copy";
+            this.menuEditCopy.Click += new System.EventHandler(this.menuEditCopy_Click);
+            // 
+            // menuEditPaste
+            // 
+            this.menuEditPaste.Image = global::MVCForms.Properties.Resources.stock_paste;
+            this.menuEditPaste.Name = "menuEditPaste";
+            this.menuEditPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.menuEditPaste.Size = new System.Drawing.Size(180, 22);
+            this.menuEditPaste.Text = "&Paste";
+            this.menuEditPaste.Click += new System.EventHandler(this.menuEditPaste_Click);
+            // 
+            // menuEditDelete
+            // 
+            this.menuEditDelete.Image = global::MVCForms.Properties.Resources.Delete;
+            this.menuEditDelete.Name = "menuEditDelete";
+            this.menuEditDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.menuEditDelete.Size = new System.Drawing.Size(180, 22);
+            this.menuEditDelete.Text = "&Delete";
+            this.menuEditDelete.Click += new System.EventHandler(this.menuEditDelete_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            // 
+            // menuEditFind
+            // 
+            this.menuEditFind.Image = global::MVCForms.Properties.Resources.edit_find;
+            this.menuEditFind.Name = "menuEditFind";
+            this.menuEditFind.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.menuEditFind.Size = new System.Drawing.Size(180, 22);
+            this.menuEditFind.Text = "&Find...";
+            this.menuEditFind.Click += new System.EventHandler(this.menuEditFind_Click);
+            // 
+            // menuEditReplace
+            // 
+            this.menuEditReplace.Image = global::MVCForms.Properties.Resources.edit_find_replace;
+            this.menuEditReplace.Name = "menuEditReplace";
+            this.menuEditReplace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.menuEditReplace.Size = new System.Drawing.Size(180, 22);
+            this.menuEditReplace.Text = "Rep&lace...";
+            this.menuEditReplace.Click += new System.EventHandler(this.menuEditReplace_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            // 
+            // menuEditRefresh
+            // 
+            this.menuEditRefresh.Image = global::MVCForms.Properties.Resources.reload;
+            this.menuEditRefresh.Name = "menuEditRefresh";
+            this.menuEditRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.menuEditRefresh.Size = new System.Drawing.Size(180, 22);
+            this.menuEditRefresh.Text = "R&efresh";
+            this.menuEditRefresh.Click += new System.EventHandler(this.menuEditRefresh_Click);
             // 
             // menuEditSeparator0
             // 
             this.menuEditSeparator0.Name = "menuEditSeparator0";
-            this.menuEditSeparator0.Size = new System.Drawing.Size(168, 6);
+            this.menuEditSeparator0.Size = new System.Drawing.Size(177, 6);
+            // 
+            // menuEditPreferences
+            // 
+            this.menuEditPreferences.Image = global::MVCForms.Properties.Resources.stock_properties;
+            this.menuEditPreferences.Name = "menuEditPreferences";
+            this.menuEditPreferences.Size = new System.Drawing.Size(180, 22);
+            this.menuEditPreferences.Text = "Prefere&nces...";
+            this.menuEditPreferences.Click += new System.EventHandler(this.menuEditPreferences_Click);
             // 
             // menuEditProperties
             // 
             this.menuEditProperties.Image = ((System.Drawing.Image)(resources.GetObject("menuEditProperties.Image")));
             this.menuEditProperties.ImageTransparentColor = System.Drawing.Color.Black;
             this.menuEditProperties.Name = "menuEditProperties";
-            this.menuEditProperties.Size = new System.Drawing.Size(171, 22);
-            this.menuEditProperties.Text = "P&roperties...";
+            this.menuEditProperties.Size = new System.Drawing.Size(180, 22);
+            this.menuEditProperties.Text = "Pr&operties...";
             this.menuEditProperties.Click += new System.EventHandler(this.menuEditProperties_Click);
             // 
             // menuHelp
             // 
             this.menuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuHelpContents,
+            this.menuHelpIndex,
+            this.menuHelpOnlineHelp,
+            this.toolStripSeparator3,
+            this.menuHelpLicenceInformation,
+            this.menuHelpCheckForUpdates,
+            this.toolStripSeparator2,
             this.menuHelpAbout});
             this.menuHelp.Name = "menuHelp";
             this.menuHelp.Size = new System.Drawing.Size(44, 20);
             this.menuHelp.Text = "&Help";
             this.menuHelp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // menuHelpContents
+            // 
+            this.menuHelpContents.Image = global::MVCForms.Properties.Resources.stock_help;
+            this.menuHelpContents.Name = "menuHelpContents";
+            this.menuHelpContents.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.menuHelpContents.Size = new System.Drawing.Size(181, 22);
+            this.menuHelpContents.Text = "&Contents";
+            this.menuHelpContents.Click += new System.EventHandler(this.menuHelpContents_Click);
+            // 
+            // menuHelpIndex
+            // 
+            this.menuHelpIndex.Name = "menuHelpIndex";
+            this.menuHelpIndex.Size = new System.Drawing.Size(181, 22);
+            this.menuHelpIndex.Text = "&Index";
+            this.menuHelpIndex.Click += new System.EventHandler(this.menuHelpIndex_Click);
+            // 
+            // menuHelpOnlineHelp
+            // 
+            this.menuHelpOnlineHelp.Name = "menuHelpOnlineHelp";
+            this.menuHelpOnlineHelp.Size = new System.Drawing.Size(181, 22);
+            this.menuHelpOnlineHelp.Text = "&Online Help";
+            this.menuHelpOnlineHelp.Click += new System.EventHandler(this.menuHelpOnlineHelp_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(178, 6);
+            // 
+            // menuHelpLicenceInformation
+            // 
+            this.menuHelpLicenceInformation.Name = "menuHelpLicenceInformation";
+            this.menuHelpLicenceInformation.Size = new System.Drawing.Size(181, 22);
+            this.menuHelpLicenceInformation.Text = "&Licence Information";
+            this.menuHelpLicenceInformation.Click += new System.EventHandler(this.menuHelpLicenceInformation_Click);
+            // 
+            // menuHelpCheckForUpdates
+            // 
+            this.menuHelpCheckForUpdates.Name = "menuHelpCheckForUpdates";
+            this.menuHelpCheckForUpdates.Size = new System.Drawing.Size(181, 22);
+            this.menuHelpCheckForUpdates.Text = "Check for &Updates";
+            this.menuHelpCheckForUpdates.Click += new System.EventHandler(this.menuHelpCheckForUpdates_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(178, 6);
+            // 
             // menuHelpAbout
             // 
+            this.menuHelpAbout.Image = global::MVCForms.Properties.Resources.gtk_about;
             this.menuHelpAbout.Name = "menuHelpAbout";
             this.menuHelpAbout.Size = new System.Drawing.Size(181, 22);
             this.menuHelpAbout.Text = "&About MVCForms ...";
@@ -484,6 +814,26 @@
             this.lblStillAnotherInt.TabIndex = 131;
             this.lblStillAnotherInt.Text = "Int32";
             // 
+            // buttonEditDelete
+            // 
+            this.buttonEditDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditDelete.Image = global::MVCForms.Properties.Resources.Delete;
+            this.buttonEditDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditDelete.Name = "buttonEditDelete";
+            this.buttonEditDelete.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditDelete.Text = "Delete";
+            this.buttonEditDelete.Click += new System.EventHandler(this.menuEditDelete_Click);
+            // 
+            // buttonEditPaste
+            // 
+            this.buttonEditPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditPaste.Image = global::MVCForms.Properties.Resources.stock_paste;
+            this.buttonEditPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditPaste.Name = "buttonEditPaste";
+            this.buttonEditPaste.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditPaste.Text = "Paste";
+            this.buttonEditPaste.Click += new System.EventHandler(this.menuEditPaste_Click);
+            // 
             // MVCView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -532,7 +882,7 @@
         private System.Windows.Forms.ToolStripButton buttonFileOpen;
         private System.Windows.Forms.ToolStripButton buttonFileSave;
         private System.Windows.Forms.ToolStripSeparator buttonSeparator0;
-        private System.Windows.Forms.ToolStripButton buttonEditCopyToClipboard;
+        private System.Windows.Forms.ToolStripButton buttonEditCopy;
         private System.Windows.Forms.ToolStripButton buttonEditProperties;
         private System.Windows.Forms.MenuStrip menu;
         private System.Windows.Forms.ToolStripMenuItem menuFile;
@@ -543,7 +893,7 @@
         private System.Windows.Forms.ToolStripSeparator menuFileSeparator2;
         private System.Windows.Forms.ToolStripMenuItem menuFileExit;
         private System.Windows.Forms.ToolStripMenuItem menuEdit;
-        private System.Windows.Forms.ToolStripMenuItem menuEditCopyToClipboard;
+        private System.Windows.Forms.ToolStripMenuItem menuEditCopy;
         private System.Windows.Forms.ToolStripSeparator menuEditSeparator0;
         private System.Windows.Forms.ToolStripMenuItem menuEditProperties;
         private System.Windows.Forms.ToolStripMenuItem menuHelp;
@@ -572,6 +922,40 @@
         private System.Windows.Forms.TextBox txtStillAnotherInt;
         private System.Windows.Forms.Label lblStillAnotherString;
         private System.Windows.Forms.Label lblStillAnotherInt;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem menuFilePrint;
+        private System.Windows.Forms.ToolStripMenuItem menuHelpContents;
+        private System.Windows.Forms.ToolStripMenuItem menuHelpIndex;
+        private System.Windows.Forms.ToolStripMenuItem menuHelpOnlineHelp;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem menuHelpLicenceInformation;
+        private System.Windows.Forms.ToolStripMenuItem menuHelpCheckForUpdates;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem menuEditUndo;
+        private System.Windows.Forms.ToolStripMenuItem menuEditRedo;
+        private System.Windows.Forms.ToolStripMenuItem menuEditSelectAll;
+        private System.Windows.Forms.ToolStripMenuItem menuEditCut;
+        private System.Windows.Forms.ToolStripMenuItem menuEditPaste;
+        private System.Windows.Forms.ToolStripMenuItem menuEditFind;
+        private System.Windows.Forms.ToolStripMenuItem menuEditReplace;
+        private System.Windows.Forms.ToolStripMenuItem menuEditRefresh;
+        private System.Windows.Forms.ToolStripMenuItem menuEditPreferences;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripButton buttonFilePrint;
+        private System.Windows.Forms.ToolStripButton buttonEditCut;
+        private System.Windows.Forms.ToolStripButton buttonHelpContents;
+        private System.Windows.Forms.ToolStripMenuItem menuEditDelete;
+        private System.Windows.Forms.ToolStripButton buttonEditUndo;
+        private System.Windows.Forms.ToolStripButton buttonEditRedo;
+        private System.Windows.Forms.ToolStripButton buttonEditPreferences;
+        private System.Windows.Forms.ToolStripButton buttonEditRefresh;
+        private System.Windows.Forms.ToolStripButton buttonEditFind;
+        private System.Windows.Forms.ToolStripButton buttonEditReplace;
+        private System.Windows.Forms.ToolStripButton buttonEditPaste;
+        private System.Windows.Forms.ToolStripButton buttonEditDelete;
     }
 }
 

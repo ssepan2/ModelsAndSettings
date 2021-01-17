@@ -9,4 +9,9 @@
     <ProjectReference Include="..\..\Ssepan.Utility\Ssepan.Utility\Ssepan.Utility.csproj">
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <Generator>ResGen /str</Generator>
+    </Compile>
+  </ItemGroup>
 </Project>

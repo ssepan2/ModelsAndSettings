@@ -39,6 +39,8 @@
             this.buttonEditRedo = new System.Windows.Forms.ToolStripButton();
             this.buttonEditCut = new System.Windows.Forms.ToolStripButton();
             this.buttonEditCopy = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditPaste = new System.Windows.Forms.ToolStripButton();
+            this.buttonEditDelete = new System.Windows.Forms.ToolStripButton();
             this.buttonEditFind = new System.Windows.Forms.ToolStripButton();
             this.buttonEditReplace = new System.Windows.Forms.ToolStripButton();
             this.buttonEditRefresh = new System.Windows.Forms.ToolStripButton();
@@ -106,8 +108,6 @@
             this.txtStillAnotherInt = new System.Windows.Forms.TextBox();
             this.lblStillAnotherString = new System.Windows.Forms.Label();
             this.lblStillAnotherInt = new System.Windows.Forms.Label();
-            this.buttonEditDelete = new System.Windows.Forms.ToolStripButton();
-            this.buttonEditPaste = new System.Windows.Forms.ToolStripButton();
             this.toolbar.SuspendLayout();
             this.menu.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -189,7 +189,7 @@
             // buttonEditUndo
             // 
             this.buttonEditUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditUndo.Image = global::MVCForms.Properties.Resources.undo;
+            this.buttonEditUndo.Image = global::MVCForms.Properties.Resources.Undo;
             this.buttonEditUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonEditUndo.Name = "buttonEditUndo";
             this.buttonEditUndo.Size = new System.Drawing.Size(23, 22);
@@ -199,7 +199,7 @@
             // buttonEditRedo
             // 
             this.buttonEditRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditRedo.Image = global::MVCForms.Properties.Resources.redo;
+            this.buttonEditRedo.Image = global::MVCForms.Properties.Resources.Redo;
             this.buttonEditRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonEditRedo.Name = "buttonEditRedo";
             this.buttonEditRedo.Size = new System.Drawing.Size(23, 22);
@@ -209,7 +209,7 @@
             // buttonEditCut
             // 
             this.buttonEditCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditCut.Image = global::MVCForms.Properties.Resources.editcut;
+            this.buttonEditCut.Image = global::MVCForms.Properties.Resources.Cut;
             this.buttonEditCut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonEditCut.Name = "buttonEditCut";
             this.buttonEditCut.Size = new System.Drawing.Size(23, 22);
@@ -226,10 +226,30 @@
             this.buttonEditCopy.Text = "Copy";
             this.buttonEditCopy.Click += new System.EventHandler(this.menuEditCopy_Click);
             // 
+            // buttonEditPaste
+            // 
+            this.buttonEditPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditPaste.Image = global::MVCForms.Properties.Resources.Paste;
+            this.buttonEditPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditPaste.Name = "buttonEditPaste";
+            this.buttonEditPaste.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditPaste.Text = "Paste";
+            this.buttonEditPaste.Click += new System.EventHandler(this.menuEditPaste_Click);
+            // 
+            // buttonEditDelete
+            // 
+            this.buttonEditDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonEditDelete.Image = global::MVCForms.Properties.Resources.Delete;
+            this.buttonEditDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonEditDelete.Name = "buttonEditDelete";
+            this.buttonEditDelete.Size = new System.Drawing.Size(23, 22);
+            this.buttonEditDelete.Text = "Delete";
+            this.buttonEditDelete.Click += new System.EventHandler(this.menuEditDelete_Click);
+            // 
             // buttonEditFind
             // 
             this.buttonEditFind.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditFind.Image = global::MVCForms.Properties.Resources.edit_find;
+            this.buttonEditFind.Image = global::MVCForms.Properties.Resources.Find;
             this.buttonEditFind.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonEditFind.Name = "buttonEditFind";
             this.buttonEditFind.Size = new System.Drawing.Size(23, 22);
@@ -239,7 +259,7 @@
             // buttonEditReplace
             // 
             this.buttonEditReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditReplace.Image = global::MVCForms.Properties.Resources.edit_find_replace;
+            this.buttonEditReplace.Image = global::MVCForms.Properties.Resources.Replace;
             this.buttonEditReplace.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonEditReplace.Name = "buttonEditReplace";
             this.buttonEditReplace.Size = new System.Drawing.Size(23, 22);
@@ -249,7 +269,7 @@
             // buttonEditRefresh
             // 
             this.buttonEditRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditRefresh.Image = global::MVCForms.Properties.Resources.reload;
+            this.buttonEditRefresh.Image = global::MVCForms.Properties.Resources.Refresh;
             this.buttonEditRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonEditRefresh.Name = "buttonEditRefresh";
             this.buttonEditRefresh.Size = new System.Drawing.Size(23, 22);
@@ -259,7 +279,7 @@
             // buttonEditPreferences
             // 
             this.buttonEditPreferences.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditPreferences.Image = global::MVCForms.Properties.Resources.stock_properties;
+            this.buttonEditPreferences.Image = global::MVCForms.Properties.Resources.Preferences;
             this.buttonEditPreferences.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonEditPreferences.Name = "buttonEditPreferences";
             this.buttonEditPreferences.Size = new System.Drawing.Size(23, 22);
@@ -284,7 +304,7 @@
             // buttonHelpContents
             // 
             this.buttonHelpContents.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonHelpContents.Image = global::MVCForms.Properties.Resources.stock_help;
+            this.buttonHelpContents.Image = global::MVCForms.Properties.Resources.Contents;
             this.buttonHelpContents.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonHelpContents.Name = "buttonHelpContents";
             this.buttonHelpContents.Size = new System.Drawing.Size(23, 22);
@@ -403,41 +423,41 @@
             // 
             // menuEditUndo
             // 
-            this.menuEditUndo.Image = global::MVCForms.Properties.Resources.undo;
+            this.menuEditUndo.Image = global::MVCForms.Properties.Resources.Undo;
             this.menuEditUndo.Name = "menuEditUndo";
             this.menuEditUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.menuEditUndo.Size = new System.Drawing.Size(180, 22);
+            this.menuEditUndo.Size = new System.Drawing.Size(167, 22);
             this.menuEditUndo.Text = "&Undo";
             this.menuEditUndo.Click += new System.EventHandler(this.menuEditUndo_Click);
             // 
             // menuEditRedo
             // 
-            this.menuEditRedo.Image = global::MVCForms.Properties.Resources.redo;
+            this.menuEditRedo.Image = global::MVCForms.Properties.Resources.Redo;
             this.menuEditRedo.Name = "menuEditRedo";
             this.menuEditRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.menuEditRedo.Size = new System.Drawing.Size(180, 22);
+            this.menuEditRedo.Size = new System.Drawing.Size(167, 22);
             this.menuEditRedo.Text = "&Redo";
             this.menuEditRedo.Click += new System.EventHandler(this.menuEditRedo_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(164, 6);
             // 
             // menuEditSelectAll
             // 
             this.menuEditSelectAll.Name = "menuEditSelectAll";
             this.menuEditSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.menuEditSelectAll.Size = new System.Drawing.Size(180, 22);
+            this.menuEditSelectAll.Size = new System.Drawing.Size(167, 22);
             this.menuEditSelectAll.Text = "Select &All";
             this.menuEditSelectAll.Click += new System.EventHandler(this.menuEditSelectAll_Click);
             // 
             // menuEditCut
             // 
-            this.menuEditCut.Image = global::MVCForms.Properties.Resources.editcut;
+            this.menuEditCut.Image = global::MVCForms.Properties.Resources.Cut;
             this.menuEditCut.Name = "menuEditCut";
             this.menuEditCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.menuEditCut.Size = new System.Drawing.Size(180, 22);
+            this.menuEditCut.Size = new System.Drawing.Size(167, 22);
             this.menuEditCut.Text = "Cu&t";
             this.menuEditCut.Click += new System.EventHandler(this.menuEditCut_Click);
             // 
@@ -447,16 +467,16 @@
             this.menuEditCopy.ImageTransparentColor = System.Drawing.Color.Black;
             this.menuEditCopy.Name = "menuEditCopy";
             this.menuEditCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.menuEditCopy.Size = new System.Drawing.Size(180, 22);
+            this.menuEditCopy.Size = new System.Drawing.Size(167, 22);
             this.menuEditCopy.Text = "&Copy";
             this.menuEditCopy.Click += new System.EventHandler(this.menuEditCopy_Click);
             // 
             // menuEditPaste
             // 
-            this.menuEditPaste.Image = global::MVCForms.Properties.Resources.stock_paste;
+            this.menuEditPaste.Image = global::MVCForms.Properties.Resources.Paste;
             this.menuEditPaste.Name = "menuEditPaste";
             this.menuEditPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.menuEditPaste.Size = new System.Drawing.Size(180, 22);
+            this.menuEditPaste.Size = new System.Drawing.Size(167, 22);
             this.menuEditPaste.Text = "&Paste";
             this.menuEditPaste.Click += new System.EventHandler(this.menuEditPaste_Click);
             // 
@@ -465,57 +485,57 @@
             this.menuEditDelete.Image = global::MVCForms.Properties.Resources.Delete;
             this.menuEditDelete.Name = "menuEditDelete";
             this.menuEditDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.menuEditDelete.Size = new System.Drawing.Size(180, 22);
+            this.menuEditDelete.Size = new System.Drawing.Size(167, 22);
             this.menuEditDelete.Text = "&Delete";
             this.menuEditDelete.Click += new System.EventHandler(this.menuEditDelete_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(164, 6);
             // 
             // menuEditFind
             // 
-            this.menuEditFind.Image = global::MVCForms.Properties.Resources.edit_find;
+            this.menuEditFind.Image = global::MVCForms.Properties.Resources.Find;
             this.menuEditFind.Name = "menuEditFind";
             this.menuEditFind.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.menuEditFind.Size = new System.Drawing.Size(180, 22);
+            this.menuEditFind.Size = new System.Drawing.Size(167, 22);
             this.menuEditFind.Text = "&Find...";
             this.menuEditFind.Click += new System.EventHandler(this.menuEditFind_Click);
             // 
             // menuEditReplace
             // 
-            this.menuEditReplace.Image = global::MVCForms.Properties.Resources.edit_find_replace;
+            this.menuEditReplace.Image = global::MVCForms.Properties.Resources.Replace;
             this.menuEditReplace.Name = "menuEditReplace";
             this.menuEditReplace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.menuEditReplace.Size = new System.Drawing.Size(180, 22);
+            this.menuEditReplace.Size = new System.Drawing.Size(167, 22);
             this.menuEditReplace.Text = "Rep&lace...";
             this.menuEditReplace.Click += new System.EventHandler(this.menuEditReplace_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(164, 6);
             // 
             // menuEditRefresh
             // 
-            this.menuEditRefresh.Image = global::MVCForms.Properties.Resources.reload;
+            this.menuEditRefresh.Image = global::MVCForms.Properties.Resources.Refresh;
             this.menuEditRefresh.Name = "menuEditRefresh";
             this.menuEditRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.menuEditRefresh.Size = new System.Drawing.Size(180, 22);
+            this.menuEditRefresh.Size = new System.Drawing.Size(167, 22);
             this.menuEditRefresh.Text = "R&efresh";
             this.menuEditRefresh.Click += new System.EventHandler(this.menuEditRefresh_Click);
             // 
             // menuEditSeparator0
             // 
             this.menuEditSeparator0.Name = "menuEditSeparator0";
-            this.menuEditSeparator0.Size = new System.Drawing.Size(177, 6);
+            this.menuEditSeparator0.Size = new System.Drawing.Size(164, 6);
             // 
             // menuEditPreferences
             // 
-            this.menuEditPreferences.Image = global::MVCForms.Properties.Resources.stock_properties;
+            this.menuEditPreferences.Image = global::MVCForms.Properties.Resources.Preferences;
             this.menuEditPreferences.Name = "menuEditPreferences";
-            this.menuEditPreferences.Size = new System.Drawing.Size(180, 22);
+            this.menuEditPreferences.Size = new System.Drawing.Size(167, 22);
             this.menuEditPreferences.Text = "Prefere&nces...";
             this.menuEditPreferences.Click += new System.EventHandler(this.menuEditPreferences_Click);
             // 
@@ -524,7 +544,7 @@
             this.menuEditProperties.Image = ((System.Drawing.Image)(resources.GetObject("menuEditProperties.Image")));
             this.menuEditProperties.ImageTransparentColor = System.Drawing.Color.Black;
             this.menuEditProperties.Name = "menuEditProperties";
-            this.menuEditProperties.Size = new System.Drawing.Size(180, 22);
+            this.menuEditProperties.Size = new System.Drawing.Size(167, 22);
             this.menuEditProperties.Text = "Pr&operties...";
             this.menuEditProperties.Click += new System.EventHandler(this.menuEditProperties_Click);
             // 
@@ -546,7 +566,7 @@
             // 
             // menuHelpContents
             // 
-            this.menuHelpContents.Image = global::MVCForms.Properties.Resources.stock_help;
+            this.menuHelpContents.Image = global::MVCForms.Properties.Resources.Contents;
             this.menuHelpContents.Name = "menuHelpContents";
             this.menuHelpContents.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.menuHelpContents.Size = new System.Drawing.Size(181, 22);
@@ -593,7 +613,7 @@
             // 
             // menuHelpAbout
             // 
-            this.menuHelpAbout.Image = global::MVCForms.Properties.Resources.gtk_about;
+            this.menuHelpAbout.Image = global::MVCForms.Properties.Resources.About;
             this.menuHelpAbout.Name = "menuHelpAbout";
             this.menuHelpAbout.Size = new System.Drawing.Size(181, 22);
             this.menuHelpAbout.Text = "&About MVCForms ...";
@@ -813,26 +833,6 @@
             this.lblStillAnotherInt.Size = new System.Drawing.Size(31, 13);
             this.lblStillAnotherInt.TabIndex = 131;
             this.lblStillAnotherInt.Text = "Int32";
-            // 
-            // buttonEditDelete
-            // 
-            this.buttonEditDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditDelete.Image = global::MVCForms.Properties.Resources.Delete;
-            this.buttonEditDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonEditDelete.Name = "buttonEditDelete";
-            this.buttonEditDelete.Size = new System.Drawing.Size(23, 22);
-            this.buttonEditDelete.Text = "Delete";
-            this.buttonEditDelete.Click += new System.EventHandler(this.menuEditDelete_Click);
-            // 
-            // buttonEditPaste
-            // 
-            this.buttonEditPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditPaste.Image = global::MVCForms.Properties.Resources.stock_paste;
-            this.buttonEditPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonEditPaste.Name = "buttonEditPaste";
-            this.buttonEditPaste.Size = new System.Drawing.Size(23, 22);
-            this.buttonEditPaste.Text = "Paste";
-            this.buttonEditPaste.Click += new System.EventHandler(this.menuEditPaste_Click);
             // 
             // MVCView
             // 

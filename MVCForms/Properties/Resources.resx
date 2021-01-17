@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="edit-find-replace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Replace" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\edit-find-replace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
@@ -136,7 +136,7 @@
   <data name="Properties" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRy
+        YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRy
         oQAAAmZJREFUOE+Nk91rkmEYxh+3/oAoIoiigw7GIDooPGkVjYioCQU7KWqFtM76XJ/soIMcsViREBMV
         izXztcXahzqzaJurRlqNQcKgook6tdcwxcKPoV49z+003tVBB9d7w3M/v+u+eLhfBmC5VOVyWSUqV91S
         rYru8H5N9KleKBaLAma8ssFHdyE08PA2bJZu9Bl0MOuvw9DTSbJ4TJCmhsByuRzLZDICFmaqdDqtqsLZ
@@ -150,7 +150,7 @@
         ZH0qlVoVCoVW83O6z895v8x+A+fs7zp/7ZJsAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="editcut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Cut" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\editcut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="App" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -170,13 +170,13 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 </value>
   </data>
-  <data name="stock_help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Contents" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stock_help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gtk-about" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="About" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gtk-about.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\redo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Save" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -229,16 +229,16 @@
         dD+HD+5i324JOyQ++Hp7sWnjWtav8WCDp4c74D+XIPwBF8beaT1+/VgAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="edit-find" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Find" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\edit-find.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="stock_properties" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Preferences" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stock_properties.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Print" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRy
+        YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRy
         oQAAAk5JREFUOE+dkv1PUmEcxS9Wv/RLf01ra6vVVpuJWlptWmaE0zkpGsakIGQZUSqpvVhLaoTMBTrM
         AseIaY1NZ6C9iC5dbikUWBImoGG8nLgPlxvYWq2znfvc3T3nc7733ofKEodZ/1s0gGO0vUaf/S36h6f+
         aNOQG8x+VpuYdQsNeOX2YqPWf8Sx4FtGn3UMhScvgFt5noVkwqSddiKRxFIwBIfrHfGA3QmDeRSuKQ8q
@@ -252,16 +252,16 @@
         sqmjAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="reload" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\reload.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="undo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Undo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\undo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Copy" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAACFElEQVQ4T52T
+        vgAADr4B6kKxwAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAACFElEQVQ4T52T
         70sTcRzHt8r/o5Qh1mN7HpGmJBgUPigoSKNHe6CPehQZBlnOWOBsW1gzlW1204tIFylT19Jk6pz9mLQM
         aoOp3Ol0Tm/29r6f2+ltBooveG9339v79b3PHdPJ6LM5xk40sLV88tf0On7kO1i44TDFORBEJ/8Zj208
         6AcHwcr5OPoDuN3YhbOVtUxyXI56l/uFnqFwtqaQ2f6Htu4P8PrDuFbfqkq0xVyJc3CKit4IwE0DoaiI
@@ -274,7 +274,7 @@
         rkJggg==
 </value>
   </data>
-  <data name="stock_paste" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Paste" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stock_paste.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

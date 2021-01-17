@@ -490,7 +490,7 @@ namespace MVCForms
 
         private void menuHelpOnlineHelp_Click(object sender, EventArgs e)
         {
-            ViewModel.HelpOnlineHelp();
+            ViewModel.HelpOnHelp();
         }
 
         private void menuHelpLicenceInformation_Click(object sender, EventArgs e)
@@ -562,13 +562,24 @@ namespace MVCForms
                     (
                         this.PropertyChangedEventHandlerDelegate,
                         new Dictionary<String, Bitmap>() 
-                        { 
-                            { "New", Resources.New }, 
-                            { "Save", Resources.Save },
-                            { "Open", Resources.Open },
-                            { "Print", Resources.Print },
-                            { "Copy", Resources.Copy },
-                            { "Properties", Resources.Properties }
+                        { //TODO:ideally, should get these from library, but items added did not generated into resource class.
+                            { "New", MVCForms.Properties.Resources.New }, 
+                            { "Open", MVCForms.Properties.Resources.Open },
+                            { "Save", MVCForms.Properties.Resources.Save },
+                            { "Print", MVCForms.Properties.Resources.Print },
+                            { "Undo", MVCForms.Properties.Resources.Undo },
+                            { "Redo", MVCForms.Properties.Resources.Redo },
+                            { "Cut", MVCForms.Properties.Resources.Cut },
+                            { "Copy", MVCForms.Properties.Resources.Copy },
+                            { "Paste", MVCForms.Properties.Resources.Paste },
+                            { "Delete", MVCForms.Properties.Resources.Delete },
+                            { "Find", MVCForms.Properties.Resources.Find },
+                            { "Replace", MVCForms.Properties.Resources.Replace },
+                            { "Refresh", MVCForms.Properties.Resources.Refresh },
+                            { "Preferences", MVCForms.Properties.Resources.Preferences },
+                            { "Properties", MVCForms.Properties.Resources.Properties },
+                            { "Contents", MVCForms.Properties.Resources.Contents },
+                            { "About", MVCForms.Properties.Resources.About }
                         },
                         settingsFileDialogInfo
                     )

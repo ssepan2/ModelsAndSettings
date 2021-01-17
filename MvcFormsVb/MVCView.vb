@@ -426,7 +426,7 @@ Partial Public Class MVCView
 
     Protected Sub DisposeSettings()
         'save user and application settings 
-        Global.My.MySettings.Default.Save() 'Properties.Settings.Default.Save()
+        Global.MvcFormsVb.My.MySettings.Default.Save() 'Properties.Settings.Default.Save()
 
         If SettingsController(Of MVCSettings).Settings.Dirty Then
             'prompt before saving
@@ -629,10 +629,10 @@ Partial Public Class MVCView
 
     Private Sub BindSizeAndLocation()
         'Note:Size must be done after InitializeComponent(); do Location this way as well.--SJS
-        DataBindings.Add(New Binding("Location", Global.My.MySettings.Default, "Location", True, DataSourceUpdateMode.OnPropertyChanged)) 'Global.Properties.Settings.Default
-        DataBindings.Add(New Binding("ClientSize", Global.My.MySettings.Default, "Size", True, DataSourceUpdateMode.OnPropertyChanged)) 'Global.Properties.Settings.Default
-        ClientSize = Global.My.MySettings.Default.Size 'Global.Properties.Settings.Default.Size
-        Location = Global.My.MySettings.Default.Location 'Global.My.Properties.Settings.Default.Location
+        DataBindings.Add(New Binding("Location", Global.MvcFormsVb.My.MySettings.Default, "Location", True, DataSourceUpdateMode.OnPropertyChanged)) 'Global.Properties.Settings.Default
+        DataBindings.Add(New Binding("ClientSize", Global.MvcFormsVb.My.MySettings.Default, "Size", True, DataSourceUpdateMode.OnPropertyChanged)) 'Global.Properties.Settings.Default
+        ClientSize = Global.MvcFormsVb.My.MySettings.Default.Size 'Global.Properties.Settings.Default.Size
+        Location = Global.MvcFormsVb.My.MySettings.Default.Location 'Global.My.Properties.Settings.Default.Location
 
     End Sub
 #End Region

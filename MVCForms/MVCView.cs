@@ -420,22 +420,22 @@ namespace MVCForms
 
         private void menuEditUndo_Click(object sender, EventArgs e)
         {
-            // ViewModel.EditUndo();
+            ViewModel.EditUndo();
         }
 
         private void menuEditRedo_Click(object sender, EventArgs e)
         {
-            // ViewModel.EditRedo();
+            ViewModel.EditRedo();
         }
 
         private void menuEditSelectAll_Click(object sender, EventArgs e)
         {
-            // ViewModel.EditSelectAll();
+            ViewModel.EditSelectAll();
         }
 
         private void menuEditCut_Click(object sender, EventArgs e)
         {
-            // ViewModel.EditCut();
+            ViewModel.EditCut();
         }
 
         private void menuEditCopy_Click(Object sender, EventArgs e)
@@ -445,32 +445,32 @@ namespace MVCForms
 
         private void menuEditPaste_Click(object sender, EventArgs e)
         {
-            // ViewModel.EditPaste();
+            ViewModel.EditPaste();
         }
 
         private void menuEditDelete_Click(object sender, EventArgs e)
         {
-            // ViewModel.EditDelete();
+            ViewModel.EditDelete();
         }
 
         private void menuEditFind_Click(object sender, EventArgs e)
         {
-            // ViewModel.EditFind();
+            ViewModel.EditFind();
         }
 
         private void menuEditReplace_Click(object sender, EventArgs e)
         {
-            // ViewModel.EditReplace();
+            ViewModel.EditReplace();
         }
 
         private void menuEditRefresh_Click(object sender, EventArgs e)
         {
-            // ViewModel.EditRefresh();
+            ViewModel.EditRefresh();
         }
 
         private void menuEditPreferences_Click(object sender, EventArgs e)
         {
-            // ViewModel.EditPreferences();
+            ViewModel.EditPreferences();
         }
 
         private void menuEditProperties_Click(Object sender, EventArgs e)
@@ -480,27 +480,27 @@ namespace MVCForms
 
         private void menuHelpContents_Click(object sender, EventArgs e)
         {
-            // ViewModel.HelpContents();
+            ViewModel.HelpContents();
         }
 
         private void menuHelpIndex_Click(object sender, EventArgs e)
         {
-            // ViewModel.HelpIndex();
+            ViewModel.HelpIndex();
         }
 
         private void menuHelpOnlineHelp_Click(object sender, EventArgs e)
         {
-            // ViewModel.HelpOnlineHel();
+            ViewModel.HelpOnlineHelp();
         }
 
         private void menuHelpLicenceInformation_Click(object sender, EventArgs e)
         {
-            // ViewModel.HelpLicenceInformation();
+            ViewModel.HelpLicenceInformation();
         }
 
         private void menuHelpCheckForUpdates_Click(object sender, EventArgs e)
         {
-            // ViewModel.HelpCheckForUpdates();
+            ViewModel.HelpCheckForUpdates();
         }
 
         private void menuHelpAbout_Click(Object sender, EventArgs e)

@@ -4,17 +4,15 @@
     <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>True</UseWindowsForms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <StartupObject>Program</StartupObject>
-    <RootNamespace></RootNamespace>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <ApplicationIcon>Resources\App.ico</ApplicationIcon>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <StartupObject>MvcFormsVb.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>_MYTYPE="WindowsForms"</DefineConstants>
     <DefineDebug>false</DefineDebug>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Resources\**" />
@@ -23,41 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="My Project\Application.Designer.vb" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="App.ico" />
-    <None Remove="Copy.png" />
-    <None Remove="Delete.png" />
-    <None Remove="My Project\Application.myapp" />
-    <None Remove="New.png" />
-    <None Remove="Open.png" />
-    <None Remove="Print.png" />
-    <None Remove="Properties.png" />
-    <None Remove="Save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\App.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Properties.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Print.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Open.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\New.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Delete.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Copy.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Ssepan.Application\Ssepan.Application.csproj">

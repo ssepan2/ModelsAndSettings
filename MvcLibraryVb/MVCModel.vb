@@ -8,6 +8,7 @@ Imports System.Reflection
 Imports System.Text
 'using System.Threading.Tasks;
 Imports Ssepan.Application
+Imports Ssepan.Application.MVC
 Imports Ssepan.Utility
 
 'Namespace MvcLibraryVb

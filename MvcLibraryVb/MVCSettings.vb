@@ -10,6 +10,7 @@ Imports System.Text
 'using System.Threading.Tasks;
 Imports System.Xml.Serialization
 Imports Ssepan.Application
+Imports Ssepan.Application.MVC
 Imports Ssepan.Utility
 
 'Namespace MvcLibraryVb

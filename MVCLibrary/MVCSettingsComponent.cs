@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using Ssepan.Application;
+using Ssepan.Application.MVC;
 using Ssepan.Utility;
 
 namespace MVCLibrary

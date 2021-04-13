@@ -8,6 +8,7 @@ Imports System.Reflection
 Imports System.Runtime.Serialization
 Imports System.Text
 Imports Ssepan.Application
+Imports Ssepan.Application.MVC
 Imports Ssepan.Utility
 
 'Namespace MvcLibraryVb

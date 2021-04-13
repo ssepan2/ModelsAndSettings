@@ -14,6 +14,8 @@ Imports System.Text
 'using System.Threading.Tasks;
 Imports System.Windows.Forms
 Imports Ssepan.Application
+Imports Ssepan.Application.MVC
+Imports Ssepan.Application.WinConsole
 Imports Ssepan.Io
 Imports Ssepan.Utility
 Imports MvcLibraryVb
@@ -111,7 +113,7 @@ Public Class ConsoleView
 		''' <param name="e"></param>
 		Protected Sub PropertyChangedEventHandlerDelegate(sender As [Object], e As PropertyChangedEventArgs)
 			Try
-#Region "Model"
+            'Region "Model"
 				If e.PropertyName = "IsChanged" Then
 					'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", e.PropertyName));
 					ApplySettings()
@@ -152,9 +154,9 @@ Public Class ConsoleView
 					ConsoleApplication.defaultOutputDelegate([String].Format("e.PropertyName: {0}", e.PropertyName))
 #End If
 				End If
-#End Region
+            'End Region
 
-#Region "Settings"
+            'Region "Settings"
 				If e.PropertyName = "Dirty" Then
 					'apply settings that don't have databindings
 					ViewModel.DirtyIconIsVisible = (SettingsController(Of MVCSettings).Settings.Dirty)
@@ -162,7 +164,7 @@ Public Class ConsoleView
 #If DEBUG_SETTINGS_PROPERTYCHANGED Then
 					ConsoleApplication.defaultOutputDelegate([String].Format("e.PropertyName: {0}", e.PropertyName))
 #End If
-#End Region
+                'End Region
 				End If
 			Catch ex As Exception
 				Log.Write(ex, MethodBase.GetCurrentMethod(), EventLogEntryType.[Error])

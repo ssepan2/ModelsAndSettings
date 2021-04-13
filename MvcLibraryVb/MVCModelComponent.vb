@@ -8,6 +8,7 @@ Imports System.Reflection
 'using System.Runtime.Serialization;
 'using System.Text;
 Imports Ssepan.Application
+Imports Ssepan.Application.MVC
 Imports Ssepan.Utility
 
 'Namespace MVCLibrary

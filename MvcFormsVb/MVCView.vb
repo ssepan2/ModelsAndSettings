@@ -12,6 +12,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Windows.Forms
 Imports Ssepan.Application
+Imports Ssepan.Application.MVC
 Imports Ssepan.Io
 Imports Ssepan.Utility
 Imports MvcLibraryVb
@@ -120,7 +121,7 @@ Partial Public Class MVCView
     ''' <paramname="e"></param>
     Protected Sub PropertyChangedEventHandlerDelegate(ByVal sender As Object, ByVal e As PropertyChangedEventArgs)
         Try
-#Region "Model"
+            'Region "Model"
             If Equals(e.PropertyName, "IsChanged") Then
                 'ConsoleApplication.defaultOutputDelegate(String.Format("{0}", e.PropertyName));
                 ApplySettings()
@@ -216,9 +217,9 @@ Partial Public Class MVCView
                         ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName));
 #End If
             End If
-#End Region
+            'End Region
 
-#Region "Settings"
+            'Region "Settings"
             If Equals(e.PropertyName, "Dirty") Then
                 'apply settings that don't have databindings
                 ViewModel.DirtyIconIsVisible = SettingsController(Of MVCSettings).Settings.Dirty
@@ -226,7 +227,7 @@ Partial Public Class MVCView
 #If DEBUG_SETTINGS_PROPERTYCHANGED Then
                     ConsoleApplication.defaultOutputDelegate(String.Format("e.PropertyName: {0}", e.PropertyName));
 #End If
-#End Region
+                'End Region
             End If
 
         Catch ex As Exception
@@ -426,7 +427,7 @@ Partial Public Class MVCView
 
     Protected Sub DisposeSettings()
         'save user and application settings 
-        Global.MvcFormsVb.My.MySettings.Default.Save() 'Properties.Settings.Default.Save()
+        My.MySettings.Default.Save() 'Properties.Settings.Default.Save()
 
         If SettingsController(Of MVCSettings).Settings.Dirty Then
             'prompt before saving
@@ -629,10 +630,10 @@ Partial Public Class MVCView
 
     Private Sub BindSizeAndLocation()
         'Note:Size must be done after InitializeComponent(); do Location this way as well.--SJS
-        DataBindings.Add(New Binding("Location", Global.MvcFormsVb.My.MySettings.Default, "Location", True, DataSourceUpdateMode.OnPropertyChanged)) 'Global.Properties.Settings.Default
-        DataBindings.Add(New Binding("ClientSize", Global.MvcFormsVb.My.MySettings.Default, "Size", True, DataSourceUpdateMode.OnPropertyChanged)) 'Global.Properties.Settings.Default
-        ClientSize = Global.MvcFormsVb.My.MySettings.Default.Size 'Global.Properties.Settings.Default.Size
-        Location = Global.MvcFormsVb.My.MySettings.Default.Location 'Global.My.Properties.Settings.Default.Location
+        DataBindings.Add(New Binding("Location", My.MySettings.Default, "Location", True, DataSourceUpdateMode.OnPropertyChanged)) 'Global.Properties.Settings.Default
+        DataBindings.Add(New Binding("ClientSize", My.MySettings.Default, "Size", True, DataSourceUpdateMode.OnPropertyChanged)) 'Global.Properties.Settings.Default
+        ClientSize = My.MySettings.Default.Size 'Global.Properties.Settings.Default.Size
+        Location = My.MySettings.Default.Location 'Global.My.Properties.Settings.Default.Location
 
     End Sub
 #End Region

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using MVCLibrary;
 using Ssepan.Application;
+using Ssepan.Application.WinConsole;
 using Ssepan.Utility;
     
 namespace MVCConsole

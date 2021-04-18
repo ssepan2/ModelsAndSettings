@@ -102,6 +102,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\reload1.png" />
+    <None Include="Resources\redo1.png" />
+    <None Include="Resources\Save.png" />
+    <None Include="Resources\Replace.png" />
+    <None Include="Resources\reload.png" />
+    <None Include="Resources\redo.png" />
+    <None Include="Resources\Properties.png" />
+    <None Include="Resources\Print.png" />
+    <None Include="Resources\Preferences.png" />
+    <None Include="Resources\Paste.png" />
+    <None Include="Resources\Open.png" />
+    <None Include="Resources\New.png" />
+    <None Include="Resources\Network.png" />
+    <None Include="Resources\Find.png" />
+    <None Include="Resources\Delete.png" />
+    <None Include="Resources\Cut.png" />
+    <None Include="Resources\Copy.png" />
+    <None Include="Resources\Contents.png" />
+    <None Include="Resources\undo.png" />
+    <None Include="Resources\About.png" />
     <Content Include="Resources\App.ico" />
   </ItemGroup>
   <ItemGroup />

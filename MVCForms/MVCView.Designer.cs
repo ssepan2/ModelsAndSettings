@@ -269,7 +269,7 @@
             // buttonEditRefresh
             // 
             this.buttonEditRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonEditRefresh.Image = global::MVCForms.Properties.Resources.Refresh;
+            this.buttonEditRefresh.Image = global::MVCForms.Properties.Resources.Reload;
             this.buttonEditRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonEditRefresh.Name = "buttonEditRefresh";
             this.buttonEditRefresh.Size = new System.Drawing.Size(23, 22);
@@ -519,7 +519,7 @@
             // 
             // menuEditRefresh
             // 
-            this.menuEditRefresh.Image = global::MVCForms.Properties.Resources.Refresh;
+            this.menuEditRefresh.Image = global::MVCForms.Properties.Resources.Reload;
             this.menuEditRefresh.Name = "menuEditRefresh";
             this.menuEditRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.menuEditRefresh.Size = new System.Drawing.Size(167, 22);

@@ -283,7 +283,7 @@ Partial Public Class MVCView
         Return returnValue
     End Function
 
-    Private Sub View_Load(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub View_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
         Try
             ViewModel.StatusMessage = String.Format("{0} starting...", ViewName)
             ViewModel.StatusMessage = String.Format("{0} started.", ViewName)
@@ -295,7 +295,7 @@ Partial Public Class MVCView
         End Try
     End Sub
 
-    Private Sub View_FormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs)
+    Private Sub View_FormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs) Handles MyBase.FormClosing
         Try
             ViewModel.StatusMessage = String.Format("{0} completing...", ViewName)
             DisposeSettings()
@@ -311,41 +311,105 @@ Partial Public Class MVCView
 #End Region
 
 #Region "Menu Events"
-    Private Sub menuFileNew_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub menuFileNew_Click(ByVal sender As Object, ByVal e As EventArgs) Handles menuFileNew.Click, buttonFileNew.Click
         ViewModel.FileNew()
     End Sub
 
-    Private Sub menuFileOpen_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub menuFileOpen_Click(ByVal sender As Object, ByVal e As EventArgs) Handles menuFileOpen.Click, buttonFileOpen.Click
         ViewModel.FileOpen()
     End Sub
 
-    Private Sub menuFileSave_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub menuFileSave_Click(ByVal sender As Object, ByVal e As EventArgs) Handles menuFileSave.Click, buttonFileSave.Click
         ViewModel.FileSave()
     End Sub
 
-    Private Sub menuFileSaveAs_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub menuFileSaveAs_Click(ByVal sender As Object, ByVal e As EventArgs) Handles menuFileSaveAs.Click
         ViewModel.FileSaveAs()
     End Sub
 
-    Private Sub menuFileExit_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub menuFilePrint_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuFilePrint.Click, buttonFilePrint.Click
+        ViewModel.FilePrint()
+    End Sub
+
+    Private Sub menuFileExit_Click(ByVal sender As Object, ByVal e As EventArgs) Handles menuFileExit.Click
         ViewModel.FileExit()
     End Sub
 
-    Private Sub menuEditProperties_Click(ByVal sender As Object, ByVal e As EventArgs)
-        ViewModel.EditProperties()
+    Private Sub menuEditUndo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditUndo.Click, buttonEditUndo.Click
+        ViewModel.EditUndo()
     End Sub
 
-    Private Sub menuEditCopyToClipboard_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub menuEditRedo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditRedo.Click, buttonEditRedo.Click
+        ViewModel.EditRedo()
+    End Sub
+
+    Private Sub menuEditSelectAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditSelectAll.Click
+        ViewModel.EditSelectAll()
+    End Sub
+
+    Private Sub menuEditCut_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditCut.Click, buttonEditCut.Click
+        ViewModel.EditCut()
+    End Sub
+
+    Private Sub menuEditCopy_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditCopy.Click, buttonEditCopy.Click
         ViewModel.EditCopy()
     End Sub
 
-    Private Sub menuHelpAbout_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub menuEditPaste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditPaste.Click, buttonEditPaste.Click
+        ViewModel.EditPaste()
+    End Sub
+
+    Private Sub menuEditDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditDelete.Click, buttonEditDelete.Click
+        ViewModel.EditDelete()
+    End Sub
+
+    Private Sub menuEditFind_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditFind.Click, buttonEditFind.Click
+        ViewModel.EditFind()
+    End Sub
+
+    Private Sub menuEditReplace_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditReplace.Click, buttonEditReplace.Click
+        ViewModel.EditReplace()
+    End Sub
+
+    Private Sub menuEditRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditRefresh.Click, buttonEditRefresh.Click
+        ViewModel.EditRefresh()
+    End Sub
+
+    Private Sub menuEditPreferences_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuEditPreferences.Click, buttonEditPreferences.Click
+        ViewModel.EditPreferences()
+    End Sub
+
+    Private Sub menuEditProperties_Click(ByVal sender As Object, ByVal e As EventArgs) Handles menuEditProperties.Click, buttonEditProperties.Click
+        ViewModel.EditProperties()
+    End Sub
+
+    Private Sub menuHelpContents_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuHelpContents.Click, buttonHelpContents.Click
+        ViewModel.HelpContents()
+    End Sub
+
+    Private Sub menuHelpIndex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuHelpIndex.Click
+        ViewModel.HelpIndex()
+    End Sub
+
+    Private Sub menuHelpOnlineHelp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuHelpOnlineHelp.Click
+        ViewModel.HelpOnHelp()
+    End Sub
+
+    Private Sub menuHelpLicenceInformation_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuHelpLicenceInformation.Click
+        ViewModel.HelpLicenceInformation()
+    End Sub
+
+    Private Sub menuHelpCheckForUpdates_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuHelpCheckForUpdates.Click
+        ViewModel.HelpCheckForUpdates()
+    End Sub
+
+    Private Sub menuHelpAbout_Click(ByVal sender As Object, ByVal e As EventArgs) Handles menuHelpAbout.Click
         ViewModel.HelpAbout(Of AssemblyInfo)()
     End Sub
 #End Region
 
 #Region "Control Events"
-    Private Sub cmdRun_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub cmdRun_Click(ByVal sender As Object, ByVal e As EventArgs) Handles cmdRun.Click
         ViewModel.DoSomething()
         'ViewModel.CustomMessage = "blah";//done in DoSomething
     End Sub
@@ -369,12 +433,23 @@ Partial Public Class MVCView
 
             'class to handle standard behaviors
             ViewModelController(Of Bitmap, MVCViewModel).[New](ViewName, New MVCViewModel(AddressOf Me.PropertyChangedEventHandlerDelegate, New Dictionary(Of String, Bitmap)() From {
-                    {"New", My.Resources.Resources._New},
-                    {"Save", My.Resources.Resources.Save},
-                    {"Open", My.Resources.Resources.Open},
-                    {"Print", My.Resources.Resources.Print},
-                    {"Copy", My.Resources.Resources.Copy},
-                    {"Properties", My.Resources.Resources.Properties}
+                  {"New", My.Resources._New},
+                  {"Open", My.Resources.Open},
+                  {"Save", My.Resources.Save},
+                  {"Print", My.Resources.Print},
+                  {"Undo", My.Resources.Undo},
+                  {"Redo", My.Resources.Redo},
+                  {"Cut", My.Resources.Cut},
+                  {"Copy", My.Resources.Copy},
+                  {"Paste", My.Resources.Paste},
+                  {"Delete", My.Resources.Delete},
+                  {"Find", My.Resources.Find},
+                  {"Replace", My.Resources.Replace},
+                  {"Refresh", My.Resources.Reload},
+                  {"Preferences", My.Resources.Preferences},
+                  {"Properties", My.Resources.Properties},
+                  {"Contents", My.Resources.Contents},
+                  {"About", My.Resources.About}
                 }, settingsFileDialogInfo))
 
             'select a viewmodel by view name
@@ -434,11 +509,11 @@ Partial Public Class MVCView
             Dim dialogResult = MessageBox.Show("Save changes?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             Select Case dialogResult
-                Case DialogResult.Yes
+                Case dialogResult.Yes
                     'SAVE
                     ViewModel.FileSave()
                     Exit Select
-                Case DialogResult.No
+                Case dialogResult.No
                     Exit Select
                 Case Else
                     Throw New InvalidEnumArgumentException()
@@ -489,7 +564,7 @@ Partial Public Class MVCView
         End Try
     End Sub
 
-    Private Sub BindField(Of TControl As Control, TModel)(ByVal fieldControl As TControl, ByVal model As TModel, ByVal modelPropertyName As String, ByVal Optional controlPropertyName As String = "Text", ByVal Optional formattingEnabled As Boolean = False, ByVal Optional dataSourceUpdateMode As DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged, ByVal Optional reBind As Boolean = True)
+    Private Sub BindField(Of TControl As Control, TModel)(ByVal fieldControl As TControl, ByVal model As TModel, ByVal modelPropertyName As String, Optional ByVal controlPropertyName As String = "Text", Optional ByVal formattingEnabled As Boolean = False, Optional ByVal dataSourceUpdateMode As DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged, Optional ByVal reBind As Boolean = True)
         Try
             fieldControl.DataBindings.Clear()
 

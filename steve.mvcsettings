@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MVCSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SomeComponent>
+    <SomeOtherInt>155</SomeOtherInt>
+    <SomeOtherBoolean>true</SomeOtherBoolean>
+    <SomeOtherString>4/18/2021 2:09:22 PM</SomeOtherString>
+  </SomeComponent>
+  <SomeInt>153</SomeInt>
+  <SomeBoolean>true</SomeBoolean>
+  <SomeString>4/18/2021 2:09:22 PM</SomeString>
+</MVCSettings>

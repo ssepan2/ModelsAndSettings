@@ -576,7 +576,7 @@ namespace MVCForms
                             { "Delete", MVCForms.Properties.Resources.Delete },
                             { "Find", MVCForms.Properties.Resources.Find },
                             { "Replace", MVCForms.Properties.Resources.Replace },
-                            { "Refresh", MVCForms.Properties.Resources.Refresh },
+                            { "Refresh", MVCForms.Properties.Resources.Reload },
                             { "Preferences", MVCForms.Properties.Resources.Preferences },
                             { "Properties", MVCForms.Properties.Resources.Properties },
                             { "Contents", MVCForms.Properties.Resources.Contents },
